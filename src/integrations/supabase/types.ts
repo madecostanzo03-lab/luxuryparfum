@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      brands: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      perfumes: {
+        Row: {
+          brand_id: string
+          created_at: string
+          description: string | null
+          fragrance_type: Database["public"]["Enums"]["fragrance_type"]
+          gender: Database["public"]["Enums"]["gender_type"]
+          id: string
+          image_url: string | null
+          in_stock: boolean
+          is_bestseller: boolean
+          is_recommended: boolean
+          name: string
+          notes: string | null
+          price: number
+          promotion_text: string | null
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          created_at?: string
+          description?: string | null
+          fragrance_type: Database["public"]["Enums"]["fragrance_type"]
+          gender: Database["public"]["Enums"]["gender_type"]
+          id?: string
+          image_url?: string | null
+          in_stock?: boolean
+          is_bestseller?: boolean
+          is_recommended?: boolean
+          name: string
+          notes?: string | null
+          price: number
+          promotion_text?: string | null
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          created_at?: string
+          description?: string | null
+          fragrance_type?: Database["public"]["Enums"]["fragrance_type"]
+          gender?: Database["public"]["Enums"]["gender_type"]
+          id?: string
+          image_url?: string | null
+          in_stock?: boolean
+          is_bestseller?: boolean
+          is_recommended?: boolean
+          name?: string
+          notes?: string | null
+          price?: number
+          promotion_text?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perfumes_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +129,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      fragrance_type: "fresco" | "dulce" | "amaderado" | "intenso"
+      gender_type: "hombre" | "mujer" | "unisex"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +257,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      fragrance_type: ["fresco", "dulce", "amaderado", "intenso"],
+      gender_type: ["hombre", "mujer", "unisex"],
+    },
   },
 } as const
