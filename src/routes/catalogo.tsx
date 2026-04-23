@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Brand, FragranceType, Gender, Perfume } from "@/lib/types";
@@ -26,6 +26,28 @@ export const Route = createFileRoute("/catalogo")({
     ],
   }),
   component: CatalogoPage,
+  errorComponent: ({ error }) => {
+    const router = useRouter();
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-32 text-center">
+        <p className="eyebrow text-accent">Error</p>
+        <h1 className="mt-6 text-4xl font-serif">No pudimos cargar el catálogo</h1>
+        <p className="mt-4 text-foreground/60 text-sm">{error.message}</p>
+        <button
+          onClick={() => router.invalidate()}
+          className="mt-8 eyebrow text-accent hover:opacity-70 transition-opacity"
+        >
+          Reintentar
+        </button>
+      </div>
+    );
+  },
+  notFoundComponent: () => (
+    <div className="max-w-2xl mx-auto px-6 py-32 text-center">
+      <h1 className="text-4xl font-serif">Página no encontrada</h1>
+      <Link to="/" className="mt-8 inline-block eyebrow text-accent">Volver al inicio</Link>
+    </div>
+  ),
 });
 
 const GENDERS: { value: Gender | ""; label: string }[] = [
