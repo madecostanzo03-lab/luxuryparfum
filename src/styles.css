@@ -35,7 +35,9 @@
   --color-deep-blue: var(--deep-blue);
   --color-noir: var(--noir);
 
-  --font-serif: "Instrument Serif", "Times New Roman", serif;
+  --font-serif: "Italiana", "Times New Roman", serif;
+  --font-display: "Italiana", "Times New Roman", serif;
+  --font-italic: "Instrument Serif", "Times New Roman", serif;
   --font-sans: "Work Sans", system-ui, sans-serif;
 }
 
@@ -109,39 +111,45 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
 
-  /* Tipografía de marca — la misma del logo Luxury Parfum.
-     Aplicar a botones, links de navegación y elementos de identidad. */
+  /* Tipografía de marca — exactamente la del logo Luxury Parfum.
+     Italiana: sans-serif geométrica display, fina, espaciada, lujo editorial. */
   .brand-serif {
-    font-family: var(--font-serif);
-    font-style: italic;
-    letter-spacing: 0.005em;
+    font-family: var(--font-display);
     font-weight: 400;
+    letter-spacing: 0.06em;
   }
 
-  /* Etiquetas eyebrow — refinada, más editorial, menos genérica */
-  .eyebrow {
-    font-family: var(--font-serif);
+  /* Italic editorial — para citas, descripciones poéticas, hint líneas finas */
+  .brand-italic {
+    font-family: var(--font-italic);
     font-style: italic;
-    font-size: 0.78rem;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.005em;
+  }
+
+  /* Etiquetas eyebrow — display fina, espaciada, mayúsculas premium */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     color: var(--color-gold);
   }
 
-  /* Botón CTA premium — usa la serif del logo, no Work Sans plano */
+  /* Botón CTA premium — display del logo, alta legibilidad y autoridad */
   .btn-luxury {
-    font-family: var(--font-serif);
-    font-style: italic;
+    font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
   }
 
   .divider-gold {
