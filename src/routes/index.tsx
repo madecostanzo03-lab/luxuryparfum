@@ -74,14 +74,14 @@ function HomePage() {
             className="mt-12 text-[2.75rem] md:text-7xl lg:text-[6rem] font-serif text-balance max-w-5xl leading-[1.0] tracking-tight fade-up"
             style={{ animationDelay: "0.5s" }}
           >
-            Descubrí tu <em className="text-accent">fragancia ideal</em>
+            Elegí cómo querés que <em className="text-accent">te recuerden</em>
           </h1>
 
           <p
             className="mt-12 max-w-md text-foreground/65 text-base md:text-lg leading-relaxed tracking-wide fade-up"
             style={{ animationDelay: "0.8s" }}
           >
-            Una colección curada de perfumería de autor, pensada para acompañar tus momentos.
+            Una colección curada de perfumería de autor — para que tu fragancia hable antes que vos.
           </p>
 
           <div

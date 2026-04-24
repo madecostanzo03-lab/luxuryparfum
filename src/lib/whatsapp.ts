@@ -23,26 +23,23 @@ export function perfumePublicUrl(perfumeId: string, variantId?: string | null): 
 
 function buildMessage(ctx: WhatsappPerfumeContext): string {
   const lines: string[] = [];
-  lines.push("Hola Luxury Parfum,");
+  lines.push("Hola, quiero este perfume:");
   lines.push("");
-  lines.push("Quiero consultar por esta fragancia:");
-  lines.push("");
-
-  const titleParts = [ctx.brand, ctx.name].filter(Boolean).join(" — ");
-  lines.push(`Producto: ${titleParts}`);
-
+  lines.push(`Nombre: ${ctx.name}`);
+  if (ctx.brand) {
+    lines.push(`Marca: ${ctx.brand}`);
+  }
   if (ctx.presentation) {
     lines.push(`Presentación: ${ctx.presentation}`);
   }
   if (typeof ctx.price === "number") {
-    lines.push(`Precio${ctx.fromPrice ? " desde" : ""}: USD ${ctx.price.toFixed(0)}`);
+    lines.push(`Precio: ${ctx.fromPrice ? "desde " : ""}$${ctx.price.toFixed(0)} USD`);
   }
   if (ctx.url) {
     lines.push(`Link: ${ctx.url}`);
   }
-
   lines.push("");
-  lines.push("¿Tienen stock disponible? Quiero coordinar la compra. Gracias.");
+  lines.push("¿Está disponible?");
 
   return lines.join("\n");
 }
