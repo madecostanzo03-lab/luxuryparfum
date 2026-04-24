@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { WelcomePopup } from "@/components/WelcomePopup";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 import appCss from "../styles.css?url";
 
@@ -75,10 +76,11 @@ function RootComponent() {
   return (
     <>
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-16 sm:pt-20">
         <Outlet />
       </main>
       <Footer />
+      <FloatingWhatsApp />
       <WelcomePopup />
       <Toaster />
     </>

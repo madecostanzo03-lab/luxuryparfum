@@ -108,20 +108,40 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -0.01em;
   }
 
-  /* Etiquetas eyebrow / overline */
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
+  /* Tipografía de marca — la misma del logo Luxury Parfum.
+     Aplicar a botones, links de navegación y elementos de identidad. */
+  .brand-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    letter-spacing: 0.005em;
     font-weight: 400;
-    letter-spacing: 0.4em;
+  }
+
+  /* Etiquetas eyebrow — refinada, más editorial, menos genérica */
+  .eyebrow {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-gold);
+  }
+
+  /* Botón CTA premium — usa la serif del logo, no Work Sans plano */
+  .btn-luxury {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
   }
 
   .divider-gold {

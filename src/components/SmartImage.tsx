@@ -76,13 +76,17 @@ export function SmartImage({
       ) : (
         <>
           {/*
-            CAPA 1 — Fusión cromática:
-            La imagen base se renderiza con `mix-blend-mode: multiply`. Esto
-            multiplica los píxeles blancos/claros del fondo original del
-            proveedor contra el azul oscuro del "estudio", haciéndolos
-            DESAPARECER por completo: el blanco se vuelve azul oscuro, los
-            grises se funden, y solo el frasco (que tiene color real, vidrio
-            y líquido) se mantiene visible. Adiós a los recortes pegados.
+            CAPA ÚNICA — fusión sutil con el estudio:
+            En vez de un `multiply` agresivo (que hacía desaparecer frascos enteros
+            cuando la imagen del proveedor tenía mucho contraste), aplicamos:
+            - Una máscara radial muy suave que solo desvanece los bordes extremos
+              (donde están los recortes blancos típicos), dejando el frasco
+              completamente visible en el centro.
+            - Un realce de contraste/saturación leve para que el frasco "tenga
+              cuerpo" contra el fondo oscuro.
+            - Una sombra inferior para integrarlo con el estudio.
+            Resultado: el perfume SIEMPRE se ve, los bordes blancos se diluyen
+            con el azul, sin riesgo de quedarse sin imagen.
           */}
           <img
             src={src!}
@@ -95,51 +99,18 @@ export function SmartImage({
               preserveBg
                 ? undefined
                 : {
-                    mixBlendMode: "multiply",
                     WebkitMaskImage:
-                      "radial-gradient(ellipse 70% 78% at 50% 50%, #000 50%, transparent 88%)",
+                      "radial-gradient(ellipse 88% 92% at 50% 50%, #000 72%, transparent 100%)",
                     maskImage:
-                      "radial-gradient(ellipse 70% 78% at 50% 50%, #000 50%, transparent 88%)",
+                      "radial-gradient(ellipse 88% 92% at 50% 50%, #000 72%, transparent 100%)",
                     filter:
-                      "contrast(1.18) saturate(1.25) brightness(1.08)",
+                      "contrast(1.05) saturate(1.1) brightness(1.02) drop-shadow(0 8px 18px rgba(0,0,0,0.45))",
                   }
             }
             className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
               loaded ? "opacity-100" : "opacity-0"
             } ${imgClassName}`}
-            aria-hidden={!preserveBg}
           />
-
-          {/*
-            CAPA 2 — Realce del frasco:
-            La misma imagen, pero con `mix-blend-mode: screen` y muy baja
-            opacidad. Esto reintroduce los reflejos / brillos / detalles del
-            vidrio que el multiply oscureció en exceso, dándole vida al
-            frasco contra el fondo azul. Resultado: vidrio luminoso,
-            etiquetas legibles, sin caja blanca.
-            Solo cuando NO usamos preserveBg.
-          */}
-          {!preserveBg && (
-            <img
-              src={src!}
-              alt=""
-              loading={eager ? "eager" : "lazy"}
-              decoding="async"
-              aria-hidden
-              style={{
-                mixBlendMode: "screen",
-                opacity: 0.35,
-                WebkitMaskImage:
-                  "radial-gradient(ellipse 55% 65% at 50% 52%, #000 40%, transparent 80%)",
-                maskImage:
-                  "radial-gradient(ellipse 55% 65% at 50% 52%, #000 40%, transparent 80%)",
-                filter: "contrast(1.1) saturate(1.1) brightness(1.05)",
-              }}
-              className={`pointer-events-none absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
-                loaded ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          )}
         </>
       )}
 
