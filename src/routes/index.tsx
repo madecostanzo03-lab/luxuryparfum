@@ -14,10 +14,17 @@ import sensIntenso from "@/assets/sensacion-intenso.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Luxury Parfum — Fragancias de autor" },
-      { name: "description", content: "Cada fragancia define un momento. Descubre nuestra colección curada de perfumería de lujo." },
-      { property: "og:title", content: "Luxury Parfum — Fragancias de autor" },
-      { property: "og:description", content: "Cada fragancia define un momento. Descubre nuestra colección curada." },
+      { title: "Luxury Parfum — Te ayudamos a encontrar tu perfume ideal" },
+      {
+        name: "description",
+        content:
+          "Asesoramiento personalizado de perfumería de lujo. Te ayudamos a elegir el perfume que mejor habla de vos. Originales, curados y enviados a todo el país.",
+      },
+      { property: "og:title", content: "Luxury Parfum — Encontrá tu perfume ideal" },
+      {
+        property: "og:description",
+        content: "Asesoramiento premium por WhatsApp. Elegimos tu aroma, no solo tu perfume.",
+      },
     ],
   }),
   component: HomePage,
@@ -29,7 +36,6 @@ function HomePage() {
 
   useEffect(() => {
     (async () => {
-      // Selección del equipo + más elegidos (manuales, no por precio)
       const { data: flagged } = await supabase
         .from("perfumes")
         .select("*, brand:brands(*), variants:perfume_variants(*)")
@@ -39,7 +45,6 @@ function HomePage() {
         const all = (flagged as Perfume[]).filter(
           (p) => !p.brand || !HIDDEN_BRAND_SLUG_SET.has(p.brand.slug),
         );
-        // Variedad de precio — orden ascendente
         const byPriceAsc = (a: Perfume, b: Perfume) => a.price - b.price;
         setRecommended(all.filter((p) => p.is_recommended).sort(byPriceAsc).slice(0, 8));
         setBestsellers(all.filter((p) => p.is_bestseller).sort(byPriceAsc).slice(0, 8));
@@ -49,8 +54,8 @@ function HomePage() {
 
   return (
     <>
-      {/* HERO EDITORIAL */}
-      <section className="relative h-[100vh] min-h-[720px] w-full overflow-hidden -mt-20">
+      {/* HERO EDITORIAL — mobile-first */}
+      <section className="relative min-h-[88vh] sm:min-h-[100vh] sm:h-[100vh] w-full overflow-hidden -mt-16 sm:-mt-20">
         <img
           src={heroImg}
           alt="Frasco de perfume Luxury Parfum sobre superficie azul reflectante"
@@ -58,87 +63,107 @@ function HomePage() {
           width={1920}
           height={1280}
         />
-        {/* Overlays editoriales — profundidad y legibilidad */}
-        <div className="absolute inset-0 bg-noir/45" />
-        <div className="absolute inset-0 bg-gradient-to-b from-noir/70 via-transparent to-noir" />
-        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/20 to-noir/60" />
+        <div className="absolute inset-0 bg-noir/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-noir/75 via-transparent to-noir" />
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
-          <p className="eyebrow text-foreground/60 fade-in" style={{ animationDelay: "0.2s" }}>
-            Luxury Parfum
-          </p>
-
-          <div className="mt-12 w-16 h-px bg-accent/70 fade-in" style={{ animationDelay: "0.35s" }} />
-
-          <h1
-            className="mt-12 text-[2.75rem] md:text-7xl lg:text-[6rem] font-serif text-balance max-w-5xl leading-[1.0] tracking-tight fade-up"
-            style={{ animationDelay: "0.5s" }}
-          >
-            Elegí cómo querés que <em className="text-accent">te recuerden</em>
-          </h1>
-
-          <p
-            className="mt-12 max-w-md text-foreground/65 text-base md:text-lg leading-relaxed tracking-wide fade-up"
-            style={{ animationDelay: "0.8s" }}
-          >
-            Una colección curada de perfumería de autor — para que tu fragancia hable antes que vos.
+        <div className="relative z-10 h-full min-h-[88vh] sm:min-h-[100vh] flex flex-col items-center justify-center text-center px-5 sm:px-6 pt-20 pb-14">
+          <p className="eyebrow text-foreground/65 fade-in" style={{ animationDelay: "0.2s" }}>
+            Asesoría de perfumería premium
           </p>
 
           <div
-            className="mt-16 flex flex-col sm:flex-row items-center gap-6 fade-up"
+            className="mt-7 sm:mt-10 w-12 h-px bg-accent/70 fade-in"
+            style={{ animationDelay: "0.35s" }}
+          />
+
+          <h1
+            className="mt-7 sm:mt-10 text-[2.2rem] sm:text-6xl lg:text-[5.5rem] font-serif text-balance max-w-4xl leading-[1.05] tracking-tight fade-up"
+            style={{ animationDelay: "0.5s" }}
+          >
+            Te ayudamos a encontrar tu <em className="text-accent">perfume ideal</em>
+          </h1>
+
+          <p
+            className="mt-6 sm:mt-9 max-w-md text-foreground/70 text-base sm:text-lg leading-relaxed brand-serif fade-up"
+            style={{ animationDelay: "0.8s" }}
+          >
+            No vendemos perfumes — elegimos tu presencia. Asesoramiento personalizado para que tu fragancia hable antes que vos.
+          </p>
+
+          <div
+            className="mt-9 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-5 w-full max-w-sm sm:max-w-none sm:w-auto fade-up"
             style={{ animationDelay: "1.05s" }}
           >
-            <Link
-              to="/catalogo"
-              search={{ marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" }}
-              className="inline-flex items-center justify-center px-14 py-5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
-            >
-              Explorar catálogo
-            </Link>
-
             <a
               href={whatsappGeneralLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-10 py-5 eyebrow text-[0.65rem] text-foreground/60 hover:text-accent transition-colors duration-500"
-              aria-label="Hablar por WhatsApp"
+              className="btn-luxury inline-flex items-center justify-center px-10 sm:px-12 py-5 bg-accent text-accent-foreground hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
             >
-              Asesoramiento por WhatsApp →
+              Asesorame por WhatsApp
             </a>
+            <Link
+              to="/catalogo"
+              search={{ marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" }}
+              className="brand-serif text-[0.95rem] inline-flex items-center justify-center px-8 py-5 text-foreground/75 hover:text-accent transition-colors duration-500 underline-offset-4 hover:underline"
+            >
+              Ver el catálogo →
+            </Link>
           </div>
-        </div>
 
-        {/* Indicador scroll */}
-        <div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 fade-in"
-          style={{ animationDelay: "1.4s" }}
-        >
-          <div className="w-px h-14 bg-gradient-to-b from-transparent to-foreground/30" />
+          <p
+            className="mt-6 text-[0.7rem] sm:text-xs text-foreground/45 brand-serif fade-in"
+            style={{ animationDelay: "1.25s" }}
+          >
+            Respuesta rápida · Envíos a todo el país · Originales garantizados
+          </p>
         </div>
       </section>
 
-      {/* CTA INMEDIATO POST-HERO — captura visitantes indecisos */}
-      <section className="border-b border-border/40">
-        <div className="max-w-5xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          <div>
-            <p className="eyebrow text-[0.6rem] text-accent/80">Asesoramiento gratuito</p>
-            <p className="mt-2 font-serif text-xl md:text-2xl tracking-tight">
-              ¿No sabés cuál elegir? <span className="text-foreground/60">Te asesoramos gratis.</span>
-            </p>
+      {/* SECCIÓN ASESORÍA — la pieza central de conversión */}
+      <section className="relative border-y border-accent/15 bg-gradient-to-b from-deep-blue/30 to-noir/0">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-12 py-16 sm:py-24 text-center">
+          <p className="eyebrow text-accent/85">Asesoramiento personalizado</p>
+          <h2 className="mt-6 text-3xl sm:text-5xl lg:text-6xl font-serif leading-[1.05] tracking-tight text-balance">
+            ¿No sabés <em className="text-accent">cuál elegir</em>?
+          </h2>
+          <p className="mt-6 max-w-xl mx-auto text-foreground/70 brand-serif text-base sm:text-lg leading-relaxed">
+            Conversamos por WhatsApp y te recomendamos la fragancia perfecta — según tu estilo, tu momento y cómo querés que te recuerden.
+          </p>
+
+          {/* Criterios de asesoría — cards limpias, mobile friendly */}
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto text-left">
+            {[
+              { titulo: "Ocasión", desc: "Diaria, oficina, noche, evento" },
+              { titulo: "Estación", desc: "Primavera, verano, otoño, invierno" },
+              { titulo: "Estilo", desc: "Clásico, moderno, atrevido, minimal" },
+              { titulo: "Familia", desc: "Dulce, fresco, amaderado, intenso" },
+              { titulo: "Presencia", desc: "Elegante y sutil o impacto fuerte" },
+              { titulo: "Presupuesto", desc: "Joya accesible o icono de lujo" },
+            ].map((c) => (
+              <div
+                key={c.titulo}
+                className="border border-border/40 bg-background/40 backdrop-blur-sm p-4 sm:p-5 hover:border-accent/40 transition-colors duration-500"
+              >
+                <p className="brand-serif text-accent text-base sm:text-lg">{c.titulo}</p>
+                <p className="mt-1.5 text-[0.78rem] sm:text-sm text-foreground/55 leading-snug">
+                  {c.desc}
+                </p>
+              </div>
+            ))}
           </div>
+
           <a
             href={whatsappGeneralLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-col items-center"
+            className="btn-luxury mt-12 inline-flex items-center justify-center px-12 py-5 bg-accent text-accent-foreground hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
           >
-            <span className="px-10 py-4 bg-accent text-accent-foreground eyebrow text-[0.6rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500">
-              Escribinos ahora
-            </span>
-            <span className="mt-2 text-[0.6rem] text-foreground/40 tracking-wide">
-              Respuesta rápida por WhatsApp
-            </span>
+            Quiero que me asesoren
           </a>
+          <p className="mt-3 text-[0.7rem] text-foreground/45 brand-serif">
+            Te respondemos en minutos · Sin compromiso
+          </p>
         </div>
       </section>
 
@@ -146,21 +171,24 @@ function HomePage() {
       <Section
         eyebrow="Selección del equipo"
         title={<>Nuestras <em className="text-accent">favoritas</em></>}
-        subtitle="Una mezcla curada — desde joyas accesibles hasta clásicos atemporales — pensada para que encuentres tu match sin importar el presupuesto."
+        subtitle="Las que más recomendamos cuando alguien nos dice 'no sé por dónde empezar'. Variedad de precios, una para cada estilo."
         perfumes={recommended}
       />
 
       {/* EXPLORAR POR SENSACIONES */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-32">
-        <div className="text-center max-w-2xl mx-auto mb-20">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-20 sm:py-32">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <p className="eyebrow">Explorar por sensaciones</p>
-          <h2 className="mt-8 text-4xl md:text-5xl lg:text-6xl font-serif leading-[1.05] tracking-tight text-balance">
+          <h2 className="mt-6 sm:mt-8 text-3xl sm:text-5xl lg:text-6xl font-serif leading-[1.05] tracking-tight text-balance">
             Cada fragancia, <em className="text-accent">una emoción</em>
           </h2>
-          <span className="divider-gold mt-10" />
+          <span className="divider-gold mt-8" />
+          <p className="mt-6 brand-serif text-foreground/65 text-base sm:text-lg max-w-md mx-auto">
+            Elegí cómo querés sentirte hoy y te mostramos qué se ajusta.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {[
             { label: "Frescos", subtitle: "Cítricos & luminosos", img: sensFresco, tipo: "fresco" as const },
             { label: "Dulces", subtitle: "Florales & gourmand", img: sensDulce, tipo: "dulce" as const },
@@ -189,14 +217,14 @@ function HomePage() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/40 to-noir/10 group-hover:from-noir/95 transition-all duration-700" />
-              <div className="absolute inset-0 flex flex-col items-center justify-end text-center p-8 pb-12">
-                <p className="eyebrow text-[0.55rem] text-accent/80 opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-700">
+              <div className="absolute inset-0 flex flex-col items-center justify-end text-center p-5 sm:p-7 pb-8 sm:pb-10">
+                <p className="eyebrow text-[0.65rem] text-accent/85 hidden sm:block opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-700">
                   {s.subtitle}
                 </p>
-                <h3 className="mt-3 text-3xl md:text-4xl font-serif tracking-tight">
+                <h3 className="mt-2 text-xl sm:text-3xl lg:text-4xl font-serif tracking-tight">
                   {s.label}
                 </h3>
-                <span className="mt-5 eyebrow text-[0.5rem] text-foreground/50 group-hover:text-accent transition-colors duration-500">
+                <span className="mt-3 sm:mt-4 brand-serif text-[0.75rem] sm:text-sm text-foreground/60 group-hover:text-accent transition-colors duration-500">
                   Descubrir →
                 </span>
               </div>
@@ -207,30 +235,43 @@ function HomePage() {
 
       {/* MÁS ELEGIDOS */}
       <Section
-        eyebrow="Más elegidos"
-        title={<>Los <em className="text-accent">favoritos</em> de siempre</>}
-        subtitle="Iconos reconocibles que nunca fallan — los que más recomendamos a quienes no saben por dónde empezar."
+        eyebrow="Los más pedidos"
+        title={<>Los <em className="text-accent">favoritos</em> que no fallan</>}
+        subtitle="Iconos reconocibles — los que más gente elige cuando quiere ir a lo seguro."
         perfumes={bestsellers}
       />
 
       {/* CTA AL CATÁLOGO COMPLETO */}
-      <section className="max-w-4xl mx-auto px-6 py-24 text-center">
+      <section className="max-w-4xl mx-auto px-5 sm:px-6 py-20 sm:py-24 text-center">
         <p className="eyebrow">El catálogo completo</p>
-        <h2 className="mt-6 text-3xl md:text-4xl font-serif leading-tight text-balance">
+        <h2 className="mt-6 text-3xl sm:text-4xl font-serif leading-tight text-balance">
           Más de cien fragancias <em className="text-accent">esperándote</em>
         </h2>
-        <Link
-          to="/catalogo"
-          search={{ marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" }}
-          className="mt-10 inline-flex items-center justify-center px-12 py-4 border border-accent text-accent eyebrow text-[0.6rem] hover:bg-accent hover:text-accent-foreground transition-all duration-500"
-        >
-          Explorar catálogo
-        </Link>
+        <p className="mt-5 brand-serif text-foreground/65 max-w-md mx-auto">
+          Filtrá por marca, género, familia o precio — o pedinos una recomendación.
+        </p>
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            to="/catalogo"
+            search={{ marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" }}
+            className="btn-luxury inline-flex items-center justify-center px-12 py-4 border border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-500"
+          >
+            Ver catálogo
+          </Link>
+          <a
+            href={whatsappGeneralLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="brand-serif text-[0.95rem] text-foreground/70 hover:text-accent transition-colors"
+          >
+            o pedinos una recomendación →
+          </a>
+        </div>
       </section>
 
       {/* CONFIANZA — 3 PILARES */}
-      <section className="border-t border-border/40 my-16">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 py-20 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+      <section className="border-t border-border/40 my-12 sm:my-16">
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-12 py-16 sm:py-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
           {[
             {
               title: "Perfumes originales",
@@ -246,32 +287,34 @@ function HomePage() {
             },
           ].map((pillar) => (
             <div key={pillar.title} className="text-center md:text-left">
-              <span className="divider-gold mb-6 mx-auto md:mx-0" />
-              <h3 className="text-xl font-serif tracking-tight">{pillar.title}</h3>
-              <p className="mt-4 text-foreground/60 text-sm leading-relaxed">{pillar.text}</p>
+              <span className="divider-gold mb-5 mx-auto md:mx-0" />
+              <h3 className="text-xl sm:text-2xl font-serif tracking-tight">{pillar.title}</h3>
+              <p className="mt-4 text-foreground/65 brand-serif text-[0.95rem] leading-relaxed">
+                {pillar.text}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA FINAL — CIERRE EMOCIONAL */}
-      <section className="my-32 text-center max-w-3xl mx-auto px-6">
+      <section className="my-20 sm:my-32 text-center max-w-3xl mx-auto px-5 sm:px-6">
         <p className="eyebrow">Encontrá tu firma</p>
-        <h2 className="mt-8 text-4xl md:text-5xl font-serif leading-tight text-balance">
+        <h2 className="mt-7 text-3xl sm:text-5xl font-serif leading-tight text-balance">
           No es solo un perfume — es <em className="text-accent">cómo te van a recordar</em>.
         </h2>
-        <p className="mt-8 max-w-md mx-auto text-foreground/65 leading-relaxed">
-          Conversamos por WhatsApp y te recomendamos la fragancia perfecta para vos.
+        <p className="mt-7 max-w-md mx-auto text-foreground/70 brand-serif text-base sm:text-lg leading-relaxed">
+          Contanos cómo querés que te perciban y te recomendamos la fragancia perfecta.
         </p>
         <a
           href={whatsappGeneralLink()}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-12 inline-flex items-center justify-center px-12 py-5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
+          className="btn-luxury mt-10 inline-flex items-center justify-center px-12 py-5 bg-accent text-accent-foreground hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
         >
           Elegí el tuyo por WhatsApp
         </a>
-        <p className="mt-4 text-[0.65rem] text-foreground/40 tracking-wide eyebrow">
+        <p className="mt-3 text-[0.7rem] text-foreground/45 brand-serif">
           Te asesoramos en minutos · Respuesta rápida
         </p>
       </section>
@@ -292,13 +335,13 @@ function Section({
 }) {
   if (perfumes.length === 0) return null;
   return (
-    <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
-      <div className="text-center max-w-2xl mx-auto mb-16">
+    <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 py-16 sm:py-20">
+      <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
         <p className="eyebrow">{eyebrow}</p>
-        <h2 className="mt-6 text-4xl md:text-5xl font-serif leading-tight text-balance">{title}</h2>
-        <p className="mt-6 text-foreground/60 text-base">{subtitle}</p>
+        <h2 className="mt-5 text-3xl sm:text-5xl font-serif leading-tight text-balance">{title}</h2>
+        <p className="mt-5 text-foreground/65 brand-serif text-base sm:text-lg">{subtitle}</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-10 sm:gap-y-14">
         {perfumes.map((p) => (
           <PerfumeCard key={p.id} perfume={p} />
         ))}
