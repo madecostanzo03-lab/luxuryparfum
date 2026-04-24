@@ -11,11 +11,14 @@ export interface WhatsappPerfumeContext {
 }
 
 /** Construye una URL pública al producto dentro del catálogo. */
-export function perfumePublicUrl(perfumeId: string): string {
+export function perfumePublicUrl(perfumeId: string, variantId?: string | null): string {
+  const params = new URLSearchParams({ p: perfumeId });
+  if (variantId) params.set("v", variantId);
+  const qs = params.toString();
   if (typeof window !== "undefined") {
-    return `${window.location.origin}/catalogo?p=${perfumeId}`;
+    return `${window.location.origin}/catalogo?${qs}`;
   }
-  return `/catalogo?p=${perfumeId}`;
+  return `/catalogo?${qs}`;
 }
 
 function buildMessage(ctx: WhatsappPerfumeContext): string {
