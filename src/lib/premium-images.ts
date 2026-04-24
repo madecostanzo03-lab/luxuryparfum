@@ -6,6 +6,8 @@
 import burberryGoddess from "@/assets/perfumes-premium/burberry-goddess.webp";
 import ckOne from "@/assets/perfumes-premium/ck-one.webp";
 import ch212VipBlack from "@/assets/perfumes-premium/ch-212-vip-black.webp";
+import ch212VipRose from "@/assets/perfumes-premium/ch-212-vip-rose.webp";
+import ch212Men from "@/assets/perfumes-premium/ch-212-men.webp";
 import chBadBoyLeParfum from "@/assets/perfumes-premium/ch-bad-boy-le-parfum.webp";
 import chGoodGirlBlush from "@/assets/perfumes-premium/ch-good-girl-blush.webp";
 import chGoodGirlVery from "@/assets/perfumes-premium/ch-good-girl-very.webp";
@@ -18,6 +20,8 @@ import jpgScandalLeParfum from "@/assets/perfumes-premium/jpg-scandal-le-parfum.
 import lattafaKhamrah from "@/assets/perfumes-premium/lattafa-khamrah.webp";
 import lattafaYaraTous from "@/assets/perfumes-premium/lattafa-yara-tous.webp";
 import paco1Million from "@/assets/perfumes-premium/paco-1-million.webp";
+import pacoPhantomIntense from "@/assets/perfumes-premium/paco-phantom-intense.webp";
+import pacoPhantomElixir from "@/assets/perfumes-premium/paco-phantom-elixir.webp";
 
 /**
  * Mapeo por UUID de perfume → imagen editorial premium local.
@@ -40,6 +44,12 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "207229fa-b4bb-4e3d-9dce-6f326f9ca22f": lattafaKhamrah, // Lattafa Khamrah
   "af3ac6c9-ce0a-443b-91e7-97deca7cf520": lattafaYaraTous, // Lattafa Yara Tous
   "ec88cae0-98e3-4c0c-bfba-6d0367c3c549": paco1Million, // Paco 1 Million
+  "97179d3c-95fd-4805-a634-ad3fbcd8dfa9": ch212Men, // 212 Men NYC
+  "5fce3f5a-60b5-4bdf-a36c-9b456bc0e841": ch212VipRose, // 212 VIP Rose
+  "989a5e66-3d52-4179-9cf7-7b9a7e303892": pacoPhantomIntense, // Phantom Intense 100ml
+  "98b3be5e-bfb3-406d-8b33-200bc90e3d0f": pacoPhantomIntense, // Phantom Intense 50ml
+  "1e7759ee-8fab-44a1-adda-410f3233ef55": pacoPhantomElixir, // Phantom Parfum
+  "471efe8d-71fd-452d-bb9b-49a1eb156445": pacoPhantomElixir, // Phantom Elixir Parf Intense
 };
 
 /**
