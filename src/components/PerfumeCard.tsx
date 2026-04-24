@@ -37,14 +37,14 @@ export function PerfumeCard({
           type="button"
           onClick={() => handleOpen(true)}
           aria-label={`Ver detalles de ${displayName}`}
-          className="relative aspect-[3/4] overflow-hidden bg-card block w-full text-left"
+          className="relative aspect-[4/5] overflow-hidden bg-card block w-full text-left"
         >
           {perfume.image_url ? (
             <img
               src={perfume.image_url}
               alt={`${displayName}${perfume.brand ? ` — ${perfume.brand.name}` : ""}`}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
+              className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary to-card">
@@ -63,19 +63,19 @@ export function PerfumeCard({
               Más elegido
             </span>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-noir/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-t from-noir/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         </button>
 
         <div className="pt-7 flex flex-col items-center text-center">
           {perfume.brand && (
             <p className="eyebrow text-[0.55rem] text-foreground/40">{perfume.brand.name}</p>
           )}
-          <h3 className="mt-3 text-xl md:text-2xl font-serif leading-tight tracking-tight">
+          <h3 className="mt-3 text-lg md:text-xl font-serif leading-tight tracking-tight">
             {displayName}
           </h3>
-          <span className="mt-4 text-sm text-foreground/60 tracking-wide">
+          <span className="mt-3 text-sm text-foreground/70 tracking-wide">
             {variantsCount > 1 ? "Desde " : ""}
-            <span className="text-foreground/90">USD {perfume.price.toFixed(0)}</span>
+            <span className="text-foreground">USD {perfume.price.toFixed(0)}</span>
           </span>
           <a
             href={whatsappLink({
@@ -88,9 +88,9 @@ export function PerfumeCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="mt-6 eyebrow text-[0.55rem] text-accent/80 hover:text-accent transition-colors duration-500"
+            className="mt-5 inline-flex items-center justify-center px-6 py-3 border border-accent/60 text-accent eyebrow text-[0.55rem] hover:bg-accent hover:text-accent-foreground transition-all duration-500 w-full max-w-[220px]"
           >
-            Consultar →
+            Consultar por WhatsApp
           </a>
         </div>
       </article>
