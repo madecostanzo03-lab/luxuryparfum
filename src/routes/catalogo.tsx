@@ -6,6 +6,7 @@ import { PerfumeCard } from "@/components/PerfumeCard";
 import { Search, Loader2 } from "lucide-react";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
+import { HIDDEN_BRAND_SLUGS, HIDDEN_BRAND_SLUG_SET } from "@/lib/hidden-brands";
 
 const searchSchema = z.object({
   marca: fallback(z.string(), "").default(""),
@@ -78,10 +79,14 @@ function CatalogoPage() {
   const [filtering, setFiltering] = useState(false);
 
   // Cargar marcas una sola vez (no dependen de filtros)
+  // Excluimos marcas ocultas del listado del filtro
   useEffect(() => {
     (async () => {
       const { data } = await supabase.from("brands").select("*").order("name");
-      setBrands((data as Brand[]) ?? []);
+      const visible = ((data as Brand[]) ?? []).filter(
+        (b) => !HIDDEN_BRAND_SLUG_SET.has(b.slug),
+      );
+      setBrands(visible);
     })();
   }, []);
 
@@ -98,11 +103,28 @@ function CatalogoPage() {
       if (search.marca && brands.length === 0) return;
 
       setFiltering(true);
+      // Resolver IDs de marcas ocultas para excluirlas del query
+      const hiddenBrandIds = brands.length
+        ? [] // brands ya viene filtrado; obtenemos los ocultos por separado
+        : [];
+      // Necesitamos los IDs de las marcas ocultas — las consultamos directo
+      const { data: hiddenBrands } = await supabase
+        .from("brands")
+        .select("id")
+        .in("slug", HIDDEN_BRAND_SLUGS as unknown as string[]);
+      const hiddenIds = (hiddenBrands ?? []).map((b) => b.id);
+
       let query = supabase
         .from("perfumes")
         .select("*, brand:brands(*), variants:perfume_variants(*)")
         .eq("in_stock", true)
         .lte("price", search.max);
+
+      if (hiddenIds.length > 0) {
+        query = query.not("brand_id", "in", `(${hiddenIds.join(",")})`);
+      }
+      // referencia para evitar warning lint
+      void hiddenBrandIds;
 
       if (search.genero) query = query.eq("gender", search.genero);
       if (search.tipo) query = query.eq("fragrance_type", search.tipo);
