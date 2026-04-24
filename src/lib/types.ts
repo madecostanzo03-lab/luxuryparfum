@@ -10,11 +10,21 @@ export interface Brand {
   description: string | null;
 }
 
+export interface PerfumeVariant {
+  id: string;
+  perfume_id: string;
+  concentration: Concentration | null;
+  size_ml: number | null;
+  price: number;
+  in_stock: boolean;
+}
+
 export interface Perfume {
   id: string;
   name: string;
+  base_name: string | null;
   brand_id: string;
-  price: number;
+  price: number; // minimum variant price ("desde")
   gender: Gender;
   fragrance_type: FragranceType | null;
   concentration: Concentration | null;
@@ -27,4 +37,5 @@ export interface Perfume {
   is_bestseller: boolean;
   promotion_text: string | null;
   brand?: Brand;
+  variants?: PerfumeVariant[];
 }

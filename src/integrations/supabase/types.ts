@@ -59,8 +59,53 @@ export type Database = {
         }
         Relationships: []
       }
+      perfume_variants: {
+        Row: {
+          concentration:
+            | Database["public"]["Enums"]["concentration_type"]
+            | null
+          created_at: string
+          id: string
+          in_stock: boolean
+          perfume_id: string
+          price: number
+          size_ml: number | null
+        }
+        Insert: {
+          concentration?:
+            | Database["public"]["Enums"]["concentration_type"]
+            | null
+          created_at?: string
+          id?: string
+          in_stock?: boolean
+          perfume_id: string
+          price: number
+          size_ml?: number | null
+        }
+        Update: {
+          concentration?:
+            | Database["public"]["Enums"]["concentration_type"]
+            | null
+          created_at?: string
+          id?: string
+          in_stock?: boolean
+          perfume_id?: string
+          price?: number
+          size_ml?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perfume_variants_perfume_id_fkey"
+            columns: ["perfume_id"]
+            isOneToOne: false
+            referencedRelation: "perfumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       perfumes: {
         Row: {
+          base_name: string | null
           brand_id: string
           concentration:
             | Database["public"]["Enums"]["concentration_type"]
@@ -82,6 +127,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          base_name?: string | null
           brand_id: string
           concentration?:
             | Database["public"]["Enums"]["concentration_type"]
@@ -103,6 +149,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          base_name?: string | null
           brand_id?: string
           concentration?:
             | Database["public"]["Enums"]["concentration_type"]
