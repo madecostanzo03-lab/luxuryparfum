@@ -8,6 +8,7 @@ export interface Brand {
   slug: string;
   logo_url: string | null;
   description: string | null;
+  brand_tier?: number;
 }
 
 export interface PerfumeVariant {

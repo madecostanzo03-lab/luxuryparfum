@@ -79,10 +79,21 @@ function CatalogoPage() {
         supabase
           .from("perfumes")
           .select("*, brand:brands(*), variants:perfume_variants(*)")
-          .order("created_at", { ascending: false }),
+          .order("price", { ascending: false }),
         supabase.from("brands").select("*").order("name"),
       ]);
-      setPerfumes((ps as Perfume[]) ?? []);
+      const list = (ps as Perfume[]) ?? [];
+      // Sort: brand_tier ASC (premium first), then image presence, then price DESC
+      list.sort((a, b) => {
+        const ta = a.brand?.brand_tier ?? 99;
+        const tb = b.brand?.brand_tier ?? 99;
+        if (ta !== tb) return ta - tb;
+        const ia = a.image_url ? 0 : 1;
+        const ib = b.image_url ? 0 : 1;
+        if (ia !== ib) return ia - ib;
+        return b.price - a.price;
+      });
+      setPerfumes(list);
       setBrands((bs as Brand[]) ?? []);
       setLoading(false);
     })();
