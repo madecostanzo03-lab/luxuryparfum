@@ -103,11 +103,8 @@ function CatalogoPage() {
       if (search.marca && brands.length === 0) return;
 
       setFiltering(true);
-      // Resolver IDs de marcas ocultas para excluirlas del query
-      const hiddenBrandIds = brands.length
-        ? [] // brands ya viene filtrado; obtenemos los ocultos por separado
-        : [];
-      // Necesitamos los IDs de las marcas ocultas — las consultamos directo
+
+      // Resolver IDs de marcas ocultas para excluirlas a nivel query
       const { data: hiddenBrands } = await supabase
         .from("brands")
         .select("id")
@@ -123,8 +120,6 @@ function CatalogoPage() {
       if (hiddenIds.length > 0) {
         query = query.not("brand_id", "in", `(${hiddenIds.join(",")})`);
       }
-      // referencia para evitar warning lint
-      void hiddenBrandIds;
 
       if (search.genero) query = query.eq("gender", search.genero);
       if (search.tipo) query = query.eq("fragrance_type", search.tipo);
