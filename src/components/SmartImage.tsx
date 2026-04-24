@@ -35,9 +35,25 @@ export function SmartImage({
       )}
 
       {showFallback ? (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary to-card">
-          <div className="font-serif italic text-7xl md:text-8xl text-accent/25 select-none">
-            {(fallbackInitial ?? alt.charAt(0) ?? "·").toUpperCase()}
+        // Placeholder editorial premium: fondo oscuro azul-noir + filete dorado + inicial serif
+        <div className="w-full h-full relative flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 35%, oklch(0.22 0.04 250) 0%, oklch(0.13 0.03 250) 55%, oklch(0.08 0.02 250) 100%)",
+            }}
+          />
+          {/* Filetes dorados sutiles */}
+          <span className="absolute top-6 left-6 right-6 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+          <span className="absolute bottom-6 left-6 right-6 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+          <div className="relative flex flex-col items-center">
+            <div className="font-serif italic text-6xl md:text-7xl text-accent/40 select-none leading-none">
+              {(fallbackInitial ?? alt.charAt(0) ?? "·").toUpperCase()}
+            </div>
+            <span className="mt-4 eyebrow text-[0.5rem] text-foreground/30">
+              Luxury Parfum
+            </span>
           </div>
         </div>
       ) : (
