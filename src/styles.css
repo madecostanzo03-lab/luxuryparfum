@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Italiana&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -35,8 +35,8 @@
   --color-deep-blue: var(--deep-blue);
   --color-noir: var(--noir);
 
-  --font-serif: "Italiana", "Times New Roman", serif;
-  --font-display: "Italiana", "Times New Roman", serif;
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
   --font-italic: "Instrument Serif", "Times New Roman", serif;
   --font-sans: "Work Sans", system-ui, sans-serif;
 }
