@@ -22,27 +22,34 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [recommended, setRecommended] = useState<Perfume[]>([]);
   const [bestsellers, setBestsellers] = useState<Perfume[]>([]);
+  const [premium, setPremium] = useState<Perfume[]>([]);
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase
+      // Recomendados + más elegidos
+      const { data: flagged } = await supabase
         .from("perfumes")
         .select("*, brand:brands(*), variants:perfume_variants(*)")
         .or("is_recommended.eq.true,is_bestseller.eq.true");
-      if (data) {
-        const sortByTier = (a: Perfume, b: Perfume) => {
-          const ta = a.brand?.brand_tier ?? 99;
-          const tb = b.brand?.brand_tier ?? 99;
-          if (ta !== tb) return ta - tb;
-          const ia = a.image_url ? 0 : 1;
-          const ib = b.image_url ? 0 : 1;
-          if (ia !== ib) return ia - ib;
-          return b.price - a.price;
-        };
-        const all = data as Perfume[];
-        setRecommended(all.filter((p) => p.is_recommended).sort(sortByTier).slice(0, 4));
-        setBestsellers(all.filter((p) => p.is_bestseller).sort(sortByTier).slice(0, 4));
+
+      if (flagged) {
+        const all = flagged as Perfume[];
+        // Ordenamos por precio ASC para mostrar variedad (no priorizar caros)
+        const byPriceAsc = (a: Perfume, b: Perfume) => a.price - b.price;
+        setRecommended(all.filter((p) => p.is_recommended).sort(byPriceAsc).slice(0, 8));
+        setBestsellers(all.filter((p) => p.is_bestseller).sort(byPriceAsc).slice(0, 8));
       }
+
+      // Selección premium: brand_tier 1 (alta gama) - sección separada
+      const { data: premiumData } = await supabase
+        .from("perfumes")
+        .select("*, brand:brands!inner(*), variants:perfume_variants(*)")
+        .eq("in_stock", true)
+        .eq("brand.brand_tier", 1)
+        .order("price", { ascending: false })
+        .limit(8);
+
+      if (premiumData) setPremium(premiumData as Perfume[]);
     })();
   }, []);
 
@@ -168,11 +175,11 @@ function HomePage() {
         </div>
       </section>
 
-      {/* RECOMENDADOS */}
+      {/* RECOMENDADOS DEL EQUIPO */}
       <Section
-        eyebrow="Recomendados"
+        eyebrow="Recomendados del equipo"
         title={<>Selección <em className="text-accent">curada</em></>}
-        subtitle="Las fragancias que nuestro equipo elige esta temporada."
+        subtitle="Una mezcla equilibrada — desde joyas accesibles hasta clásicos atemporales — pensada para que encuentres tu match sin importar el presupuesto."
         perfumes={recommended}
       />
 
@@ -210,12 +217,20 @@ function HomePage() {
         </div>
       </section>
 
-      {/* MÁS VENDIDOS */}
+      {/* MÁS ELEGIDOS */}
       <Section
-        eyebrow="Más vendidos"
-        title={<>Las <em className="text-accent">favoritas</em> de nuestra casa</>}
-        subtitle="Las elecciones que más han conquistado a nuestra comunidad."
+        eyebrow="Más elegidos"
+        title={<>Las <em className="text-accent">favoritas</em> de siempre</>}
+        subtitle="Iconos reconocibles que nunca fallan — los que más recomendamos a quienes no saben por dónde empezar."
         perfumes={bestsellers}
+      />
+
+      {/* SELECCIÓN PREMIUM */}
+      <Section
+        eyebrow="Selección premium"
+        title={<>Para los que buscan <em className="text-accent">alta gama</em></>}
+        subtitle="Casas de perfumería de autor — Xerjoff, Parfums de Marly, Creed, Tom Ford — para quien ya sabe lo que quiere."
+        perfumes={premium}
       />
 
       {/* CTA FINAL */}
