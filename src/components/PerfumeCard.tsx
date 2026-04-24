@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Perfume } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { PerfumeModal } from "./PerfumeModal";
-import { MessageCircle } from "lucide-react";
+
 
 export function PerfumeCard({
   perfume,
