@@ -85,11 +85,16 @@ export function SmartImage({
             preserveBg
               ? undefined
               : {
-                  // Multiply funde fondos blancos del proveedor con nuestro
-                  // estudio oscuro azul-noir y deja el frasco recortado de forma
-                  // natural. Funciona muy bien para fotos tipo packshot blanco.
-                  mixBlendMode: "multiply",
-                  filter: "contrast(1.05) saturate(1.08) brightness(1.02)",
+                  // Máscara radial: difumina los bordes de la imagen original
+                  // hacia el fondo oscuro, fundiendo cualquier fondo (blanco,
+                  // gris, mockup) con nuestro "estudio" premium. El frasco,
+                  // al estar centrado, queda perfectamente visible.
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse 75% 80% at 50% 50%, #000 55%, transparent 92%)",
+                  maskImage:
+                    "radial-gradient(ellipse 75% 80% at 50% 50%, #000 55%, transparent 92%)",
+                  filter:
+                    "contrast(1.06) saturate(1.08) brightness(1.02) drop-shadow(0 12px 24px rgba(0,0,0,0.45))",
                 }
           }
           className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
