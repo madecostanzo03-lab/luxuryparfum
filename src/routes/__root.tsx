@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { WelcomePopup } from "@/components/WelcomePopup";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 import appCss from "../styles.css?url";
 
