@@ -117,6 +117,31 @@ function HomePage() {
         </div>
       </section>
 
+      {/* CTA INMEDIATO POST-HERO — captura visitantes indecisos */}
+      <section className="border-b border-border/40">
+        <div className="max-w-5xl mx-auto px-6 lg:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div>
+            <p className="eyebrow text-[0.6rem] text-accent/80">Asesoramiento gratuito</p>
+            <p className="mt-2 font-serif text-xl md:text-2xl tracking-tight">
+              ¿No sabés cuál elegir? <span className="text-foreground/60">Te asesoramos gratis.</span>
+            </p>
+          </div>
+          <a
+            href={whatsappGeneralLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-col items-center"
+          >
+            <span className="px-10 py-4 bg-accent text-accent-foreground eyebrow text-[0.6rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500">
+              Escribinos ahora
+            </span>
+            <span className="mt-2 text-[0.6rem] text-foreground/40 tracking-wide">
+              Respuesta rápida por WhatsApp
+            </span>
+          </a>
+        </div>
+      </section>
+
       {/* SELECCIÓN DEL EQUIPO */}
       <Section
         eyebrow="Selección del equipo"
@@ -229,11 +254,11 @@ function HomePage() {
         </div>
       </section>
 
-      {/* CTA FINAL — ASESORAMIENTO */}
+      {/* CTA FINAL — CIERRE EMOCIONAL */}
       <section className="my-32 text-center max-w-3xl mx-auto px-6">
-        <p className="eyebrow">Asesoramiento personalizado</p>
+        <p className="eyebrow">Encontrá tu firma</p>
         <h2 className="mt-8 text-4xl md:text-5xl font-serif leading-tight text-balance">
-          ¿No sabés por dónde <em className="text-accent">empezar</em>?
+          No es solo un perfume — es <em className="text-accent">cómo te van a recordar</em>.
         </h2>
         <p className="mt-8 max-w-md mx-auto text-foreground/65 leading-relaxed">
           Conversamos por WhatsApp y te recomendamos la fragancia perfecta para vos.
@@ -244,8 +269,11 @@ function HomePage() {
           rel="noopener noreferrer"
           className="mt-12 inline-flex items-center justify-center px-12 py-5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
         >
-          Hablar por WhatsApp
+          Elegí el tuyo por WhatsApp
         </a>
+        <p className="mt-4 text-[0.65rem] text-foreground/40 tracking-wide eyebrow">
+          Te asesoramos en minutos · Respuesta rápida
+        </p>
       </section>
     </>
   );
