@@ -113,7 +113,7 @@ function CatalogoPage() {
         query = query.ilike("name", `%${search.q}%`);
       }
 
-      const { data, error } = await query.order("price", { ascending: false });
+      const { data, error } = await query.order("price", { ascending: true });
       if (cancelled) return;
 
       if (error) {
@@ -125,15 +125,16 @@ function CatalogoPage() {
         if (search.destacado === "premium") {
           list = list.filter((p) => (p.brand?.brand_tier ?? 99) === 1);
         }
-        // Orden final: brand_tier ASC, imagen primero, precio DESC
+        // Orden final: destacados primero (recomendado/bestseller), luego con imagen,
+        // y dentro de cada grupo orden equilibrado por precio ascendente (sin sesgo a premium).
         list.sort((a, b) => {
-          const ta = a.brand?.brand_tier ?? 99;
-          const tb = b.brand?.brand_tier ?? 99;
-          if (ta !== tb) return ta - tb;
+          const fa = a.is_recommended || a.is_bestseller ? 0 : 1;
+          const fb = b.is_recommended || b.is_bestseller ? 0 : 1;
+          if (fa !== fb) return fa - fb;
           const ia = a.image_url ? 0 : 1;
           const ib = b.image_url ? 0 : 1;
           if (ia !== ib) return ia - ib;
-          return b.price - a.price;
+          return a.price - b.price;
         });
         setPerfumes(list);
       }
