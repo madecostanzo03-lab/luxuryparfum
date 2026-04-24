@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { Perfume, PerfumeVariant } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
@@ -8,10 +8,14 @@ export function PerfumeModal({
   perfume,
   open,
   onClose,
+  initialVariantId,
+  onVariantChange,
 }: {
   perfume: Perfume;
   open: boolean;
   onClose: () => void;
+  initialVariantId?: string | null;
+  onVariantChange?: (variantId: string | null) => void;
 }) {
   // Sort variants: by concentration order, then by size
   const sortedVariants = useMemo(() => {
@@ -24,9 +28,27 @@ export function PerfumeModal({
     });
   }, [perfume.variants]);
 
-  const [selectedId, setSelectedId] = useState<string | null>(
-    sortedVariants[0]?.id ?? null
-  );
+  const resolveInitial = () => {
+    if (initialVariantId && sortedVariants.some((v) => v.id === initialVariantId)) {
+      return initialVariantId;
+    }
+    return sortedVariants[0]?.id ?? null;
+  };
+
+  const [selectedId, setSelectedId] = useState<string | null>(resolveInitial);
+
+  // Sync when reopening with a different initial variant (e.g. coming from URL)
+  useEffect(() => {
+    if (open) {
+      setSelectedId(resolveInitial());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, initialVariantId, perfume.id]);
+
+  const handleSelect = (id: string) => {
+    setSelectedId(id);
+    onVariantChange?.(id);
+  };
 
   const selected: PerfumeVariant | null =
     sortedVariants.find((v) => v.id === selectedId) ?? sortedVariants[0] ?? null;
@@ -91,7 +113,7 @@ export function PerfumeModal({
                     return (
                       <button
                         key={v.id}
-                        onClick={() => setSelectedId(v.id)}
+                        onClick={() => handleSelect(v.id)}
                         className={`eyebrow text-[0.65rem] px-3 py-2 border transition-all ${
                           active
                             ? "border-accent text-accent bg-accent/5"
@@ -120,7 +142,7 @@ export function PerfumeModal({
                 presentation: selected ? variantLabel(selected) || null : null,
                 price: selected?.price ?? perfume.price,
                 fromPrice: !selected && (perfume.variants?.length ?? 0) > 1,
-                url: perfumePublicUrl(perfume.id),
+                url: perfumePublicUrl(perfume.id, selected?.id ?? null),
               })}
               target="_blank"
               rel="noopener noreferrer"

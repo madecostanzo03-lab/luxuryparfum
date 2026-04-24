@@ -14,6 +14,7 @@ const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
   max: fallback(z.number(), 500).default(500),
   p: fallback(z.string(), "").default(""),
+  v: fallback(z.string(), "").default(""),
 });
 
 export const Route = createFileRoute("/catalogo")({
@@ -205,7 +206,7 @@ function CatalogoPage() {
 
           {(search.marca || search.genero || search.tipo || search.q || search.max < 500) && (
             <button
-              onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "" } })}
+              onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
               className="eyebrow text-foreground/50 hover:text-accent transition-colors"
             >
               Limpiar filtros
@@ -229,7 +230,9 @@ function CatalogoPage() {
                   key={p.id}
                   perfume={p}
                   openInitial={search.p === p.id}
-                  onOpenChange={(o) => update({ p: o ? p.id : "" })}
+                  initialVariantId={search.p === p.id ? search.v || null : null}
+                  onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
+                  onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
                 />
               ))}
             </div>

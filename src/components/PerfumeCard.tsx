@@ -8,10 +8,14 @@ export function PerfumeCard({
   perfume,
   openInitial = false,
   onOpenChange,
+  initialVariantId = null,
+  onVariantChange,
 }: {
   perfume: Perfume;
   openInitial?: boolean;
   onOpenChange?: (open: boolean) => void;
+  initialVariantId?: string | null;
+  onVariantChange?: (variantId: string | null) => void;
 }) {
   const [open, setOpen] = useState(openInitial);
   const displayName = perfume.base_name ?? perfume.name;
