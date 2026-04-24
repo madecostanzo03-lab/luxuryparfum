@@ -155,34 +155,29 @@ function CatalogoPage() {
 
   const resetSearch = { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" } as const;
 
-  const shortcuts: { label: string; emoji: string; patch: Partial<typeof search>; isActive: boolean }[] = [
+  const shortcuts: { label: string; patch: Partial<typeof search>; isActive: boolean }[] = [
     {
-      label: "Más vendidos",
-      emoji: "🔥",
+      label: "Más elegidos",
       patch: { ...resetSearch, destacado: "bestseller" },
       isActive: search.destacado === "bestseller",
     },
     {
-      label: "Perfumes premium",
-      emoji: "💎",
+      label: "Premium",
       patch: { ...resetSearch, destacado: "premium" },
       isActive: search.destacado === "premium",
     },
     {
       label: "Para la noche",
-      emoji: "🌙",
       patch: { ...resetSearch, tipo: "intenso" },
       isActive: search.tipo === "intenso" && !search.destacado,
     },
     {
       label: "Frescos para el día",
-      emoji: "☀️",
       patch: { ...resetSearch, tipo: "fresco" },
       isActive: search.tipo === "fresco" && !search.destacado,
     },
     {
-      label: "Perfumes dulces",
-      emoji: "💖",
+      label: "Notas dulces",
       patch: { ...resetSearch, tipo: "dulce" },
       isActive: search.tipo === "dulce" && !search.destacado,
     },
@@ -201,21 +196,20 @@ function CatalogoPage() {
       </header>
 
       {/* Atajos visuales */}
-      <section className="mb-10">
-        <p className="eyebrow text-center mb-6 text-foreground/60">¿Qué estás buscando?</p>
-        <div className="flex flex-wrap justify-center gap-3">
+      <section className="mb-12">
+        <p className="eyebrow text-center mb-5 text-foreground/40">¿Qué estás buscando?</p>
+        <div className="flex flex-wrap justify-center gap-2">
           {shortcuts.map((s) => (
             <button
               key={s.label}
               onClick={() => navigate({ search: (prev: typeof search) => ({ ...prev, ...s.patch }) })}
-              className={`group inline-flex items-center gap-2.5 px-5 py-3 border text-sm transition-all ${
+              className={`eyebrow text-[0.65rem] px-4 py-2.5 border transition-colors ${
                 s.isActive
-                  ? "border-accent bg-accent/10 text-accent"
-                  : "border-border bg-input/20 text-foreground/80 hover:border-accent/60 hover:text-foreground"
+                  ? "border-accent text-accent"
+                  : "border-border/60 text-foreground/60 hover:border-foreground/40 hover:text-foreground"
               }`}
             >
-              <span className="text-lg leading-none">{s.emoji}</span>
-              <span className="font-medium tracking-wide">{s.label}</span>
+              {s.label}
             </button>
           ))}
         </div>
