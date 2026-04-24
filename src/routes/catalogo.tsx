@@ -1,9 +1,9 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Brand, FragranceType, Gender, Perfume } from "@/lib/types";
 import { PerfumeCard } from "@/components/PerfumeCard";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 
@@ -74,51 +74,78 @@ function CatalogoPage() {
   const [perfumes, setPerfumes] = useState<Perfume[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filtering, setFiltering] = useState(false);
 
+  // Cargar marcas una sola vez (no dependen de filtros)
   useEffect(() => {
     (async () => {
-      const [{ data: ps }, { data: bs }] = await Promise.all([
-        supabase
-          .from("perfumes")
-          .select("*, brand:brands(*), variants:perfume_variants(*)")
-          .order("price", { ascending: false }),
-        supabase.from("brands").select("*").order("name"),
-      ]);
-      const list = (ps as Perfume[]) ?? [];
-      // Sort: brand_tier ASC (premium first), then image presence, then price DESC
-      list.sort((a, b) => {
-        const ta = a.brand?.brand_tier ?? 99;
-        const tb = b.brand?.brand_tier ?? 99;
-        if (ta !== tb) return ta - tb;
-        const ia = a.image_url ? 0 : 1;
-        const ib = b.image_url ? 0 : 1;
-        if (ia !== ib) return ia - ib;
-        return b.price - a.price;
-      });
-      setPerfumes(list);
-      setBrands((bs as Brand[]) ?? []);
-      setLoading(false);
+      const { data } = await supabase.from("brands").select("*").order("name");
+      setBrands((data as Brand[]) ?? []);
     })();
   }, []);
 
-  const filtered = useMemo(() => {
-    return perfumes.filter((p) => {
-      if (search.marca && p.brand?.slug !== search.marca) return false;
-      if (search.genero && p.gender !== search.genero) return false;
-      if (search.tipo && p.fragrance_type !== search.tipo) return false;
-      if (p.price > search.max) return false;
+  // Resolver brand_id desde slug para filtrar en Supabase
+  const selectedBrandId = search.marca
+    ? brands.find((b) => b.slug === search.marca)?.id
+    : undefined;
+
+  // Refetch cuando cambian los filtros server-side
+  useEffect(() => {
+    let cancelled = false;
+    const run = async () => {
+      // Si filtra por marca pero todavía no llegaron las brands, esperar
+      if (search.marca && brands.length === 0) return;
+
+      setFiltering(true);
+      let query = supabase
+        .from("perfumes")
+        .select("*, brand:brands(*), variants:perfume_variants(*)")
+        .eq("in_stock", true)
+        .lte("price", search.max);
+
+      if (search.genero) query = query.eq("gender", search.genero);
+      if (search.tipo) query = query.eq("fragrance_type", search.tipo);
+      if (selectedBrandId) query = query.eq("brand_id", selectedBrandId);
       if (search.q) {
-        const q = search.q.toLowerCase();
-        const haystack = `${p.name} ${p.brand?.name ?? ""}`.toLowerCase();
-        if (!haystack.includes(q)) return false;
+        // búsqueda case-insensitive por nombre
+        query = query.ilike("name", `%${search.q}%`);
       }
-      return true;
-    });
-  }, [perfumes, search]);
+
+      const { data, error } = await query.order("price", { ascending: false });
+      if (cancelled) return;
+
+      if (error) {
+        console.error("Error cargando perfumes:", error);
+        setPerfumes([]);
+      } else {
+        const list = (data as Perfume[]) ?? [];
+        // Orden final: brand_tier ASC, imagen primero, precio DESC
+        list.sort((a, b) => {
+          const ta = a.brand?.brand_tier ?? 99;
+          const tb = b.brand?.brand_tier ?? 99;
+          if (ta !== tb) return ta - tb;
+          const ia = a.image_url ? 0 : 1;
+          const ib = b.image_url ? 0 : 1;
+          if (ia !== ib) return ia - ib;
+          return b.price - a.price;
+        });
+        setPerfumes(list);
+      }
+      setLoading(false);
+      setFiltering(false);
+    };
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [search.genero, search.tipo, search.max, search.q, selectedBrandId, search.marca, brands.length]);
 
   const update = (patch: Partial<typeof search>) => {
     navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
   };
+
+  const hasActiveFilters =
+    search.marca || search.genero || search.tipo || search.q || search.max < 500;
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
@@ -204,7 +231,7 @@ function CatalogoPage() {
             />
           </FilterGroup>
 
-          {(search.marca || search.genero || search.tipo || search.q || search.max < 500) && (
+          {hasActiveFilters && (
             <button
               onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
               className="eyebrow text-foreground/50 hover:text-accent transition-colors"
@@ -216,16 +243,46 @@ function CatalogoPage() {
 
         {/* Grid */}
         <div>
-          <p className="eyebrow text-foreground/50 mb-8">{filtered.length} pieza{filtered.length === 1 ? "" : "s"}</p>
+          <div className="flex items-center gap-3 mb-8">
+            <p className="eyebrow text-foreground/50">
+              {loading ? "Cargando..." : `${perfumes.length} pieza${perfumes.length === 1 ? "" : "s"}`}
+            </p>
+            {filtering && !loading && (
+              <Loader2 size={12} className="text-accent animate-spin" />
+            )}
+          </div>
+
           {loading ? (
-            <p className="text-foreground/50 text-sm">Cargando...</p>
-          ) : filtered.length === 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[4/5] bg-card" />
+                  <div className="pt-5 space-y-2">
+                    <div className="h-2 bg-card w-1/3" />
+                    <div className="h-4 bg-card w-2/3" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : perfumes.length === 0 ? (
             <div className="py-20 text-center text-foreground/50">
-              <p className="font-serif italic text-2xl">Ninguna fragancia coincide con tu búsqueda.</p>
+              <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
+              {hasActiveFilters && (
+                <button
+                  onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
+                  className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
+                >
+                  Limpiar filtros
+                </button>
+              )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
-              {filtered.map((p) => (
+            <div
+              className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14 transition-opacity duration-300 ${
+                filtering ? "opacity-50" : "opacity-100"
+              }`}
+            >
+              {perfumes.map((p) => (
                 <PerfumeCard
                   key={p.id}
                   perfume={p}
