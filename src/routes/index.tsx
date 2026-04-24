@@ -25,11 +25,10 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [recommended, setRecommended] = useState<Perfume[]>([]);
   const [bestsellers, setBestsellers] = useState<Perfume[]>([]);
-  const [premium, setPremium] = useState<Perfume[]>([]);
 
   useEffect(() => {
     (async () => {
-      // Recomendados + más elegidos
+      // Selección del equipo + más elegidos (manuales, no por precio)
       const { data: flagged } = await supabase
         .from("perfumes")
         .select("*, brand:brands(*), variants:perfume_variants(*)")
@@ -37,22 +36,11 @@ function HomePage() {
 
       if (flagged) {
         const all = flagged as Perfume[];
-        // Ordenamos por precio ASC para mostrar variedad (no priorizar caros)
+        // Variedad de precio — orden ascendente
         const byPriceAsc = (a: Perfume, b: Perfume) => a.price - b.price;
         setRecommended(all.filter((p) => p.is_recommended).sort(byPriceAsc).slice(0, 8));
         setBestsellers(all.filter((p) => p.is_bestseller).sort(byPriceAsc).slice(0, 8));
       }
-
-      // Selección premium: brand_tier 1 (alta gama) - sección separada
-      const { data: premiumData } = await supabase
-        .from("perfumes")
-        .select("*, brand:brands!inner(*), variants:perfume_variants(*)")
-        .eq("in_stock", true)
-        .eq("brand.brand_tier", 1)
-        .order("price", { ascending: false })
-        .limit(8);
-
-      if (premiumData) setPremium(premiumData as Perfume[]);
     })();
   }, []);
 
