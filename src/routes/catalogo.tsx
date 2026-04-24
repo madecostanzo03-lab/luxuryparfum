@@ -200,6 +200,27 @@ function CatalogoPage() {
         </p>
       </header>
 
+      {/* Atajos visuales */}
+      <section className="mb-10">
+        <p className="eyebrow text-center mb-6 text-foreground/60">¿Qué estás buscando?</p>
+        <div className="flex flex-wrap justify-center gap-3">
+          {shortcuts.map((s) => (
+            <button
+              key={s.label}
+              onClick={() => navigate({ search: (prev) => ({ ...prev, ...s.patch }) })}
+              className={`group inline-flex items-center gap-2.5 px-5 py-3 border text-sm transition-all ${
+                s.isActive
+                  ? "border-accent bg-accent/10 text-accent"
+                  : "border-border bg-input/20 text-foreground/80 hover:border-accent/60 hover:text-foreground"
+              }`}
+            >
+              <span className="text-lg leading-none">{s.emoji}</span>
+              <span className="font-medium tracking-wide">{s.label}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       {/* Buscador */}
       <div className="relative max-w-xl mx-auto mb-10">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" size={16} />
