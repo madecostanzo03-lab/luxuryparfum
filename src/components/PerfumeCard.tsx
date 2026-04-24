@@ -64,7 +64,12 @@ export function PerfumeCard({ perfume }: { perfume: Perfume }) {
             </button>
           </div>
           <a
-            href={whatsappLink(displayName)}
+            href={whatsappLink({
+              name: displayName,
+              brand: perfume.brand?.name ?? null,
+              price: perfume.price,
+              fromPrice: variantsCount > 1,
+            })}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
