@@ -74,33 +74,73 @@ export function SmartImage({
           </div>
         </div>
       ) : (
-        <img
-          src={src!}
-          alt={alt}
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-          onLoad={() => setLoaded(true)}
-          onError={() => setErrored(true)}
-          style={
-            preserveBg
-              ? undefined
-              : {
-                  // Máscara radial: difumina los bordes de la imagen original
-                  // hacia el fondo oscuro, fundiendo cualquier fondo (blanco,
-                  // gris, mockup) con nuestro "estudio" premium. El frasco,
-                  // al estar centrado, queda perfectamente visible.
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse 75% 80% at 50% 50%, #000 55%, transparent 92%)",
-                  maskImage:
-                    "radial-gradient(ellipse 75% 80% at 50% 50%, #000 55%, transparent 92%)",
-                  filter:
-                    "contrast(1.06) saturate(1.08) brightness(1.02) drop-shadow(0 12px 24px rgba(0,0,0,0.45))",
-                }
-          }
-          className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
-            loaded ? "opacity-100" : "opacity-0"
-          } ${imgClassName}`}
-        />
+        <>
+          {/*
+            CAPA 1 — Fusión cromática:
+            La imagen base se renderiza con `mix-blend-mode: multiply`. Esto
+            multiplica los píxeles blancos/claros del fondo original del
+            proveedor contra el azul oscuro del "estudio", haciéndolos
+            DESAPARECER por completo: el blanco se vuelve azul oscuro, los
+            grises se funden, y solo el frasco (que tiene color real, vidrio
+            y líquido) se mantiene visible. Adiós a los recortes pegados.
+          */}
+          <img
+            src={src!}
+            alt={alt}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+            onError={() => setErrored(true)}
+            style={
+              preserveBg
+                ? undefined
+                : {
+                    mixBlendMode: "multiply",
+                    WebkitMaskImage:
+                      "radial-gradient(ellipse 70% 78% at 50% 50%, #000 50%, transparent 88%)",
+                    maskImage:
+                      "radial-gradient(ellipse 70% 78% at 50% 50%, #000 50%, transparent 88%)",
+                    filter:
+                      "contrast(1.18) saturate(1.25) brightness(1.08)",
+                  }
+            }
+            className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
+              loaded ? "opacity-100" : "opacity-0"
+            } ${imgClassName}`}
+            aria-hidden={!preserveBg}
+          />
+
+          {/*
+            CAPA 2 — Realce del frasco:
+            La misma imagen, pero con `mix-blend-mode: screen` y muy baja
+            opacidad. Esto reintroduce los reflejos / brillos / detalles del
+            vidrio que el multiply oscureció en exceso, dándole vida al
+            frasco contra el fondo azul. Resultado: vidrio luminoso,
+            etiquetas legibles, sin caja blanca.
+            Solo cuando NO usamos preserveBg.
+          */}
+          {!preserveBg && (
+            <img
+              src={src!}
+              alt=""
+              loading={eager ? "eager" : "lazy"}
+              decoding="async"
+              aria-hidden
+              style={{
+                mixBlendMode: "screen",
+                opacity: 0.35,
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 55% 65% at 50% 52%, #000 40%, transparent 80%)",
+                maskImage:
+                  "radial-gradient(ellipse 55% 65% at 50% 52%, #000 40%, transparent 80%)",
+                filter: "contrast(1.1) saturate(1.1) brightness(1.05)",
+              }}
+              className={`pointer-events-none absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
+                loaded ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          )}
+        </>
       )}
 
       {/* Reflejo superior sutil — luz de estudio */}
@@ -108,7 +148,17 @@ export function SmartImage({
         className="pointer-events-none absolute inset-x-0 top-0 h-1/3"
         style={{
           background:
-            "linear-gradient(to bottom, oklch(0.85 0.05 80 / 0.06), transparent)",
+            "linear-gradient(to bottom, oklch(0.85 0.05 80 / 0.08), transparent)",
+        }}
+        aria-hidden
+      />
+
+      {/* Drop shadow inferior bajo el frasco — flotación de estudio */}
+      <div
+        className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[8%] w-[55%] h-3 rounded-[50%] blur-md"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, oklch(0.02 0.02 250 / 0.6) 0%, transparent 70%)",
         }}
         aria-hidden
       />
@@ -118,7 +168,7 @@ export function SmartImage({
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 100%, oklch(0.04 0.02 250 / 0.55) 0%, transparent 60%)",
+            "radial-gradient(ellipse at 50% 100%, oklch(0.04 0.02 250 / 0.65) 0%, transparent 60%)",
         }}
         aria-hidden
       />
