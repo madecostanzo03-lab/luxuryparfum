@@ -5,7 +5,6 @@ import type { Perfume } from "@/lib/types";
 import { PerfumeCard } from "@/components/PerfumeCard";
 import { whatsappGeneralLink } from "@/lib/whatsapp";
 import heroImg from "@/assets/hero-perfume.jpg";
-import emotionalImg from "@/assets/emotional-block.jpg";
 import sensFresco from "@/assets/sensacion-fresco.jpg";
 import sensDulce from "@/assets/sensacion-dulce.jpg";
 import sensAmaderado from "@/assets/sensacion-amaderado.jpg";
