@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Perfume } from "@/lib/types";
 import { PerfumeCard } from "@/components/PerfumeCard";
 import { whatsappGeneralLink } from "@/lib/whatsapp";
+import { HIDDEN_BRAND_SLUG_SET } from "@/lib/hidden-brands";
 import heroImg from "@/assets/hero-perfume.jpg";
 import sensFresco from "@/assets/sensacion-fresco.jpg";
 import sensDulce from "@/assets/sensacion-dulce.jpg";
@@ -35,7 +36,9 @@ function HomePage() {
         .or("is_recommended.eq.true,is_bestseller.eq.true");
 
       if (flagged) {
-        const all = flagged as Perfume[];
+        const all = (flagged as Perfume[]).filter(
+          (p) => !p.brand || !HIDDEN_BRAND_SLUG_SET.has(p.brand.slug),
+        );
         // Variedad de precio — orden ascendente
         const byPriceAsc = (a: Perfume, b: Perfume) => a.price - b.price;
         setRecommended(all.filter((p) => p.is_recommended).sort(byPriceAsc).slice(0, 8));

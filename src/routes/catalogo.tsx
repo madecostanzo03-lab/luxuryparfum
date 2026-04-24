@@ -138,6 +138,8 @@ function CatalogoPage() {
         setPerfumes([]);
       } else {
         let list = (data as Perfume[]) ?? [];
+        // Filtro defensivo client-side por slug (cinturón + tirantes)
+        list = list.filter((p) => !p.brand || !HIDDEN_BRAND_SLUG_SET.has(p.brand.slug));
         // "Premium" = brand_tier === 1 (filtrado client-side por estar en relación)
         if (search.destacado === "premium") {
           list = list.filter((p) => (p.brand?.brand_tier ?? 99) === 1);
