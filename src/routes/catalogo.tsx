@@ -13,6 +13,7 @@ const searchSchema = z.object({
   tipo: fallback(z.enum(["", "fresco", "dulce", "amaderado", "intenso"]), "").default(""),
   q: fallback(z.string(), "").default(""),
   max: fallback(z.number(), 500).default(500),
+  p: fallback(z.string(), "").default(""),
 });
 
 export const Route = createFileRoute("/catalogo")({
