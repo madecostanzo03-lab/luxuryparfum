@@ -295,7 +295,7 @@ function CatalogoPage() {
 
           {hasActiveFilters && (
             <button
-              onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
+              onClick={() => navigate({ search: resetSearch })}
               className="eyebrow text-foreground/50 hover:text-accent transition-colors"
             >
               Limpiar filtros
@@ -331,7 +331,7 @@ function CatalogoPage() {
               <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
               {hasActiveFilters && (
                 <button
-                  onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
+                  onClick={() => navigate({ search: resetSearch })}
                   className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
                 >
                   Limpiar filtros
