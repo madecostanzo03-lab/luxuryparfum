@@ -124,6 +124,50 @@ function HomePage() {
         </div>
       </section>
 
+      {/* EXPLORÁ POR ESTILO */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-24">
+        <div className="text-center max-w-xl mx-auto mb-14">
+          <p className="eyebrow">Explorá</p>
+          <h2 className="mt-6 text-4xl md:text-5xl font-serif leading-tight text-balance">
+            ¿Qué estás <em className="text-accent">buscando</em>?
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          {([
+            { label: "Para todos los días", search: { tipo: "fresco" as const } },
+            { label: "Para la noche", search: { tipo: "intenso" as const } },
+            { label: "Perfumes dulces", search: { tipo: "dulce" as const } },
+            { label: "Perfumes frescos", search: { tipo: "fresco" as const } },
+            { label: "Más elegidos", search: { destacado: "bestseller" as const } },
+          ]).map((opt) => (
+            <Link
+              key={opt.label}
+              to="/catalogo"
+              search={{
+                marca: "",
+                genero: "",
+                tipo: "",
+                q: "",
+                max: 500,
+                p: "",
+                v: "",
+                destacado: "",
+                ...opt.search,
+              }}
+              className="group relative flex items-center justify-center text-center px-6 py-12 border border-border/60 bg-input/10 hover:bg-input/30 hover:border-accent/60 transition-all duration-500"
+            >
+              <span className="font-serif text-lg md:text-xl text-foreground/85 group-hover:text-accent transition-colors duration-500 leading-snug">
+                {opt.label}
+              </span>
+              <span className="absolute bottom-4 right-4 eyebrow text-[0.55rem] text-foreground/30 group-hover:text-accent transition-colors duration-500">
+                →
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* RECOMENDADOS */}
       <Section
         eyebrow="Recomendados"
