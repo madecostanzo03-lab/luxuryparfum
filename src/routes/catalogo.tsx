@@ -107,6 +107,7 @@ function CatalogoPage() {
       if (search.genero) query = query.eq("gender", search.genero);
       if (search.tipo) query = query.eq("fragrance_type", search.tipo);
       if (selectedBrandId) query = query.eq("brand_id", selectedBrandId);
+      if (search.destacado === "bestseller") query = query.eq("is_bestseller", true);
       if (search.q) {
         // búsqueda case-insensitive por nombre
         query = query.ilike("name", `%${search.q}%`);
@@ -119,7 +120,11 @@ function CatalogoPage() {
         console.error("Error cargando perfumes:", error);
         setPerfumes([]);
       } else {
-        const list = (data as Perfume[]) ?? [];
+        let list = (data as Perfume[]) ?? [];
+        // "Premium" = brand_tier === 1 (filtrado client-side por estar en relación)
+        if (search.destacado === "premium") {
+          list = list.filter((p) => (p.brand?.brand_tier ?? 99) === 1);
+        }
         // Orden final: brand_tier ASC, imagen primero, precio DESC
         list.sort((a, b) => {
           const ta = a.brand?.brand_tier ?? 99;
@@ -139,7 +144,7 @@ function CatalogoPage() {
     return () => {
       cancelled = true;
     };
-  }, [search.genero, search.tipo, search.max, search.q, selectedBrandId, search.marca, brands.length]);
+  }, [search.genero, search.tipo, search.max, search.q, search.destacado, selectedBrandId, search.marca, brands.length]);
 
   const update = (patch: Partial<typeof search>) => {
     navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
