@@ -71,36 +71,37 @@ function HomePage() {
             className="mt-12 text-[2.75rem] md:text-7xl lg:text-[6rem] font-serif text-balance max-w-5xl leading-[1.0] tracking-tight fade-up"
             style={{ animationDelay: "0.5s" }}
           >
-            Elegí tu <em className="text-accent">fragancia ideal</em>
+            Descubrí tu <em className="text-accent">fragancia ideal</em>
           </h1>
 
           <p
             className="mt-12 max-w-md text-foreground/65 text-base md:text-lg leading-relaxed tracking-wide fade-up"
             style={{ animationDelay: "0.8s" }}
           >
-            Te asesoramos para encontrar el perfume perfecto.
+            Una colección curada de perfumería de autor, pensada para acompañar tus momentos.
           </p>
 
           <div
             className="mt-16 flex flex-col sm:flex-row items-center gap-6 fade-up"
             style={{ animationDelay: "1.05s" }}
           >
+            <Link
+              to="/catalogo"
+              search={{ marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" }}
+              className="inline-flex items-center justify-center px-14 py-5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
+            >
+              Explorar catálogo
+            </Link>
+
             <a
               href={whatsappGeneralLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center px-14 py-5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
+              className="inline-flex items-center justify-center px-10 py-5 eyebrow text-[0.65rem] text-foreground/60 hover:text-accent transition-colors duration-500"
               aria-label="Hablar por WhatsApp"
             >
-              Hablar por WhatsApp
+              Asesoramiento por WhatsApp →
             </a>
-
-            <Link
-              to="/catalogo"
-              className="inline-flex items-center justify-center px-10 py-5 eyebrow text-[0.65rem] text-foreground/60 hover:text-accent transition-colors duration-500"
-            >
-              Ver catálogo →
-            </Link>
           </div>
         </div>
 
