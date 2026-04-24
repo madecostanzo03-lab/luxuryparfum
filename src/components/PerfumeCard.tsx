@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import type { Perfume } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { perfumeShortHint } from "@/lib/perfume-helpers";
+import { resolvePerfumeImage } from "@/lib/premium-images";
 import { SmartImage } from "./SmartImage";
 
 // Lazy load del modal: no se descarga hasta que el usuario abre un producto.
@@ -28,6 +29,7 @@ export function PerfumeCard({
   const displayName = perfume.base_name ?? perfume.name;
   const variantsCount = perfume.variants?.length ?? 0;
   const hint = perfumeShortHint(perfume);
+  const { src: imageSrc, isPremium } = resolvePerfumeImage(perfume.id, perfume.image_url);
 
   useEffect(() => {
     setOpen(openInitial);
@@ -48,9 +50,10 @@ export function PerfumeCard({
           className="relative aspect-[4/5] overflow-hidden bg-card block w-full text-left"
         >
           <SmartImage
-            src={perfume.image_url}
+            src={imageSrc}
             alt={`${displayName}${perfume.brand ? ` — ${perfume.brand.name}` : ""}`}
             fallbackInitial={displayName.charAt(0)}
+            preserveBg={isPremium}
             imgClassName="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
           />
           {perfume.is_recommended && (
