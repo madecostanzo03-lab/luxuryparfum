@@ -69,19 +69,21 @@ export function PerfumeCard({
           <div className="absolute inset-0 bg-gradient-to-t from-noir/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         </button>
 
-        <div className="pt-7 flex flex-col items-center text-center">
+        <div className="pt-5 sm:pt-7 flex flex-col items-center text-center">
           {perfume.brand && (
-            <p className="eyebrow text-[0.55rem] text-foreground/40">{perfume.brand.name}</p>
+            <p className="eyebrow text-[0.62rem] sm:text-[0.7rem] text-foreground/45">
+              {perfume.brand.name}
+            </p>
           )}
-          <h3 className="mt-3 text-lg md:text-xl font-serif leading-tight tracking-tight">
+          <h3 className="mt-2 sm:mt-3 text-base sm:text-xl font-serif leading-tight tracking-tight px-1">
             {displayName}
           </h3>
           {hint && (
-            <p className="mt-2 text-[0.7rem] text-foreground/45 italic tracking-wide">
+            <p className="mt-1.5 sm:mt-2 text-[0.7rem] sm:text-xs text-foreground/50 brand-serif">
               {hint}
             </p>
           )}
-          <span className="mt-3 text-sm text-foreground/70 tracking-wide">
+          <span className="mt-2 sm:mt-3 text-[0.85rem] sm:text-sm text-foreground/75 brand-serif">
             {variantsCount > 1 ? "Desde " : ""}
             <span className="text-foreground">USD {perfume.price.toFixed(0)}</span>
           </span>
@@ -96,11 +98,11 @@ export function PerfumeCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="mt-5 inline-flex items-center justify-center px-6 py-3 bg-accent text-accent-foreground eyebrow text-[0.55rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500 w-full max-w-[220px]"
+            className="btn-luxury mt-4 sm:mt-5 inline-flex items-center justify-center px-4 sm:px-6 py-3 bg-accent text-accent-foreground text-[0.7rem] sm:text-[0.78rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500 w-full max-w-[220px]"
           >
             Pedir por WhatsApp
           </a>
-          <p className="mt-2 text-[0.6rem] text-foreground/40 tracking-wide">
+          <p className="mt-2 text-[0.62rem] sm:text-[0.7rem] text-foreground/45 brand-serif">
             Te asesoramos en minutos
           </p>
         </div>
