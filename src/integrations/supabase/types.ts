@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       brands: {
         Row: {
+          brand_tier: number
           created_at: string
           description: string | null
           id: string
@@ -24,6 +25,7 @@ export type Database = {
           slug: string
         }
         Insert: {
+          brand_tier?: number
           created_at?: string
           description?: string | null
           id?: string
@@ -32,6 +34,7 @@ export type Database = {
           slug: string
         }
         Update: {
+          brand_tier?: number
           created_at?: string
           description?: string | null
           id?: string
