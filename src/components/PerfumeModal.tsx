@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { Perfume, PerfumeVariant } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { ArrowLeft, X } from "lucide-react";
+import { resolvePerfumeImage } from "@/lib/premium-images";
 import { SmartImage } from "./SmartImage";
 
 export function PerfumeModal({
@@ -96,12 +97,18 @@ export function PerfumeModal({
 
         <div className="grid md:grid-cols-2">
           <div className="aspect-square md:aspect-auto md:min-h-[500px] bg-card">
-            <SmartImage
-              src={perfume.image_url}
-              alt={displayName}
-              fallbackInitial={displayName.charAt(0)}
-              eager
-            />
+            {(() => {
+              const { src, isPremium } = resolvePerfumeImage(perfume.id, perfume.image_url);
+              return (
+                <SmartImage
+                  src={src}
+                  alt={displayName}
+                  fallbackInitial={displayName.charAt(0)}
+                  preserveBg={isPremium}
+                  eager
+                />
+              );
+            })()}
           </div>
 
           <div className="p-6 sm:p-8 md:p-12 flex flex-col">
