@@ -1,5 +1,5 @@
-// Número de WhatsApp de Luxury Parfum (placeholder — el dueño puede cambiarlo)
-export const WHATSAPP_NUMBER = "5491100000000";
+// Número de WhatsApp de Luxury Parfum (formato internacional, sin + ni espacios)
+export const WHATSAPP_NUMBER = "5942215716077";
 
 export interface WhatsappPerfumeContext {
   name: string;
