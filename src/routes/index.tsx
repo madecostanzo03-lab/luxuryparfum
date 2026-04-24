@@ -27,11 +27,21 @@ function HomePage() {
     (async () => {
       const { data } = await supabase
         .from("perfumes")
-        .select("*, brand:brands(*)")
+        .select("*, brand:brands(*), variants:perfume_variants(*)")
         .or("is_recommended.eq.true,is_bestseller.eq.true");
       if (data) {
-        setRecommended((data as Perfume[]).filter((p) => p.is_recommended).slice(0, 4));
-        setBestsellers((data as Perfume[]).filter((p) => p.is_bestseller).slice(0, 4));
+        const sortByTier = (a: Perfume, b: Perfume) => {
+          const ta = a.brand?.brand_tier ?? 99;
+          const tb = b.brand?.brand_tier ?? 99;
+          if (ta !== tb) return ta - tb;
+          const ia = a.image_url ? 0 : 1;
+          const ib = b.image_url ? 0 : 1;
+          if (ia !== ib) return ia - ib;
+          return b.price - a.price;
+        };
+        const all = data as Perfume[];
+        setRecommended(all.filter((p) => p.is_recommended).sort(sortByTier).slice(0, 4));
+        setBestsellers(all.filter((p) => p.is_bestseller).sort(sortByTier).slice(0, 4));
       }
     })();
   }, []);
