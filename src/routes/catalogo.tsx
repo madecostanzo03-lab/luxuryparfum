@@ -15,6 +15,7 @@ const searchSchema = z.object({
   max: fallback(z.number(), 500).default(500),
   p: fallback(z.string(), "").default(""),
   v: fallback(z.string(), "").default(""),
+  destacado: fallback(z.enum(["", "bestseller", "premium"]), "").default(""),
 });
 
 export const Route = createFileRoute("/catalogo")({
