@@ -151,38 +151,40 @@ function CatalogoPage() {
   };
 
   const hasActiveFilters =
-    search.marca || search.genero || search.tipo || search.q || search.max < 500;
+    search.marca || search.genero || search.tipo || search.q || search.max < 500 || search.destacado;
+
+  const resetSearch = { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" } as const;
 
   const shortcuts: { label: string; emoji: string; patch: Partial<typeof search>; isActive: boolean }[] = [
     {
       label: "Más vendidos",
       emoji: "🔥",
-      patch: { genero: "", tipo: "", marca: "", max: 500 },
-      isActive: false,
+      patch: { ...resetSearch, destacado: "bestseller" },
+      isActive: search.destacado === "bestseller",
     },
     {
       label: "Perfumes premium",
       emoji: "💎",
-      patch: { genero: "", tipo: "", marca: "", max: 500 },
-      isActive: false,
+      patch: { ...resetSearch, destacado: "premium" },
+      isActive: search.destacado === "premium",
     },
     {
       label: "Para la noche",
       emoji: "🌙",
-      patch: { tipo: "intenso", genero: "", marca: "", max: 500 },
-      isActive: search.tipo === "intenso",
+      patch: { ...resetSearch, tipo: "intenso" },
+      isActive: search.tipo === "intenso" && !search.destacado,
     },
     {
       label: "Frescos para el día",
       emoji: "☀️",
-      patch: { tipo: "fresco", genero: "", marca: "", max: 500 },
-      isActive: search.tipo === "fresco",
+      patch: { ...resetSearch, tipo: "fresco" },
+      isActive: search.tipo === "fresco" && !search.destacado,
     },
     {
       label: "Perfumes dulces",
       emoji: "💖",
-      patch: { tipo: "dulce", genero: "", marca: "", max: 500 },
-      isActive: search.tipo === "dulce",
+      patch: { ...resetSearch, tipo: "dulce" },
+      isActive: search.tipo === "dulce" && !search.destacado,
     },
   ];
 
