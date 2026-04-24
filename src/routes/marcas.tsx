@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Brand } from "@/lib/types";
+import { HIDDEN_BRAND_SLUG_SET } from "@/lib/hidden-brands";
 
 export const Route = createFileRoute("/marcas")({
   head: () => ({
@@ -20,7 +21,10 @@ function MarcasPage() {
 
   useEffect(() => {
     supabase.from("brands").select("*").order("name").then(({ data }) => {
-      setBrands((data as Brand[]) ?? []);
+      const visible = ((data as Brand[]) ?? []).filter(
+        (b) => !HIDDEN_BRAND_SLUG_SET.has(b.slug),
+      );
+      setBrands(visible);
     });
   }, []);
 
