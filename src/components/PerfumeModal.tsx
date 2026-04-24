@@ -168,11 +168,11 @@ export function PerfumeModal({
               })}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 md:mt-auto md:pt-10 inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent text-accent-foreground eyebrow hover:bg-accent/90 transition-all duration-500"
+              className="btn-luxury mt-8 md:mt-auto md:pt-10 inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-500"
             >
               Consultar por WhatsApp
             </a>
-            <p className="mt-3 text-center text-[0.65rem] text-foreground/40 tracking-wide">
+            <p className="mt-3 text-center text-[0.7rem] text-foreground/45 brand-serif">
               Te respondemos en minutos
             </p>
           </div>
