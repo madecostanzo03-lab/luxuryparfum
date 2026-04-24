@@ -62,9 +62,12 @@ export type Database = {
       perfumes: {
         Row: {
           brand_id: string
+          concentration:
+            | Database["public"]["Enums"]["concentration_type"]
+            | null
           created_at: string
           description: string | null
-          fragrance_type: Database["public"]["Enums"]["fragrance_type"]
+          fragrance_type: Database["public"]["Enums"]["fragrance_type"] | null
           gender: Database["public"]["Enums"]["gender_type"]
           id: string
           image_url: string | null
@@ -75,13 +78,17 @@ export type Database = {
           notes: string | null
           price: number
           promotion_text: string | null
+          size_ml: number | null
           updated_at: string
         }
         Insert: {
           brand_id: string
+          concentration?:
+            | Database["public"]["Enums"]["concentration_type"]
+            | null
           created_at?: string
           description?: string | null
-          fragrance_type: Database["public"]["Enums"]["fragrance_type"]
+          fragrance_type?: Database["public"]["Enums"]["fragrance_type"] | null
           gender: Database["public"]["Enums"]["gender_type"]
           id?: string
           image_url?: string | null
@@ -92,13 +99,17 @@ export type Database = {
           notes?: string | null
           price: number
           promotion_text?: string | null
+          size_ml?: number | null
           updated_at?: string
         }
         Update: {
           brand_id?: string
+          concentration?:
+            | Database["public"]["Enums"]["concentration_type"]
+            | null
           created_at?: string
           description?: string | null
-          fragrance_type?: Database["public"]["Enums"]["fragrance_type"]
+          fragrance_type?: Database["public"]["Enums"]["fragrance_type"] | null
           gender?: Database["public"]["Enums"]["gender_type"]
           id?: string
           image_url?: string | null
@@ -109,6 +120,7 @@ export type Database = {
           notes?: string | null
           price?: number
           promotion_text?: string | null
+          size_ml?: number | null
           updated_at?: string
         }
         Relationships: [
@@ -129,6 +141,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      concentration_type: "edt" | "edp" | "edc" | "parfum" | "extrait"
       fragrance_type: "fresco" | "dulce" | "amaderado" | "intenso"
       gender_type: "hombre" | "mujer" | "unisex"
     }
@@ -258,6 +271,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      concentration_type: ["edt", "edp", "edc", "parfum", "extrait"],
       fragrance_type: ["fresco", "dulce", "amaderado", "intenso"],
       gender_type: ["hombre", "mujer", "unisex"],
     },

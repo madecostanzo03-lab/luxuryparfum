@@ -48,17 +48,23 @@ export function PerfumeModal({
             <h2 className="mt-4 text-4xl font-serif leading-tight">{perfume.name}</h2>
             <span className="divider-gold mt-6" />
 
+            <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-foreground/60">
+              {perfume.concentration && (
+                <span className="eyebrow border border-border px-2 py-1">
+                  {perfume.concentration.toUpperCase()}
+                </span>
+              )}
+              {perfume.size_ml && (
+                <span className="eyebrow border border-border px-2 py-1">
+                  {perfume.size_ml} ml
+                </span>
+              )}
+            </div>
+
             {perfume.description && (
               <p className="mt-6 text-foreground/75 leading-relaxed font-serif italic text-lg">
                 "{perfume.description}"
               </p>
-            )}
-
-            {perfume.notes && (
-              <div className="mt-8">
-                <p className="eyebrow mb-3">Notas olfativas</p>
-                <p className="text-sm text-foreground/80 leading-relaxed">{perfume.notes}</p>
-              </div>
             )}
 
             <div className="mt-8 flex items-center gap-4">
