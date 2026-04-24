@@ -1,20 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Perfume } from "@/lib/types";
-import { whatsappLink } from "@/lib/whatsapp";
+import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { PerfumeModal } from "./PerfumeModal";
 import { MessageCircle } from "lucide-react";
 
-export function PerfumeCard({ perfume }: { perfume: Perfume }) {
-  const [open, setOpen] = useState(false);
+export function PerfumeCard({
+  perfume,
+  openInitial = false,
+  onOpenChange,
+}: {
+  perfume: Perfume;
+  openInitial?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}) {
+  const [open, setOpen] = useState(openInitial);
   const displayName = perfume.base_name ?? perfume.name;
   const variantsCount = perfume.variants?.length ?? 0;
+
+  useEffect(() => {
+    setOpen(openInitial);
+  }, [openInitial]);
+
+  const handleOpen = (next: boolean) => {
+    setOpen(next);
+    onOpenChange?.(next);
+  };
 
   return (
     <>
       <article className="group flex flex-col">
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => handleOpen(true)}
           aria-label={`Ver detalles de ${displayName}`}
           className="relative aspect-[4/5] overflow-hidden bg-card block w-full text-left"
         >
@@ -57,7 +74,7 @@ export function PerfumeCard({ perfume }: { perfume: Perfume }) {
             </span>
             <button
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={() => handleOpen(true)}
               className="eyebrow text-[0.55rem] text-accent hover:opacity-70 transition-opacity"
             >
               Detalles →
@@ -69,6 +86,7 @@ export function PerfumeCard({ perfume }: { perfume: Perfume }) {
               brand: perfume.brand?.name ?? null,
               price: perfume.price,
               fromPrice: variantsCount > 1,
+              url: perfumePublicUrl(perfume.id),
             })}
             target="_blank"
             rel="noopener noreferrer"
@@ -84,7 +102,7 @@ export function PerfumeCard({ perfume }: { perfume: Perfume }) {
       <PerfumeModal
         perfume={perfume}
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => handleOpen(false)}
       />
     </>
   );

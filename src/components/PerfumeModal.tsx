@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { Perfume, PerfumeVariant } from "@/lib/types";
-import { whatsappLink } from "@/lib/whatsapp";
+import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { X } from "lucide-react";
 
 export function PerfumeModal({
@@ -120,6 +120,7 @@ export function PerfumeModal({
                 presentation: selected ? variantLabel(selected) || null : null,
                 price: selected?.price ?? perfume.price,
                 fromPrice: !selected && (perfume.variants?.length ?? 0) > 1,
+                url: perfumePublicUrl(perfume.id),
               })}
               target="_blank"
               rel="noopener noreferrer"

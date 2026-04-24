@@ -7,6 +7,15 @@ export interface WhatsappPerfumeContext {
   presentation?: string | null; // ej: "EDP · 100 ml"
   price?: number | null; // USD
   fromPrice?: boolean; // true si es "desde"
+  url?: string | null; // link directo al producto
+}
+
+/** Construye una URL pública al producto dentro del catálogo. */
+export function perfumePublicUrl(perfumeId: string): string {
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/catalogo?p=${perfumeId}`;
+  }
+  return `/catalogo?p=${perfumeId}`;
 }
 
 function buildMessage(ctx: WhatsappPerfumeContext): string {
@@ -23,6 +32,9 @@ function buildMessage(ctx: WhatsappPerfumeContext): string {
   }
   if (typeof ctx.price === "number") {
     lines.push(`• Precio${ctx.fromPrice ? " desde" : ""}: USD ${ctx.price.toFixed(0)}`);
+  }
+  if (ctx.url) {
+    lines.push(`• Link: ${ctx.url}`);
   }
 
   lines.push("");
