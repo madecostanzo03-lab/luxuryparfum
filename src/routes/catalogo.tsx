@@ -207,7 +207,7 @@ function CatalogoPage() {
           {shortcuts.map((s) => (
             <button
               key={s.label}
-              onClick={() => navigate({ search: (prev) => ({ ...prev, ...s.patch }) })}
+              onClick={() => navigate({ search: (prev: typeof search) => ({ ...prev, ...s.patch }) })}
               className={`group inline-flex items-center gap-2.5 px-5 py-3 border text-sm transition-all ${
                 s.isActive
                   ? "border-accent bg-accent/10 text-accent"
