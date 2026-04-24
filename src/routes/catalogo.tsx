@@ -205,7 +205,7 @@ function CatalogoPage() {
 
           {(search.marca || search.genero || search.tipo || search.q || search.max < 500) && (
             <button
-              onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500 } })}
+              onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "" } })}
               className="eyebrow text-foreground/50 hover:text-accent transition-colors"
             >
               Limpiar filtros
@@ -225,7 +225,12 @@ function CatalogoPage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
               {filtered.map((p) => (
-                <PerfumeCard key={p.id} perfume={p} />
+                <PerfumeCard
+                  key={p.id}
+                  perfume={p}
+                  openInitial={search.p === p.id}
+                  onOpenChange={(o) => update({ p: o ? p.id : "" })}
+                />
               ))}
             </div>
           )}
