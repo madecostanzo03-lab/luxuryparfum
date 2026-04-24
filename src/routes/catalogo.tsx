@@ -76,7 +76,10 @@ function CatalogoPage() {
   useEffect(() => {
     (async () => {
       const [{ data: ps }, { data: bs }] = await Promise.all([
-        supabase.from("perfumes").select("*, brand:brands(*)").order("created_at", { ascending: false }),
+        supabase
+          .from("perfumes")
+          .select("*, brand:brands(*), variants:perfume_variants(*)")
+          .order("created_at", { ascending: false }),
         supabase.from("brands").select("*").order("name"),
       ]);
       setPerfumes((ps as Perfume[]) ?? []);

@@ -44,9 +44,11 @@ export function PerfumeCard({ perfume }: { perfume: Perfume }) {
           {perfume.brand && (
             <p className="eyebrow text-[0.6rem] text-foreground/50">{perfume.brand.name}</p>
           )}
-          <h3 className="mt-2 text-xl font-serif">{perfume.name}</h3>
+          <h3 className="mt-2 text-xl font-serif">{perfume.base_name ?? perfume.name}</h3>
           <div className="mt-3 flex items-center justify-between">
-            <span className="text-sm text-foreground/60">USD {perfume.price.toFixed(0)}</span>
+            <span className="text-sm text-foreground/60">
+              {perfume.variants && perfume.variants.length > 1 ? "Desde " : ""}USD {perfume.price.toFixed(0)}
+            </span>
             <span className="eyebrow text-[0.55rem] text-accent">Descubrir →</span>
           </div>
         </div>
