@@ -113,6 +113,14 @@ function HomePage() {
         </div>
       </section>
 
+      {/* SELECCIÓN DEL EQUIPO */}
+      <Section
+        eyebrow="Selección del equipo"
+        title={<>Nuestras <em className="text-accent">favoritas</em></>}
+        subtitle="Una mezcla curada — desde joyas accesibles hasta clásicos atemporales — pensada para que encuentres tu match sin importar el presupuesto."
+        perfumes={recommended}
+      />
+
       {/* EXPLORAR POR SENSACIONES */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-32">
         <div className="text-center max-w-2xl mx-auto mb-20">
@@ -168,76 +176,72 @@ function HomePage() {
         </div>
       </section>
 
-      {/* RECOMENDADOS DEL EQUIPO */}
-      <Section
-        eyebrow="Recomendados del equipo"
-        title={<>Selección <em className="text-accent">curada</em></>}
-        subtitle="Una mezcla equilibrada — desde joyas accesibles hasta clásicos atemporales — pensada para que encuentres tu match sin importar el presupuesto."
-        perfumes={recommended}
-      />
-
-      {/* BLOQUE EMOCIONAL */}
-      <section className="relative my-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="relative aspect-[3/4] overflow-hidden">
-            <img
-              src={emotionalImg}
-              alt="Descubrimiento de fragancia"
-              loading="lazy"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="lg:pl-12">
-            <p className="eyebrow">Asesoramiento personalizado</p>
-            <h2 className="mt-6 text-4xl md:text-5xl font-serif leading-tight text-balance">
-              Te ayudamos a elegir tu <em className="text-accent">fragancia ideal</em>.
-            </h2>
-            <span className="divider-gold mt-8" />
-            <p className="mt-8 text-foreground/70 leading-relaxed text-lg">
-              Cada piel cuenta una historia. Conversamos contigo para entender tu rutina,
-              tus recuerdos y tu deseo, y te guiamos hacia la fragancia que verdaderamente
-              te define.
-            </p>
-            <a
-              href={whatsappGeneralLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-10 inline-flex items-center gap-3 px-8 py-4 border border-accent text-accent eyebrow hover:bg-accent hover:text-accent-foreground transition-all duration-500"
-            >
-              Conversar por WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* MÁS ELEGIDOS */}
       <Section
         eyebrow="Más elegidos"
-        title={<>Las <em className="text-accent">favoritas</em> de siempre</>}
+        title={<>Los <em className="text-accent">favoritos</em> de siempre</>}
         subtitle="Iconos reconocibles que nunca fallan — los que más recomendamos a quienes no saben por dónde empezar."
         perfumes={bestsellers}
       />
 
-      {/* SELECCIÓN PREMIUM */}
-      <Section
-        eyebrow="Selección premium"
-        title={<>Para los que buscan <em className="text-accent">alta gama</em></>}
-        subtitle="Casas de perfumería de autor — Xerjoff, Parfums de Marly, Creed, Tom Ford — para quien ya sabe lo que quiere."
-        perfumes={premium}
-      />
-
-      {/* CTA FINAL */}
-      <section className="my-40 text-center max-w-3xl mx-auto px-6">
-        <p className="eyebrow">Acceso exclusivo</p>
-        <h2 className="mt-6 text-4xl md:text-5xl font-serif leading-tight text-balance">
-          Recibí <em className="text-accent">recomendaciones</em><br />y beneficios reservados.
+      {/* CTA AL CATÁLOGO COMPLETO */}
+      <section className="max-w-4xl mx-auto px-6 py-24 text-center">
+        <p className="eyebrow">El catálogo completo</p>
+        <h2 className="mt-6 text-3xl md:text-4xl font-serif leading-tight text-balance">
+          Más de cien fragancias <em className="text-accent">esperándote</em>
         </h2>
         <Link
-          to="/login"
-          className="mt-12 inline-flex items-center gap-4 px-10 py-4 border border-foreground/40 eyebrow hover:border-accent hover:text-accent transition-all duration-700"
+          to="/catalogo"
+          search={{ marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" }}
+          className="mt-10 inline-flex items-center justify-center px-12 py-4 border border-accent text-accent eyebrow text-[0.6rem] hover:bg-accent hover:text-accent-foreground transition-all duration-500"
         >
-          Acceder
+          Explorar catálogo
         </Link>
+      </section>
+
+      {/* CONFIANZA — 3 PILARES */}
+      <section className="border-t border-border/40 my-16">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 py-20 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          {[
+            {
+              title: "Perfumes originales",
+              text: "100% auténticos. Trabajamos solo con casas de perfumería y distribuidores oficiales.",
+            },
+            {
+              title: "Selección curada",
+              text: "Cada pieza es elegida una a una. No vendemos catálogo masivo: vendemos lo que recomendaríamos.",
+            },
+            {
+              title: "Atención personalizada",
+              text: "Te acompañamos por WhatsApp para encontrar la fragancia exacta para tu piel y tu momento.",
+            },
+          ].map((pillar) => (
+            <div key={pillar.title} className="text-center md:text-left">
+              <span className="divider-gold mb-6 mx-auto md:mx-0" />
+              <h3 className="text-xl font-serif tracking-tight">{pillar.title}</h3>
+              <p className="mt-4 text-foreground/60 text-sm leading-relaxed">{pillar.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA FINAL — ASESORAMIENTO */}
+      <section className="my-32 text-center max-w-3xl mx-auto px-6">
+        <p className="eyebrow">Asesoramiento personalizado</p>
+        <h2 className="mt-8 text-4xl md:text-5xl font-serif leading-tight text-balance">
+          ¿No sabés por dónde <em className="text-accent">empezar</em>?
+        </h2>
+        <p className="mt-8 max-w-md mx-auto text-foreground/65 leading-relaxed">
+          Conversamos por WhatsApp y te recomendamos la fragancia perfecta para vos.
+        </p>
+        <a
+          href={whatsappGeneralLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 inline-flex items-center justify-center px-12 py-5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500"
+        >
+          Hablar por WhatsApp
+        </a>
       </section>
     </>
   );
