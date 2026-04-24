@@ -1,9 +1,11 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import type { Brand, FragranceType, Gender, Perfume } from "@/lib/types";
+import type { Brand, Perfume } from "@/lib/types";
 import { PerfumeCard } from "@/components/PerfumeCard";
-import { Search, Loader2 } from "lucide-react";
+import { CatalogFilters } from "@/components/CatalogFilters";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerClose } from "@/components/ui/drawer";
+import { Search, Loader2, SlidersHorizontal, X } from "lucide-react";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { HIDDEN_BRAND_SLUGS, HIDDEN_BRAND_SLUG_SET } from "@/lib/hidden-brands";
@@ -53,21 +55,6 @@ export const Route = createFileRoute("/catalogo")({
     </div>
   ),
 });
-
-const GENDERS: { value: Gender | ""; label: string }[] = [
-  { value: "", label: "Todos" },
-  { value: "hombre", label: "Hombre" },
-  { value: "mujer", label: "Mujer" },
-  { value: "unisex", label: "Unisex" },
-];
-
-const TYPES: { value: FragranceType | ""; label: string }[] = [
-  { value: "", label: "Todos" },
-  { value: "fresco", label: "Fresco" },
-  { value: "dulce", label: "Dulce" },
-  { value: "amaderado", label: "Amaderado" },
-  { value: "intenso", label: "Intenso" },
-];
 
 function CatalogoPage() {
   const search = Route.useSearch();
