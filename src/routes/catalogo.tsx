@@ -159,8 +159,17 @@ function CatalogoPage() {
     navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
   };
 
-  const hasActiveFilters =
-    search.marca || search.genero || search.tipo || search.q || search.max < 500 || search.destacado;
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const activeFilterCount =
+    (search.marca ? 1 : 0) +
+    (search.genero ? 1 : 0) +
+    (search.tipo ? 1 : 0) +
+    (search.max < 500 ? 1 : 0);
+
+  const hasActiveFilters = Boolean(
+    search.marca || search.genero || search.tipo || search.q || search.max < 500 || search.destacado,
+  );
 
   const resetSearch = { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" } as const;
 
@@ -224,87 +233,95 @@ function CatalogoPage() {
         </div>
       </section>
 
-      {/* Buscador */}
-      <div className="relative max-w-xl mx-auto mb-10">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" size={16} />
-        <input
-          type="search"
-          placeholder="Buscar por nombre o marca..."
-          value={search.q}
-          onChange={(e) => update({ q: e.target.value })}
-          className="w-full bg-input/40 border border-border pl-11 pr-4 py-3 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-accent transition-colors"
-        />
-      </div>
+      {/* Buscador + botón Filtrar (mobile) */}
+      <div className="max-w-xl mx-auto mb-8">
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" size={16} />
+          <input
+            type="search"
+            placeholder="Buscar por nombre o marca..."
+            value={search.q}
+            onChange={(e) => update({ q: e.target.value })}
+            className="w-full bg-input/40 border border-border pl-11 pr-4 py-3 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-accent transition-colors"
+          />
+        </div>
 
-      <div className="grid lg:grid-cols-[240px_1fr] gap-10">
-        {/* Filtros */}
-        <aside className="space-y-8">
-          <FilterGroup label="Marca">
-            <select
-              value={search.marca}
-              onChange={(e) => update({ marca: e.target.value })}
-              className="w-full bg-input/40 border border-border px-3 py-2.5 text-sm focus:outline-none focus:border-accent"
-            >
-              <option value="">Todas</option>
-              {brands.map((b) => (
-                <option key={b.id} value={b.slug}>{b.name}</option>
-              ))}
-            </select>
-          </FilterGroup>
-
-          <FilterGroup label="Género">
-            <div className="flex flex-col gap-2">
-              {GENDERS.map((g) => (
-                <button
-                  key={g.value}
-                  onClick={() => update({ genero: g.value })}
-                  className={`text-left text-sm py-1 transition-colors ${
-                    search.genero === g.value ? "text-accent" : "text-foreground/60 hover:text-foreground"
-                  }`}
-                >
-                  {g.label}
-                </button>
-              ))}
-            </div>
-          </FilterGroup>
-
-          <FilterGroup label="Tipo de fragancia">
-            <div className="flex flex-col gap-2">
-              {TYPES.map((t) => (
-                <button
-                  key={t.value}
-                  onClick={() => update({ tipo: t.value })}
-                  className={`text-left text-sm py-1 transition-colors ${
-                    search.tipo === t.value ? "text-accent" : "text-foreground/60 hover:text-foreground"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-          </FilterGroup>
-
-          <FilterGroup label={`Precio máx · USD ${search.max}`}>
-            <input
-              type="range"
-              min={50}
-              max={500}
-              step={10}
-              value={search.max}
-              onChange={(e) => update({ max: Number(e.target.value) })}
-              className="w-full accent-accent"
-            />
-          </FilterGroup>
-
+        {/* Botón Filtrar — solo mobile/tablet */}
+        <div className="lg:hidden mt-4 flex items-center justify-between gap-3">
+          <button
+            onClick={() => setFiltersOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2.5 border border-border text-foreground/80 hover:border-accent hover:text-accent transition-colors eyebrow text-[0.6rem]"
+          >
+            <SlidersHorizontal size={14} />
+            <span>Filtrar</span>
+            {activeFilterCount > 0 && (
+              <span className="ml-1 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[0.55rem] bg-accent text-accent-foreground rounded-full">
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
           {hasActiveFilters && (
             <button
               onClick={() => navigate({ search: resetSearch })}
-              className="eyebrow text-foreground/50 hover:text-accent transition-colors"
+              className="eyebrow text-[0.6rem] text-foreground/50 hover:text-accent transition-colors"
             >
-              Limpiar filtros
+              Limpiar
             </button>
           )}
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-[240px_1fr] gap-10">
+        {/* Filtros desktop */}
+        <aside className="hidden lg:block">
+          <CatalogFilters
+            brands={brands}
+            value={{
+              marca: search.marca,
+              genero: search.genero,
+              tipo: search.tipo,
+              max: search.max,
+            }}
+            onChange={(patch) => update(patch)}
+            onReset={() => navigate({ search: resetSearch })}
+            hasActiveFilters={hasActiveFilters}
+          />
         </aside>
+
+        {/* Drawer filtros mobile */}
+        <Drawer open={filtersOpen} onOpenChange={setFiltersOpen}>
+          <DrawerContent className="bg-background border-border/40 max-h-[88vh]">
+            <DrawerHeader className="flex items-center justify-between border-b border-border/40">
+              <DrawerTitle className="eyebrow text-foreground/70">Filtrar catálogo</DrawerTitle>
+              <DrawerClose
+                className="p-2 text-foreground/60 hover:text-accent transition-colors"
+                aria-label="Cerrar filtros"
+              >
+                <X size={18} />
+              </DrawerClose>
+            </DrawerHeader>
+            <div className="px-6 py-6 overflow-y-auto">
+              <CatalogFilters
+                brands={brands}
+                value={{
+                  marca: search.marca,
+                  genero: search.genero,
+                  tipo: search.tipo,
+                  max: search.max,
+                }}
+                onChange={(patch) => update(patch)}
+                onReset={() => navigate({ search: resetSearch })}
+                hasActiveFilters={hasActiveFilters}
+              />
+              <button
+                onClick={() => setFiltersOpen(false)}
+                className="mt-8 w-full inline-flex items-center justify-center px-6 py-3.5 bg-accent text-accent-foreground eyebrow text-[0.65rem] hover:bg-accent/90 transition-colors"
+              >
+                Ver {perfumes.length} resultado{perfumes.length === 1 ? "" : "s"}
+              </button>
+            </div>
+          </DrawerContent>
+        </Drawer>
 
         {/* Grid */}
         <div>
@@ -361,15 +378,6 @@ function CatalogoPage() {
           )}
         </div>
       </div>
-    </div>
-  );
-}
-
-function FilterGroup({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <p className="eyebrow mb-4">{label}</p>
-      {children}
     </div>
   );
 }
