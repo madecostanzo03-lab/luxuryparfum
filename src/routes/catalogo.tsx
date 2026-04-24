@@ -147,6 +147,39 @@ function CatalogoPage() {
   const hasActiveFilters =
     search.marca || search.genero || search.tipo || search.q || search.max < 500;
 
+  const shortcuts: { label: string; emoji: string; patch: Partial<typeof search>; isActive: boolean }[] = [
+    {
+      label: "Más vendidos",
+      emoji: "🔥",
+      patch: { genero: "", tipo: "", marca: "", max: 500 },
+      isActive: false,
+    },
+    {
+      label: "Perfumes premium",
+      emoji: "💎",
+      patch: { genero: "", tipo: "", marca: "", max: 500 },
+      isActive: false,
+    },
+    {
+      label: "Para la noche",
+      emoji: "🌙",
+      patch: { tipo: "intenso", genero: "", marca: "", max: 500 },
+      isActive: search.tipo === "intenso",
+    },
+    {
+      label: "Frescos para el día",
+      emoji: "☀️",
+      patch: { tipo: "fresco", genero: "", marca: "", max: 500 },
+      isActive: search.tipo === "fresco",
+    },
+    {
+      label: "Perfumes dulces",
+      emoji: "💖",
+      patch: { tipo: "dulce", genero: "", marca: "", max: 500 },
+      isActive: search.tipo === "dulce",
+    },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
       <header className="text-center max-w-2xl mx-auto mb-16">
