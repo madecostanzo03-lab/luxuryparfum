@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { Perfume, PerfumeVariant } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
-import { X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
+import { SmartImage } from "./SmartImage";
 
 export function PerfumeModal({
   perfume,
@@ -62,48 +63,62 @@ export function PerfumeModal({
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-w-4xl bg-background border-border/40 p-0 overflow-hidden">
+      <DialogContent className="max-w-4xl w-[calc(100vw-1rem)] sm:w-full max-h-[95vh] overflow-y-auto bg-background border-border/40 p-0 sm:rounded-none">
         <DialogTitle className="sr-only">{displayName}</DialogTitle>
+
+        {/* Barra superior mobile: Volver + Cerrar (sticky para no perder navegación) */}
+        <div className="sticky top-0 z-20 flex items-center justify-between px-4 py-3 bg-background/95 backdrop-blur-md border-b border-border/40 md:hidden">
+          <button
+            onClick={onClose}
+            className="inline-flex items-center gap-2 text-foreground/80 hover:text-accent transition-colors"
+            aria-label="Volver al catálogo"
+          >
+            <ArrowLeft size={16} />
+            <span className="eyebrow text-[0.6rem]">Volver</span>
+          </button>
+          <button
+            onClick={onClose}
+            className="p-2 -mr-2 text-foreground/60 hover:text-accent transition-colors"
+            aria-label="Cerrar"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* Botón cerrar solo desktop (esquina absoluta sobre la imagen) */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 text-foreground/60 hover:text-accent transition-colors"
+          className="hidden md:flex absolute top-4 right-4 z-10 p-2 text-foreground/70 hover:text-accent transition-colors bg-background/40 backdrop-blur-sm rounded-full"
           aria-label="Cerrar"
         >
           <X size={18} />
         </button>
 
         <div className="grid md:grid-cols-2">
-          <div className="aspect-square md:aspect-auto bg-card">
-            {perfume.image_url ? (
-              <img
-                src={perfume.image_url}
-                alt={displayName}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary to-card min-h-[400px]">
-                <div className="font-serif italic text-8xl text-accent/20">
-                  {displayName.charAt(0)}
-                </div>
-              </div>
-            )}
+          <div className="aspect-square md:aspect-auto md:min-h-[500px] bg-card">
+            <SmartImage
+              src={perfume.image_url}
+              alt={displayName}
+              fallbackInitial={displayName.charAt(0)}
+              eager
+            />
           </div>
 
-          <div className="p-8 md:p-12 flex flex-col">
+          <div className="p-6 sm:p-8 md:p-12 flex flex-col">
             {perfume.brand && (
               <p className="eyebrow">{perfume.brand.name}</p>
             )}
-            <h2 className="mt-4 text-4xl font-serif leading-tight">{displayName}</h2>
-            <span className="divider-gold mt-6" />
+            <h2 className="mt-3 sm:mt-4 text-3xl sm:text-4xl font-serif leading-tight">{displayName}</h2>
+            <span className="divider-gold mt-5" />
 
             {perfume.description && (
-              <p className="mt-6 text-foreground/75 leading-relaxed font-serif italic text-lg">
+              <p className="mt-5 sm:mt-6 text-foreground/75 leading-relaxed font-serif italic text-base sm:text-lg">
                 "{perfume.description}"
               </p>
             )}
 
             {sortedVariants.length > 0 && (
-              <div className="mt-8">
+              <div className="mt-7">
                 <p className="eyebrow mb-3">
                   {sortedVariants.length > 1 ? "Presentaciones" : "Presentación"}
                 </p>
@@ -128,7 +143,7 @@ export function PerfumeModal({
               </div>
             )}
 
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-7 flex items-center gap-4">
               <span className="eyebrow text-foreground/50">Precio</span>
               <span className="text-2xl font-serif">
                 USD {(selected?.price ?? perfume.price).toFixed(0)}
@@ -146,10 +161,13 @@ export function PerfumeModal({
               })}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto pt-10 inline-flex items-center justify-center gap-3 px-8 py-4 border border-accent text-accent eyebrow hover:bg-accent hover:text-accent-foreground transition-all duration-500"
+              className="mt-8 md:mt-auto md:pt-10 inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent text-accent-foreground eyebrow hover:bg-accent/90 transition-all duration-500"
             >
               Consultar por WhatsApp
             </a>
+            <p className="mt-3 text-center text-[0.65rem] text-foreground/40 tracking-wide">
+              Te respondemos en minutos
+            </p>
           </div>
         </div>
       </DialogContent>
