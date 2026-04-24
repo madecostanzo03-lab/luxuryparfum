@@ -114,11 +114,13 @@ export function PerfumeModal({
             </div>
 
             <a
-              href={whatsappLink(
-                selected
-                  ? `${displayName}${variantLabel(selected) ? ` (${variantLabel(selected)})` : ""}`
-                  : displayName
-              )}
+              href={whatsappLink({
+                name: displayName,
+                brand: perfume.brand?.name ?? null,
+                presentation: selected ? variantLabel(selected) || null : null,
+                price: selected?.price ?? perfume.price,
+                fromPrice: !selected && (perfume.variants?.length ?? 0) > 1,
+              })}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-auto pt-10 inline-flex items-center justify-center gap-3 px-8 py-4 border border-accent text-accent eyebrow hover:bg-accent hover:text-accent-foreground transition-all duration-500"
