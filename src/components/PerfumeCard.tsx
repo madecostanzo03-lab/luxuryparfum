@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import type { Perfume } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { perfumeShortHint } from "@/lib/perfume-helpers";
-import { PerfumeModal } from "./PerfumeModal";
+import { SmartImage } from "./SmartImage";
+
+// Lazy load del modal: no se descarga hasta que el usuario abre un producto.
+// Esto reduce el JS inicial del catálogo y evita bloqueos al renderizar la grilla.
+const PerfumeModal = lazy(() =>
+  import("./PerfumeModal").then((m) => ({ default: m.PerfumeModal })),
+);
 
 
 export function PerfumeCard({
@@ -41,20 +47,12 @@ export function PerfumeCard({
           aria-label={`Ver detalles de ${displayName}`}
           className="relative aspect-[4/5] overflow-hidden bg-card block w-full text-left"
         >
-          {perfume.image_url ? (
-            <img
-              src={perfume.image_url}
-              alt={`${displayName}${perfume.brand ? ` — ${perfume.brand.name}` : ""}`}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary to-card">
-              <div className="font-serif italic text-7xl text-accent/30">
-                {displayName.charAt(0)}
-              </div>
-            </div>
-          )}
+          <SmartImage
+            src={perfume.image_url}
+            alt={`${displayName}${perfume.brand ? ` — ${perfume.brand.name}` : ""}`}
+            fallbackInitial={displayName.charAt(0)}
+            imgClassName="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+          />
           {perfume.is_recommended && (
             <span className="absolute top-5 left-5 eyebrow text-[0.5rem] text-accent border border-accent/40 px-2.5 py-1 backdrop-blur-sm bg-background/30">
               Recomendado
@@ -105,13 +103,17 @@ export function PerfumeCard({
         </div>
       </article>
 
-      <PerfumeModal
-        perfume={perfume}
-        open={open}
-        onClose={() => handleOpen(false)}
-        initialVariantId={initialVariantId}
-        onVariantChange={onVariantChange}
-      />
+      {open && (
+        <Suspense fallback={null}>
+          <PerfumeModal
+            perfume={perfume}
+            open={open}
+            onClose={() => handleOpen(false)}
+            initialVariantId={initialVariantId}
+            onVariantChange={onVariantChange}
+          />
+        </Suspense>
+      )}
     </>
   );
 }
