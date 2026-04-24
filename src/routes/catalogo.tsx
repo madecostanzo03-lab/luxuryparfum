@@ -15,6 +15,7 @@ const searchSchema = z.object({
   max: fallback(z.number(), 500).default(500),
   p: fallback(z.string(), "").default(""),
   v: fallback(z.string(), "").default(""),
+  destacado: fallback(z.enum(["", "bestseller", "premium"]), "").default(""),
 });
 
 export const Route = createFileRoute("/catalogo")({
@@ -106,6 +107,7 @@ function CatalogoPage() {
       if (search.genero) query = query.eq("gender", search.genero);
       if (search.tipo) query = query.eq("fragrance_type", search.tipo);
       if (selectedBrandId) query = query.eq("brand_id", selectedBrandId);
+      if (search.destacado === "bestseller") query = query.eq("is_bestseller", true);
       if (search.q) {
         // búsqueda case-insensitive por nombre
         query = query.ilike("name", `%${search.q}%`);
@@ -118,7 +120,11 @@ function CatalogoPage() {
         console.error("Error cargando perfumes:", error);
         setPerfumes([]);
       } else {
-        const list = (data as Perfume[]) ?? [];
+        let list = (data as Perfume[]) ?? [];
+        // "Premium" = brand_tier === 1 (filtrado client-side por estar en relación)
+        if (search.destacado === "premium") {
+          list = list.filter((p) => (p.brand?.brand_tier ?? 99) === 1);
+        }
         // Orden final: brand_tier ASC, imagen primero, precio DESC
         list.sort((a, b) => {
           const ta = a.brand?.brand_tier ?? 99;
@@ -138,14 +144,49 @@ function CatalogoPage() {
     return () => {
       cancelled = true;
     };
-  }, [search.genero, search.tipo, search.max, search.q, selectedBrandId, search.marca, brands.length]);
+  }, [search.genero, search.tipo, search.max, search.q, search.destacado, selectedBrandId, search.marca, brands.length]);
 
   const update = (patch: Partial<typeof search>) => {
     navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
   };
 
   const hasActiveFilters =
-    search.marca || search.genero || search.tipo || search.q || search.max < 500;
+    search.marca || search.genero || search.tipo || search.q || search.max < 500 || search.destacado;
+
+  const resetSearch = { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "", destacado: "" } as const;
+
+  const shortcuts: { label: string; emoji: string; patch: Partial<typeof search>; isActive: boolean }[] = [
+    {
+      label: "Más vendidos",
+      emoji: "🔥",
+      patch: { ...resetSearch, destacado: "bestseller" },
+      isActive: search.destacado === "bestseller",
+    },
+    {
+      label: "Perfumes premium",
+      emoji: "💎",
+      patch: { ...resetSearch, destacado: "premium" },
+      isActive: search.destacado === "premium",
+    },
+    {
+      label: "Para la noche",
+      emoji: "🌙",
+      patch: { ...resetSearch, tipo: "intenso" },
+      isActive: search.tipo === "intenso" && !search.destacado,
+    },
+    {
+      label: "Frescos para el día",
+      emoji: "☀️",
+      patch: { ...resetSearch, tipo: "fresco" },
+      isActive: search.tipo === "fresco" && !search.destacado,
+    },
+    {
+      label: "Perfumes dulces",
+      emoji: "💖",
+      patch: { ...resetSearch, tipo: "dulce" },
+      isActive: search.tipo === "dulce" && !search.destacado,
+    },
+  ];
 
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
@@ -158,6 +199,27 @@ function CatalogoPage() {
           Cada pieza es seleccionada una a una. Descubrí la que es para vos.
         </p>
       </header>
+
+      {/* Atajos visuales */}
+      <section className="mb-10">
+        <p className="eyebrow text-center mb-6 text-foreground/60">¿Qué estás buscando?</p>
+        <div className="flex flex-wrap justify-center gap-3">
+          {shortcuts.map((s) => (
+            <button
+              key={s.label}
+              onClick={() => navigate({ search: (prev: typeof search) => ({ ...prev, ...s.patch }) })}
+              className={`group inline-flex items-center gap-2.5 px-5 py-3 border text-sm transition-all ${
+                s.isActive
+                  ? "border-accent bg-accent/10 text-accent"
+                  : "border-border bg-input/20 text-foreground/80 hover:border-accent/60 hover:text-foreground"
+              }`}
+            >
+              <span className="text-lg leading-none">{s.emoji}</span>
+              <span className="font-medium tracking-wide">{s.label}</span>
+            </button>
+          ))}
+        </div>
+      </section>
 
       {/* Buscador */}
       <div className="relative max-w-xl mx-auto mb-10">
@@ -233,7 +295,7 @@ function CatalogoPage() {
 
           {hasActiveFilters && (
             <button
-              onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
+              onClick={() => navigate({ search: resetSearch })}
               className="eyebrow text-foreground/50 hover:text-accent transition-colors"
             >
               Limpiar filtros
@@ -269,7 +331,7 @@ function CatalogoPage() {
               <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
               {hasActiveFilters && (
                 <button
-                  onClick={() => navigate({ search: { marca: "", genero: "", tipo: "", q: "", max: 500, p: "", v: "" } })}
+                  onClick={() => navigate({ search: resetSearch })}
                   className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
                 >
                   Limpiar filtros
