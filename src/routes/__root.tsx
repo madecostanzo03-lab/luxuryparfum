@@ -2,7 +2,6 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 import appCss from "../styles.css?url";
 
@@ -38,6 +37,12 @@ export const Route = createRootRoute({
       { name: "author", content: "Luxury Parfum" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Luxury Parfum — Fragancias de autor" },
+      { name: "twitter:title", content: "Luxury Parfum — Fragancias de autor" },
+      { property: "og:description", content: "Catálogo curado de perfumería de lujo. Te guiamos a encontrar tu fragancia ideal." },
+      { name: "twitter:description", content: "Catálogo curado de perfumería de lujo. Te guiamos a encontrar tu fragancia ideal." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e1d2b120-9261-406e-bfb7-b6752e620c06" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e1d2b120-9261-406e-bfb7-b6752e620c06" },
     ],
     links: [
       {
@@ -73,7 +78,6 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <FloatingWhatsApp />
       <Toaster />
     </>
   );
