@@ -85,13 +85,14 @@ export function SmartImage({
             preserveBg
               ? undefined
               : {
-                  // Funde fondos blancos del proveedor con nuestro estudio oscuro,
-                  // dejando el frasco visible y unificando la estética.
-                  mixBlendMode: "screen",
-                  filter: "contrast(1.08) saturate(1.05)",
+                  // Multiply funde fondos blancos del proveedor con nuestro
+                  // estudio oscuro azul-noir y deja el frasco recortado de forma
+                  // natural. Funciona muy bien para fotos tipo packshot blanco.
+                  mixBlendMode: "multiply",
+                  filter: "contrast(1.05) saturate(1.08) brightness(1.02)",
                 }
           }
-          className={`relative w-full h-full object-contain p-4 sm:p-6 transition-opacity duration-700 ${
+          className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
             loaded ? "opacity-100" : "opacity-0"
           } ${imgClassName}`}
         />
