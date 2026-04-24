@@ -105,6 +105,86 @@ import pvalentino_valentino_uomo from "@/assets/perfumes-premium-batch1/valentin
 import pversace_versace_bright_crystal_absolu from "@/assets/perfumes-premium-batch1/versace-versace-bright-crystal-absolu.webp";
 import pversace_versace_eros from "@/assets/perfumes-premium-batch1/versace-versace-eros.webp";
 
+// === BATCH 3: 78 imágenes editorial premium limpias (sin notas olfativas) ===
+import p3_agatha_paris_agatha_paris_l_homme_azur from "@/assets/perfumes-premium-batch3/agatha-paris-agatha-paris-l-homme-azur.webp";
+import p3_agatha_paris_agatha_paris_l_homme_classique from "@/assets/perfumes-premium-batch3/agatha-paris-agatha-paris-l-homme-classique.webp";
+import p3_agatha_paris_agatha_paris_l_homme_terres_du_sud from "@/assets/perfumes-premium-batch3/agatha-paris-agatha-paris-l-homme-terres-du-sud.webp";
+import p3_animale_animale from "@/assets/perfumes-premium-batch3/animale-animale.webp";
+import p3_animale_animale_animale_for_men from "@/assets/perfumes-premium-batch3/animale-animale-animale-for-men.webp";
+import p3_animale_animale_for_men from "@/assets/perfumes-premium-batch3/animale-animale-for-men.webp";
+import p3_animale_animale_love from "@/assets/perfumes-premium-batch3/animale-animale-love.webp";
+import p3_antonio_banderas_antonio_banderas_black_seduct from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-black-seduct.webp";
+import p3_antonio_banderas_antonio_banderas_black_seduction_band from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-black-seduction-band.webp";
+import p3_antonio_banderas_antonio_banderas_blue_seduction from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-blue-seduction.webp";
+import p3_antonio_banderas_antonio_banderas_diavolo from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-diavolo.webp";
+import p3_antonio_banderas_antonio_banderas_her_secret_absolu from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-her-secret-absolu.webp";
+import p3_antonio_banderas_antonio_banderas_her_secret_desire from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-her-secret-desire.webp";
+import p3_antonio_banderas_antonio_banderas_her_secret_temptation_edt_50 from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-her-secret-temptation-edt-50.webp";
+import p3_antonio_banderas_antonio_banderas_king_of_seduct_absolut from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-king-of-seduct-absolut.webp";
+import p3_antonio_banderas_antonio_banderas_king_of_seduction from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-king-of-seduction.webp";
+import p3_antonio_banderas_antonio_banderas_mediterraneo from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-mediterraneo.webp";
+import p3_antonio_banderas_antonio_banderas_power_of_seduction from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-power-of-seduction.webp";
+import p3_antonio_banderas_antonio_banderas_secret_temptation from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-secret-temptation.webp";
+import p3_antonio_banderas_antonio_banderas_the_golden_secret from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-the-golden-secret.webp";
+import p3_antonio_banderas_antonio_banderas_the_icon from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-the-icon.webp";
+import p3_antonio_banderas_antonio_banderas_the_icon_elixir from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-the-icon-elixir.webp";
+import p3_antonio_banderas_antonio_banderas_the_icon_supreme from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-the-icon-supreme.webp";
+import p3_antonio_banderas_antonio_banderas_the_secret_absolu from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-the-secret-absolu.webp";
+import p3_antonio_banderas_antonio_banderas_the_secret_edt_a_100ml from "@/assets/perfumes-premium-batch3/antonio-banderas-antonio-banderas-the-secret-edt-a-100ml.webp";
+import p3_azzaro_azzaro_pour_elle from "@/assets/perfumes-premium-batch3/azzaro-azzaro-pour-elle.webp";
+import p3_azzaro_azzaro_sport from "@/assets/perfumes-premium-batch3/azzaro-azzaro-sport.webp";
+import p3_calvin_klein_calvin_klein_ck_be from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-ck-be.webp";
+import p3_calvin_klein_calvin_klein_ck_in2u from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-ck-in2u.webp";
+import p3_calvin_klein_calvin_klein_ck_one_essence_parfum_intense_100ml from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-ck-one-essence-parfum-intense-100ml.webp";
+import p3_calvin_klein_calvin_klein_eternity from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-eternity.webp";
+import p3_calvin_klein_calvin_klein_eternity_aromat_essenc from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-eternity-aromat-essenc.webp";
+import p3_calvin_klein_calvin_klein_eternity_aromat_essenc_parfum_50 from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-eternity-aromat-essenc-parfum-50.webp";
+import p3_calvin_klein_calvin_klein_everyone from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-everyone.webp";
+import p3_calvin_klein_calvin_klein_men_euphoria from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-men-euphoria.webp";
+import p3_calvin_klein_calvin_klein_one_essence_viva_love from "@/assets/perfumes-premium-batch3/calvin-klein-calvin-klein-one-essence-viva-love.webp";
+import p3_hugo_boss_hugo_boss_alive from "@/assets/perfumes-premium-batch3/hugo-boss-hugo-boss-alive.webp";
+import p3_hugo_boss_hugo_boss_bottled_infinite from "@/assets/perfumes-premium-batch3/hugo-boss-hugo-boss-bottled-infinite.webp";
+import p3_hugo_boss_hugo_boss_bottled_tonic from "@/assets/perfumes-premium-batch3/hugo-boss-hugo-boss-bottled-tonic.webp";
+import p3_hugo_boss_hugo_boss_jeans from "@/assets/perfumes-premium-batch3/hugo-boss-hugo-boss-jeans.webp";
+import p3_hugo_boss_hugo_boss_jeans_edt_75ml_mh from "@/assets/perfumes-premium-batch3/hugo-boss-hugo-boss-jeans-edt-75ml-mh.webp";
+import p3_kenzo_kenzo_flowerby from "@/assets/perfumes-premium-batch3/kenzo-kenzo-flowerby.webp";
+import p3_lacoste_lacoste_l_12_12_blanc from "@/assets/perfumes-premium-batch3/lacoste-lacoste-l-12-12-blanc.webp";
+import p3_lacoste_lacoste_l_12_12_rose_eau_fraiche from "@/assets/perfumes-premium-batch3/lacoste-lacoste-l-12-12-rose-eau-fraiche.webp";
+import p3_lacoste_lacoste_l_homme from "@/assets/perfumes-premium-batch3/lacoste-lacoste-l-homme.webp";
+import p3_lacoste_lacoste_pour_femme from "@/assets/perfumes-premium-batch3/lacoste-lacoste-pour-femme.webp";
+import p3_moschino_moschino_funny from "@/assets/perfumes-premium-batch3/moschino-moschino-funny.webp";
+import p3_moschino_moschino_toy_2_bubble_gum from "@/assets/perfumes-premium-batch3/moschino-moschino-toy-2-bubble-gum.webp";
+import p3_moschino_moschino_toy_2_pearl from "@/assets/perfumes-premium-batch3/moschino-moschino-toy-2-pearl.webp";
+import p3_moschino_moschino_toy_boy from "@/assets/perfumes-premium-batch3/moschino-moschino-toy-boy.webp";
+import p3_nina_ricci_nina_ricci_nina_fleur from "@/assets/perfumes-premium-batch3/nina-ricci-nina-ricci-nina-fleur.webp";
+import p3_nina_ricci_nina_ricci_nina_rouge from "@/assets/perfumes-premium-batch3/nina-ricci-nina-ricci-nina-rouge.webp";
+import p3_nina_ricci_nina_ricci_nina_rouge_crush from "@/assets/perfumes-premium-batch3/nina-ricci-nina-ricci-nina-rouge-crush.webp";
+import p3_nina_ricci_nina_ricci_venus_int from "@/assets/perfumes-premium-batch3/nina-ricci-nina-ricci-venus-int.webp";
+import p3_paco_rabanne_paco_rabanne_1_million from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-1-million.webp";
+import p3_paco_rabanne_paco_rabanne_1_million_parfum_ra_50ml from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-1-million-parfum-ra-50ml.webp";
+import p3_paco_rabanne_paco_rabanne_fame from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-fame.webp";
+import p3_paco_rabanne_paco_rabanne_fame_intense from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-fame-intense.webp";
+import p3_paco_rabanne_paco_rabanne_million_gold_elixir_parfum_intense_200_644940 from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-million-gold-elixir-parfum-intense-200-644940.webp";
+import p3_paco_rabanne_paco_rabanne_million_gold_elixir_parfum_intense_50_644957 from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-million-gold-elixir-parfum-intense-50-644957.webp";
+import p3_paco_rabanne_paco_rabanne_million_gold_for_her from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-million-gold-for-her.webp";
+import p3_paco_rabanne_paco_rabanne_million_gold_for_her_parf_50ml from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-million-gold-for-her-parf-50ml.webp";
+import p3_paco_rabanne_paco_rabanne_olympea from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-olympea.webp";
+import p3_paco_rabanne_paco_rabanne_olympea_absolu_parfum_intense_50ml from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-olympea-absolu-parfum-intense-50ml.webp";
+import p3_paco_rabanne_paco_rabanne_olympea_absolu_parfum_intense_80ml from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-olympea-absolu-parfum-intense-80ml.webp";
+import p3_paco_rabanne_paco_rabanne_olympea_flora from "@/assets/perfumes-premium-batch3/paco-rabanne-paco-rabanne-olympea-flora.webp";
+import p3_ralph_lauren_ralph_lauren_polo_black from "@/assets/perfumes-premium-batch3/ralph-lauren-ralph-lauren-polo-black.webp";
+import p3_salvatore_ferragamo_salvatore_ferragamo_bright_leather from "@/assets/perfumes-premium-batch3/salvatore-ferragamo-salvatore-ferragamo-bright-leather.webp";
+import p3_tommy_hilfiger_tommy_hilfiger_tommy from "@/assets/perfumes-premium-batch3/tommy-hilfiger-tommy-hilfiger-tommy.webp";
+import p3_versace_versace_eros_pour_femme from "@/assets/perfumes-premium-batch3/versace-versace-eros-pour-femme.webp";
+import p3_versace_versace_yellow_diamond from "@/assets/perfumes-premium-batch3/versace-versace-yellow-diamond.webp";
+import p3_versace_versace_yellow_diamond_intense from "@/assets/perfumes-premium-batch3/versace-versace-yellow-diamond-intense.webp";
+import p3_viktor_rolf_viktor_rolf_flowerbomb from "@/assets/perfumes-premium-batch3/viktor-rolf-viktor-rolf-flowerbomb.webp";
+import p3_women_secret_women_secret_eau_it_s_fresh from "@/assets/perfumes-premium-batch3/women-secret-women-secret-eau-it-s-fresh.webp";
+import p3_women_secret_women_secret_intimate from "@/assets/perfumes-premium-batch3/women-secret-women-secret-intimate.webp";
+import p3_women_secret_women_secret_intimate_daydream from "@/assets/perfumes-premium-batch3/women-secret-women-secret-intimate-daydream.webp";
+import p3_women_secret_women_secret_rose_seduction from "@/assets/perfumes-premium-batch3/women-secret-women-secret-rose-seduction.webp";
+import p3_women_secret_women_secret_rouge_seduction from "@/assets/perfumes-premium-batch3/women-secret-women-secret-rouge-seduction.webp";
+
 /**
  * Mapeo por UUID de perfume → imagen editorial premium local.
  * Si el perfume está acá, se usa esta imagen y se renderiza SIN tratamiento
@@ -213,6 +293,85 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "b3abde85-b912-41de-b64d-87923395876d": pvalentino_valentino_uomo, // Valentino Uomo
   "aca3c0f1-e20d-4d22-a9dd-afa384f8de9d": pversace_versace_bright_crystal_absolu, // Versace Bright Crystal Absolu
   "37e5f1e6-6ada-41b7-9bed-c5e4c584f8e9": pversace_versace_eros, // Versace Eros
+  // === BATCH 3 ===
+  "dcb08f2e-c1ed-4cc4-bf85-5907bf744d4b": p3_agatha_paris_agatha_paris_l_homme_azur, // Agatha Paris — Agatha Paris L Homme Azur
+  "3e9bd56a-8e7e-415d-b142-1aa4ffab47d2": p3_agatha_paris_agatha_paris_l_homme_classique, // Agatha Paris — Agatha Paris L Homme Classique
+  "bdf2ac6a-4992-49d0-9444-3d7d061390c4": p3_agatha_paris_agatha_paris_l_homme_terres_du_sud, // Agatha Paris — Agatha Paris L Homme Terres Du Sud
+  "d26cda04-4b51-4af8-a5fc-003b7174bfa5": p3_animale_animale, // Animale — Animale
+  "43289a58-fbfa-477b-bc3d-0d6ad466ed43": p3_animale_animale_animale_for_men, // Animale — Animale Animale For Men
+  "47106086-06ce-4693-b594-7066c60ced38": p3_animale_animale_for_men, // Animale — Animale For Men
+  "1475eb84-1a7c-4b1a-8afb-b9e24e0ea388": p3_animale_animale_love, // Animale — Animale Love
+  "c08a1c60-8022-4793-988c-685f27932fdc": p3_antonio_banderas_antonio_banderas_black_seduct, // Antonio Banderas — Antonio Banderas Black Seduct
+  "63b05f0d-136f-4865-b8dd-cf1a5c422c3d": p3_antonio_banderas_antonio_banderas_black_seduction_band, // Antonio Banderas — Antonio Banderas Black Seduction Band
+  "95f47e8b-6b2a-4d3f-a3fb-52e61c3ae1dd": p3_antonio_banderas_antonio_banderas_blue_seduction, // Antonio Banderas — Antonio Banderas Blue Seduction
+  "c536a261-7029-4963-8afc-40915a6b3ee1": p3_antonio_banderas_antonio_banderas_diavolo, // Antonio Banderas — Antonio Banderas Diavolo
+  "1f7afe72-bd99-40a8-a899-dc89f90082f1": p3_antonio_banderas_antonio_banderas_her_secret_absolu, // Antonio Banderas — Antonio Banderas Her Secret Absolu
+  "fd72b25c-3de6-42cc-9c69-6405c99b63cc": p3_antonio_banderas_antonio_banderas_her_secret_desire, // Antonio Banderas — Antonio Banderas Her Secret Desire
+  "245829b0-4874-4362-931f-d8ee71e12371": p3_antonio_banderas_antonio_banderas_her_secret_temptation_edt_50, // Antonio Banderas — Antonio Banderas Her Secret Temptation Edt 50
+  "30827c90-ba32-49cd-ab97-a3ead9ff7d56": p3_antonio_banderas_antonio_banderas_king_of_seduct_absolut, // Antonio Banderas — Antonio Banderas King Of Seduct Absolut
+  "655bf3c6-6b73-427e-905c-2e22cb58b813": p3_antonio_banderas_antonio_banderas_king_of_seduction, // Antonio Banderas — Antonio Banderas King Of Seduction
+  "2b90425b-a874-499b-8c44-30e495843df1": p3_antonio_banderas_antonio_banderas_mediterraneo, // Antonio Banderas — Antonio Banderas Mediterraneo
+  "a16bffda-7623-4e6a-99f1-8ce1c9758934": p3_antonio_banderas_antonio_banderas_power_of_seduction, // Antonio Banderas — Antonio Banderas Power Of Seduction
+  "55b598ac-89b6-4078-a86e-e2f33a322728": p3_antonio_banderas_antonio_banderas_secret_temptation, // Antonio Banderas — Antonio Banderas Secret Temptation
+  "3d96495a-1b57-442e-a6bb-e13f9c3a3fba": p3_antonio_banderas_antonio_banderas_the_golden_secret, // Antonio Banderas — Antonio Banderas The Golden Secret
+  "d16d1ef0-f1e7-4a24-926e-786ed363e658": p3_antonio_banderas_antonio_banderas_the_icon, // Antonio Banderas — Antonio Banderas The Icon
+  "d69a2ac6-5dae-40aa-b5be-b9471b9f9fa9": p3_antonio_banderas_antonio_banderas_the_icon_elixir, // Antonio Banderas — Antonio Banderas The Icon Elixir
+  "6d3f76c1-d1c8-48af-bb99-89c8ec24202d": p3_antonio_banderas_antonio_banderas_the_icon_supreme, // Antonio Banderas — Antonio Banderas The Icon Supreme
+  "76975ccf-2677-4c0d-a740-cd21585a5f12": p3_antonio_banderas_antonio_banderas_the_secret_absolu, // Antonio Banderas — Antonio Banderas The Secret Absolu
+  "ccc83d61-0b39-4a6e-b5b4-3e742d0098e8": p3_antonio_banderas_antonio_banderas_the_secret_edt_a_100ml, // Antonio Banderas — Antonio Banderas The Secret Edt A 100ml
+  "5685b909-7aa1-44fd-aa91-62dc318cafd7": p3_azzaro_azzaro_pour_elle, // Azzaro — Azzaro Pour Elle
+  "06c7f5d6-3533-42a7-ad67-047aedbb6b35": p3_azzaro_azzaro_sport, // Azzaro — Azzaro Sport
+  "5daa726f-37aa-435d-b179-260f310ef867": p3_calvin_klein_calvin_klein_ck_be, // Calvin Klein — Calvin Klein Ck Be
+  "81f3ab78-d564-4eae-b18f-56510198f7d2": p3_calvin_klein_calvin_klein_ck_in2u, // Calvin Klein — Calvin Klein Ck In2u
+  "53d67d0a-413e-4721-8729-0125c9b2469e": p3_calvin_klein_calvin_klein_ck_one_essence_parfum_intense_100ml, // Calvin Klein — Calvin Klein Ck One Essence Parfum Intense 100ml
+  "0b6db7e6-aecb-4ad4-9696-60958ea9c583": p3_calvin_klein_calvin_klein_eternity, // Calvin Klein — Calvin Klein Eternity
+  "ce78415b-20fd-4b57-9c63-4107b40a3911": p3_calvin_klein_calvin_klein_eternity_aromat_essenc, // Calvin Klein — Calvin Klein Eternity Aromat Essenc
+  "d9245152-b301-480a-ba76-a0a8b3027191": p3_calvin_klein_calvin_klein_eternity_aromat_essenc_parfum_50, // Calvin Klein — Calvin Klein Eternity Aromat Essenc Parfum 50
+  "bdf7782d-5e9e-4c3a-ae1e-137c008c640f": p3_calvin_klein_calvin_klein_everyone, // Calvin Klein — Calvin Klein Everyone
+  "76814cf6-a22b-4838-8899-0097ef7108cd": p3_calvin_klein_calvin_klein_men_euphoria, // Calvin Klein — Calvin Klein Men Euphoria
+  "e4239cd8-6284-46b6-a670-e1bc2ca4f4cf": p3_calvin_klein_calvin_klein_one_essence_viva_love, // Calvin Klein — Calvin Klein One Essence Viva Love
+  "6566bae1-dfba-4d4e-bbb8-0973f8c797a7": p3_hugo_boss_hugo_boss_alive, // Hugo Boss — Hugo Boss Alive
+  "ab84010f-a546-4aa0-958f-50a3cc8dc9a8": p3_hugo_boss_hugo_boss_bottled_infinite, // Hugo Boss — Hugo Boss Bottled Infinite
+  "5c146057-00fa-4baf-8be2-a41881f1bde8": p3_hugo_boss_hugo_boss_bottled_tonic, // Hugo Boss — Hugo Boss Bottled Tonic
+  "861f39b4-6a8d-4a7b-95f0-9ce7201168fe": p3_hugo_boss_hugo_boss_jeans, // Hugo Boss — Hugo Boss Jeans
+  "5153ab2e-d53c-4d65-a571-bfcce07b957e": p3_hugo_boss_hugo_boss_jeans_edt_75ml_mh, // Hugo Boss — Hugo Boss Jeans Edt 75ml Mh
+  "8f682a8c-8de8-406b-ad42-9b885cde259b": p3_kenzo_kenzo_flowerby, // Kenzo — Kenzo Flowerby
+  "f03a0868-71e1-49c7-8cd1-b68280cd1ba6": p3_lacoste_lacoste_l_12_12_blanc, // Lacoste — Lacoste L.12.12 Blanc
+  "01e86dcc-d2e5-430c-8462-ae6bcf20f7ce": p3_lacoste_lacoste_l_12_12_rose_eau_fraiche, // Lacoste — Lacoste L.12.12 Rose Eau Fraiche
+  "88f73b71-c94b-46a4-8781-d21e296da3e0": p3_lacoste_lacoste_l_homme, // Lacoste — Lacoste L'homme
+  "0aba632d-ab65-4669-92a1-170de5ebc536": p3_lacoste_lacoste_pour_femme, // Lacoste — Lacoste Pour Femme
+  "330c0892-ce92-43ec-8b15-ac673a9f23a9": p3_moschino_moschino_funny, // Moschino — Moschino Funny
+  "fd33931b-8c4f-419f-b0be-28aa5de2ea30": p3_moschino_moschino_toy_2_bubble_gum, // Moschino — Moschino Toy 2 Bubble Gum
+  "fbf7eb93-dbfb-4d38-bb21-d61a63e276a4": p3_moschino_moschino_toy_2_pearl, // Moschino — Moschino Toy 2 Pearl
+  "38581729-6be4-4d87-b9a1-dd641365c8d9": p3_moschino_moschino_toy_boy, // Moschino — Moschino Toy Boy
+  "dcf333b1-7b5e-4676-8a89-37fa1a63ad86": p3_nina_ricci_nina_ricci_nina_fleur, // Nina Ricci — Nina Ricci Nina Fleur
+  "844ba82d-3ad7-4da5-8c35-2369fc0f90ee": p3_nina_ricci_nina_ricci_nina_rouge, // Nina Ricci — Nina Ricci Nina Rouge
+  "99f99ef1-06a1-4969-abe8-4938480ad5af": p3_nina_ricci_nina_ricci_nina_rouge_crush, // Nina Ricci — Nina Ricci Nina Rouge Crush
+  "6917f2bb-f847-4318-852f-bcb691a2b846": p3_nina_ricci_nina_ricci_venus_int, // Nina Ricci — Nina Ricci Venus Int
+  "a0a7df02-d29e-4ff3-8830-66f7414d5cb5": p3_paco_rabanne_paco_rabanne_1_million, // Paco Rabanne — Paco Rabanne 1 Million
+  "f6060ea7-bb0a-447c-9a35-4272d343a436": p3_paco_rabanne_paco_rabanne_1_million_parfum_ra_50ml, // Paco Rabanne — Paco Rabanne 1 Million Parfum Ra 50ml
+  "88f22865-0a94-4cb6-b4f9-aef6d8b2616f": p3_paco_rabanne_paco_rabanne_fame, // Paco Rabanne — Paco Rabanne Fame
+  "aafcf3cf-1568-4a32-9ba8-06c1c099ba65": p3_paco_rabanne_paco_rabanne_fame_intense, // Paco Rabanne — Paco Rabanne Fame Intense
+  "3b785428-a70f-4ce2-802a-e1c195541e9f": p3_paco_rabanne_paco_rabanne_million_gold_elixir_parfum_intense_200_644940, // Paco Rabanne — Paco Rabanne Million Gold Elixir Parfum Intense 200(644940
+  "233b082c-3c73-4326-ba91-1b51a2aed201": p3_paco_rabanne_paco_rabanne_million_gold_elixir_parfum_intense_50_644957, // Paco Rabanne — Paco Rabanne Million Gold Elixir Parfum Intense 50(644957
+  "9d40c1df-bfac-4d2f-afaf-b3f9c7de476b": p3_paco_rabanne_paco_rabanne_million_gold_for_her, // Paco Rabanne — Paco Rabanne Million Gold For Her
+  "840f5c81-a0da-410e-b76a-a4a4b06fc588": p3_paco_rabanne_paco_rabanne_million_gold_for_her_parf_50ml, // Paco Rabanne — Paco Rabanne Million Gold For Her Parf 50ml
+  "11811197-58ec-4f7b-9645-c38d077475ac": p3_paco_rabanne_paco_rabanne_olympea, // Paco Rabanne — Paco Rabanne Olympea
+  "deeafe4e-9887-44e6-a536-446a917402cd": p3_paco_rabanne_paco_rabanne_olympea_absolu_parfum_intense_50ml, // Paco Rabanne — Paco Rabanne Olympea Absolu Parfum Intense 50ml
+  "019c1662-8e02-4b94-bb60-d07f4a2a6d6f": p3_paco_rabanne_paco_rabanne_olympea_absolu_parfum_intense_80ml, // Paco Rabanne — Paco Rabanne Olympea Absolu Parfum Intense 80ml
+  "56c377fc-df9f-4cc9-bb54-69f3f67398bb": p3_paco_rabanne_paco_rabanne_olympea_flora, // Paco Rabanne — Paco Rabanne Olympea Flora
+  "0c3ad516-8496-4930-b9c9-9126c2ef9262": p3_ralph_lauren_ralph_lauren_polo_black, // Ralph Lauren — Ralph Lauren Polo Black
+  "8ca6d8a0-bcec-4493-99b3-c8a306477675": p3_salvatore_ferragamo_salvatore_ferragamo_bright_leather, // Salvatore Ferragamo — Salvatore Ferragamo Bright Leather
+  "d86c83e4-77b5-4393-9eb4-26a51f46467d": p3_tommy_hilfiger_tommy_hilfiger_tommy, // Tommy Hilfiger — Tommy Hilfiger Tommy
+  "4e0422b4-0c24-40a2-8d6e-c1260cd7c3cd": p3_versace_versace_eros_pour_femme, // Versace — Versace Eros Pour Femme
+  "b81a5449-49fd-4e48-a532-e1d323b02e55": p3_versace_versace_yellow_diamond, // Versace — Versace Yellow Diamond
+  "06f61bde-f4a9-40bc-a321-8587a737e503": p3_versace_versace_yellow_diamond_intense, // Versace — Versace Yellow Diamond Intense
+  "64119b50-a078-4ba6-8f13-35a3014c4055": p3_viktor_rolf_viktor_rolf_flowerbomb, // Viktor & Rolf — Viktor & Rolf Flowerbomb
+  "a6d6b17b-3a15-481a-a8e4-9be4777632d0": p3_women_secret_women_secret_eau_it_s_fresh, // Women Secret — Women Secret Eau It's Fresh
+  "b370c61c-6424-4b32-9183-6ce07167e388": p3_women_secret_women_secret_intimate, // Women Secret — Women Secret Intimate
+  "610f4e73-832d-4d4f-82da-0fb4c2f728aa": p3_women_secret_women_secret_intimate_daydream, // Women Secret — Women Secret Intimate Daydream
+  "8d42c358-f1de-4a84-b3ad-fcc088467e84": p3_women_secret_women_secret_rose_seduction, // Women Secret — Women Secret Rose Seduction
+  "86e29710-8294-4edb-9919-f03498652eff": p3_women_secret_women_secret_rouge_seduction, // Women Secret — Women Secret Rouge Seduction
 };
 
 /**
