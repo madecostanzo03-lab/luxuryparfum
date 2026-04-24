@@ -76,10 +76,11 @@ function RootComponent() {
   return (
     <>
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-16 sm:pt-20">
         <Outlet />
       </main>
       <Footer />
+      <FloatingWhatsApp />
       <WelcomePopup />
       <Toaster />
     </>
