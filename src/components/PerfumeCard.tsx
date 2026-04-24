@@ -107,6 +107,8 @@ export function PerfumeCard({
         perfume={perfume}
         open={open}
         onClose={() => handleOpen(false)}
+        initialVariantId={initialVariantId}
+        onVariantChange={onVariantChange}
       />
     </>
   );
