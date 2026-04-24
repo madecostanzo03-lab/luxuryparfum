@@ -144,12 +144,14 @@ function CatalogoPage() {
         if (search.destacado === "premium") {
           list = list.filter((p) => (p.brand?.brand_tier ?? 99) === 1);
         }
-        // Orden final: destacados primero (recomendado/bestseller), luego con imagen,
-        // y dentro de cada grupo orden equilibrado por precio ascendente (sin sesgo a premium).
+        // Orden final: bestsellers primero, luego recomendados, luego resto.
+        // Dentro de cada grupo: con imagen primero, y precio ascendente para variedad
+        // (sin sesgo a premium).
         list.sort((a, b) => {
-          const fa = a.is_recommended || a.is_bestseller ? 0 : 1;
-          const fb = b.is_recommended || b.is_bestseller ? 0 : 1;
-          if (fa !== fb) return fa - fb;
+          const rank = (p: Perfume) => (p.is_bestseller ? 0 : p.is_recommended ? 1 : 2);
+          const ra = rank(a);
+          const rb = rank(b);
+          if (ra !== rb) return ra - rb;
           const ia = a.image_url ? 0 : 1;
           const ib = b.image_url ? 0 : 1;
           if (ia !== ib) return ia - ib;

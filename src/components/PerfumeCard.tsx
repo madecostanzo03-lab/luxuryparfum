@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Perfume } from "@/lib/types";
 import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
+import { perfumeShortHint } from "@/lib/perfume-helpers";
 import { PerfumeModal } from "./PerfumeModal";
 
 
@@ -20,6 +21,7 @@ export function PerfumeCard({
   const [open, setOpen] = useState(openInitial);
   const displayName = perfume.base_name ?? perfume.name;
   const variantsCount = perfume.variants?.length ?? 0;
+  const hint = perfumeShortHint(perfume);
 
   useEffect(() => {
     setOpen(openInitial);
@@ -73,6 +75,11 @@ export function PerfumeCard({
           <h3 className="mt-3 text-lg md:text-xl font-serif leading-tight tracking-tight">
             {displayName}
           </h3>
+          {hint && (
+            <p className="mt-2 text-[0.7rem] text-foreground/45 italic tracking-wide">
+              {hint}
+            </p>
+          )}
           <span className="mt-3 text-sm text-foreground/70 tracking-wide">
             {variantsCount > 1 ? "Desde " : ""}
             <span className="text-foreground">USD {perfume.price.toFixed(0)}</span>
@@ -88,10 +95,13 @@ export function PerfumeCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="mt-5 inline-flex items-center justify-center px-6 py-3 border border-accent/60 text-accent eyebrow text-[0.55rem] hover:bg-accent hover:text-accent-foreground transition-all duration-500 w-full max-w-[220px]"
+            className="mt-5 inline-flex items-center justify-center px-6 py-3 bg-accent text-accent-foreground eyebrow text-[0.55rem] hover:bg-accent/90 hover:scale-[1.02] transition-all duration-500 w-full max-w-[220px]"
           >
-            Consultar por WhatsApp
+            Pedir por WhatsApp
           </a>
+          <p className="mt-2 text-[0.6rem] text-foreground/40 tracking-wide">
+            Te asesoramos en minutos
+          </p>
         </div>
       </article>
 
