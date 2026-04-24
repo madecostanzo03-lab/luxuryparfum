@@ -1,5 +1,6 @@
 export type Gender = "hombre" | "mujer" | "unisex";
 export type FragranceType = "fresco" | "dulce" | "amaderado" | "intenso";
+export type Concentration = "edt" | "edp" | "edc" | "parfum" | "extrait";
 
 export interface Brand {
   id: string;
