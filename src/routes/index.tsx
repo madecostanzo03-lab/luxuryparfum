@@ -59,8 +59,6 @@ function HomePage() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative h-[100vh] min-h-[680px] w-full overflow-hidden -mt-20">
       {/* HERO EDITORIAL */}
       <section className="relative h-[100vh] min-h-[720px] w-full overflow-hidden -mt-20">
         <img
