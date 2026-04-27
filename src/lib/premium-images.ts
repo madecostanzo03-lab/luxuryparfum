@@ -492,6 +492,14 @@ import p6_mawwal_arabe_mawwal_mashaer_edp_100ml from "@/assets/perfumes-premium-
 import p6_mawwal_arabe_mawwal_rayhan_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-rayhan-edp-100ml.webp";
 import p6_mawwal_arabe_mawwal_athar_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-athar-edp-100ml.webp";
 
+// === BATCH 7 (parcial — 6 imágenes generadas antes del 402) ===
+import p7_gabriela_sabatini from "@/assets/perfumes-premium-batch7/gabriela-sabatini-gabriela-sabatini-edt-60ml.webp";
+import p7_jennifer_lopez_live from "@/assets/perfumes-premium-batch7/jennifer-lopez-jennifer-lopez-live-edp-100ml.webp";
+import p7_shakira_rock from "@/assets/perfumes-premium-batch7/shakira-shakira-rock-by-shakira-edt-80ml.webp";
+import p7_smart_443 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no443-edp-25ml.webp";
+import p7_smart_446 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no446-edp-25ml.webp";
+import p7_smart_448 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no448-edp-25ml.webp";
+
 export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "d9847555-4c32-411c-b06a-3c784ccec04a": burberryGoddess, // Burberry Goddess EDP Intense
   "e8a951f7-2e3e-4e75-844d-8c18f6d63c61": ckOne, // CK One EDT
