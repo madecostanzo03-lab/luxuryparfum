@@ -14,16 +14,16 @@ import sensIntenso from "@/assets/sensacion-intenso.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Luxury Parfum — Te ayudamos a encontrar tu perfume ideal" },
+      { title: "Luxury Parfum — Elegí cómo querés que te recuerden" },
       {
         name: "description",
         content:
-          "Asesoramiento personalizado de perfumería de lujo. Te ayudamos a elegir el perfume que mejor habla de vos. Originales, curados y enviados a todo el país.",
+          "Asesoramiento personalizado de perfumería de lujo. Para que tu fragancia hable antes que vos. Originales, curados y enviados a todo el país.",
       },
-      { property: "og:title", content: "Luxury Parfum — Encontrá tu perfume ideal" },
+      { property: "og:title", content: "Luxury Parfum — Elegí cómo querés que te recuerden" },
       {
         property: "og:description",
-        content: "Asesoramiento premium por WhatsApp. Elegimos tu aroma, no solo tu perfume.",
+        content: "Asesoramiento premium por WhatsApp. Tu perfume también habla por vos.",
       },
     ],
   }),
@@ -77,17 +77,17 @@ function HomePage() {
           />
 
           <h1
-            className="mt-7 sm:mt-10 text-[2.2rem] sm:text-6xl lg:text-[5.5rem] font-serif text-balance max-w-4xl leading-[1.05] tracking-tight fade-up"
+            className="mt-7 sm:mt-10 text-[2.4rem] sm:text-6xl lg:text-[5.5rem] font-serif text-balance max-w-4xl leading-[1.05] tracking-tight fade-up"
             style={{ animationDelay: "0.5s" }}
           >
-            Te ayudamos a encontrar tu <em className="text-accent">perfume ideal</em>
+            Elegí cómo querés que <em className="text-accent">te recuerden</em>
           </h1>
 
           <p
-            className="mt-6 sm:mt-9 max-w-md text-foreground/70 text-base sm:text-lg leading-relaxed brand-serif fade-up"
+            className="mt-6 sm:mt-9 max-w-md text-foreground/80 text-base sm:text-lg leading-relaxed brand-serif fade-up"
             style={{ animationDelay: "0.8s" }}
           >
-            No vendemos perfumes — elegimos tu presencia. Asesoramiento personalizado para que tu fragancia hable antes que vos.
+            Asesoramiento personalizado para que tu fragancia hable antes que vos.
           </p>
 
           <div
@@ -301,9 +301,9 @@ function HomePage() {
       <section className="my-20 sm:my-32 text-center max-w-3xl mx-auto px-5 sm:px-6">
         <p className="eyebrow">Encontrá tu firma</p>
         <h2 className="mt-7 text-3xl sm:text-5xl font-serif leading-tight text-balance">
-          No es solo un perfume — es <em className="text-accent">cómo te van a recordar</em>.
+          Tu perfume también <em className="text-accent">habla por vos</em>.
         </h2>
-        <p className="mt-7 max-w-md mx-auto text-foreground/70 brand-serif text-base sm:text-lg leading-relaxed">
+        <p className="mt-7 max-w-md mx-auto text-foreground/75 brand-serif text-base sm:text-lg leading-relaxed">
           Contanos cómo querés que te perciban y te recomendamos la fragancia perfecta.
         </p>
         <a
