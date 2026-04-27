@@ -14,16 +14,16 @@ import sensIntenso from "@/assets/sensacion-intenso.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Luxury Parfum — Te ayudamos a encontrar tu perfume ideal" },
+      { title: "Luxury Parfum — Elegí cómo querés que te recuerden" },
       {
         name: "description",
         content:
-          "Asesoramiento personalizado de perfumería de lujo. Te ayudamos a elegir el perfume que mejor habla de vos. Originales, curados y enviados a todo el país.",
+          "Asesoramiento personalizado de perfumería de lujo. Para que tu fragancia hable antes que vos. Originales, curados y enviados a todo el país.",
       },
-      { property: "og:title", content: "Luxury Parfum — Encontrá tu perfume ideal" },
+      { property: "og:title", content: "Luxury Parfum — Elegí cómo querés que te recuerden" },
       {
         property: "og:description",
-        content: "Asesoramiento premium por WhatsApp. Elegimos tu aroma, no solo tu perfume.",
+        content: "Asesoramiento premium por WhatsApp. Tu perfume también habla por vos.",
       },
     ],
   }),
