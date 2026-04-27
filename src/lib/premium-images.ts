@@ -392,6 +392,106 @@ import p5_faconnable_faconnable_legacy_edp_90ml from "@/assets/perfumes-premium-
 import p5_lattafa_arabe_lattafa_yara_yara_candy_edp_100ml_kit from "@/assets/perfumes-premium-batch5/lattafa-arabe-lattafa-yara-yara-candy-edp-100ml-kit.webp";
 import p5_lovali_lovali_1_billion_edp_100ml from "@/assets/perfumes-premium-batch5/lovali-lovali-1-billion-edp-100ml.webp";
 
+
+// === BATCH 6: 97 imágenes editorial premium ===
+import p6_maison_alhambra_arabe_maison_alhambra_chants_tenderina_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-chants-tenderina-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_baroque_la_rouge_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-baroque-la-rouge-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_glacier_gold_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-glacier-gold-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_glacier_m_gold_edp_30ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-glacier-m-gold-edp-30ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_b_a_d_homme_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-b-a-d-homme-edp-100ml.webp";
+import p6_lattafa_arabe_lattafa_yara_moi_edp_100ml from "@/assets/perfumes-premium-batch6/lattafa-arabe-lattafa-yara-moi-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_dark_door_sport_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-dark-door-sport-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_glacier_m_pour_homme_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-glacier-m-pour-homme-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_jorg_di_m_prof_de_blu_edp_30 from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-jorg-di-m-prof-de-blu-edp-30.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_glacier_ultra_edp_30ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-glacier-ultra-edp-30ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_jorge_m_di_profumo_edp_30ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-jorge-m-di-profumo-edp-30ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_jorg_di_m_prof_de_blu_edp_100ml_735916 from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-jorg-di-m-prof-de-blu-edp-100ml-735916.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_jorge_di_profumo_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-jorge-di-profumo-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_sceptre_bronzite_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-sceptre-bronzite-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_m_galactic_intense_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-m-galactic-intense-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_toro_pour_hom_glace_edp_100 from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-toro-pour-hom-glace-edp-100.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_your_m_touch_santal_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-your-m-touch-santal-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_your_touch_leather_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-your-touch-leather-edp-100ml.webp";
+import p6_maison_alhambra_arabe_maison_alhambra_your_touch_edp_100ml from "@/assets/perfumes-premium-batch6/maison-alhambra-arabe-maison-alhambra-your-touch-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_ra_if_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-ra-if-edp-100ml.webp";
+import p6_mercedes_benz_mercedes_benz_select_night_edp_100ml from "@/assets/perfumes-premium-batch6/mercedes-benz-mercedes-benz-select-night-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_sama_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-sama-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_zuhoor_red_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-zuhoor-red-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_sabeel_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-sabeel-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_sitar_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-sitar-edp-100ml.webp";
+import p6_mercedes_benz_mercedes_benz_the_move_edt_100ml from "@/assets/perfumes-premium-batch6/mercedes-benz-mercedes-benz-the-move-edt-100ml.webp";
+import p6_mawwal_arabe_mawwal_saz_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-saz-edp-100ml.webp";
+import p6_mercedes_benz_mercedes_benz_man_intense_edt_100ml from "@/assets/perfumes-premium-batch6/mercedes-benz-mercedes-benz-man-intense-edt-100ml.webp";
+import p6_mercedes_benz_mercedes_benz_ultimate_for_men_edp_120ml from "@/assets/perfumes-premium-batch6/mercedes-benz-mercedes-benz-ultimate-for-men-edp-120ml.webp";
+import p6_mirada_arabe_mirada_verato_sport_edp_100ml from "@/assets/perfumes-premium-batch6/mirada-arabe-mirada-verato-sport-edp-100ml.webp";
+import p6_montana_montana_collection_edition_4_edp_100ml from "@/assets/perfumes-premium-batch6/montana-montana-collection-edition-4-edp-100ml.webp";
+import p6_mirada_arabe_mirada_perla_sara_edp_100ml from "@/assets/perfumes-premium-batch6/mirada-arabe-mirada-perla-sara-edp-100ml.webp";
+import p6_montblanc_montblanc_explorer_extreme_parfum_100ml from "@/assets/perfumes-premium-batch6/montblanc-montblanc-explorer-extreme-parfum-100ml.webp";
+import p6_montblanc_montblanc_explorer_edp_100ml from "@/assets/perfumes-premium-batch6/montblanc-montblanc-explorer-edp-100ml.webp";
+import p6_montblanc_montblanc_femme_individuelle_edt_75ml from "@/assets/perfumes-premium-batch6/montblanc-montblanc-femme-individuelle-edt-75ml.webp";
+import p6_montblanc_montblanc_legend_blue_edp_100ml from "@/assets/perfumes-premium-batch6/montblanc-montblanc-legend-blue-edp-100ml.webp";
+import p6_montblanc_montblanc_legend_edt_100ml from "@/assets/perfumes-premium-batch6/montblanc-montblanc-legend-edt-100ml.webp";
+import p6_morgan_morgan_black_edp_100ml from "@/assets/perfumes-premium-batch6/morgan-morgan-black-edp-100ml.webp";
+import p6_nasma_arabe_nasma_adam_edp_100ml from "@/assets/perfumes-premium-batch6/nasma-arabe-nasma-adam-edp-100ml.webp";
+import p6_nazareno_gabrielli_nazareno_gabrielli_tough_boy_edt_100ml from "@/assets/perfumes-premium-batch6/nazareno-gabrielli-nazareno-gabrielli-tough-boy-edt-100ml.webp";
+import p6_nasma_arabe_nasma_basima_edp_100ml from "@/assets/perfumes-premium-batch6/nasma-arabe-nasma-basima-edp-100ml.webp";
+import p6_paris_hilton_paris_hilton_edp_100ml from "@/assets/perfumes-premium-batch6/paris-hilton-paris-hilton-edp-100ml.webp";
+import p6_nasma_arabe_nasma_nisrine_edp_100ml from "@/assets/perfumes-premium-batch6/nasma-arabe-nasma-nisrine-edp-100ml.webp";
+import p6_nautica_nautica_voyage_edt_100ml from "@/assets/perfumes-premium-batch6/nautica-nautica-voyage-edt-100ml.webp";
+import p6_pascal_morabito_pascal_morabito_or_boreal_edp_100ml from "@/assets/perfumes-premium-batch6/pascal-morabito-pascal-morabito-or-boreal-edp-100ml.webp";
+import p6_nazareno_gabrielli_nazareno_gabrielli_eterea_edp_100ml from "@/assets/perfumes-premium-batch6/nazareno-gabrielli-nazareno-gabrielli-eterea-edp-100ml.webp";
+import p6_police_police_to_be_freetodare_edp_125m from "@/assets/perfumes-premium-batch6/police-police-to-be-freetodare-edp-125m.webp";
+import p6_police_police_to_be_bad_guy_edt_125ml_shamp_agiv from "@/assets/perfumes-premium-batch6/police-police-to-be-bad-guy-edt-125ml-shamp-agiv.webp";
+import p6_police_police_rich_guy_for_man_edt_50ml from "@/assets/perfumes-premium-batch6/police-police-rich-guy-for-man-edt-50ml.webp";
+import p6_prime_collection_prime_collection_marconi_red_c_edt_90ml from "@/assets/perfumes-premium-batch6/prime-collection-prime-collection-marconi-red-c-edt-90ml.webp";
+import p6_police_police_to_be_sweet_girl_edp_125ml from "@/assets/perfumes-premium-batch6/police-police-to-be-sweet-girl-edp-125ml.webp";
+import p6_prime_collection_prime_collection_stamino_blue_edt_100ml from "@/assets/perfumes-premium-batch6/prime-collection-prime-collection-stamino-blue-edt-100ml.webp";
+import p6_rasasi_arabe_rasasi_hawas_elixir_edp_r_100ml from "@/assets/perfumes-premium-batch6/rasasi-arabe-rasasi-hawas-elixir-edp-r-100ml.webp";
+import p6_rasasi_arabe_rasasi_hawas_for_him_edp_100ml from "@/assets/perfumes-premium-batch6/rasasi-arabe-rasasi-hawas-for-him-edp-100ml.webp";
+import p6_rasasi_rasasi_hawas_black_edp_100ml_g from "@/assets/perfumes-premium-batch6/rasasi-rasasi-hawas-black-edp-100ml-g.webp";
+import p6_replay_replay_green_on_me_for_man_edt_t_100ml from "@/assets/perfumes-premium-batch6/replay-replay-green-on-me-for-man-edt-t-100ml.webp";
+import p6_reyane_tradition_reyane_tradition_one_day_oud_edp_100ml from "@/assets/perfumes-premium-batch6/reyane-tradition-reyane-tradition-one-day-oud-edp-100ml.webp";
+import p6_riiffs_arabe_riiffs_golden_elixir_extrait_de_parfum_100ml_574041_e from "@/assets/perfumes-premium-batch6/riiffs-arabe-riiffs-golden-elixir-extrait-de-parfum-100ml-574041-e.webp";
+import p6_risala_arabe_risala_elitefayruz_edp_100ml from "@/assets/perfumes-premium-batch6/risala-arabe-risala-elitefayruz-edp-100ml.webp";
+import p6_risala_arabe_risala_elitehikmah_of_life_int_edp_100ml_5763 from "@/assets/perfumes-premium-batch6/risala-arabe-risala-elitehikmah-of-life-int-edp-100ml-5763.webp";
+import p6_reyane_tradition_reyane_tradition_gentle_elsatys_edp_100ml from "@/assets/perfumes-premium-batch6/reyane-tradition-reyane-tradition-gentle-elsatys-edp-100ml.webp";
+import p6_rasasi_arabe_rasasi_hawas_ice_edp_100ml from "@/assets/perfumes-premium-batch6/rasasi-arabe-rasasi-hawas-ice-edp-100ml.webp";
+import p6_risala_arabe_risala_elitehikmah_of_life_edp_100ml from "@/assets/perfumes-premium-batch6/risala-arabe-risala-elitehikmah-of-life-edp-100ml.webp";
+import p6_risala_arabe_risala_elitevittorio_monaco_edp_100ml_196863 from "@/assets/perfumes-premium-batch6/risala-arabe-risala-elitevittorio-monaco-edp-100ml-196863.webp";
+import p6_risala_arabe_risala_elitemuluki_extreme_edp_100ml_m from "@/assets/perfumes-premium-batch6/risala-arabe-risala-elitemuluki-extreme-edp-100ml-m.webp";
+import p6_risala_arabe_risala_elitevittorio_milano_edp_100ml_196856 from "@/assets/perfumes-premium-batch6/risala-arabe-risala-elitevittorio-milano-edp-100ml-196856.webp";
+import p6_shakira_shakira_dance_red_midnight_edt_80ml from "@/assets/perfumes-premium-batch6/shakira-shakira-dance-red-midnight-edt-80ml.webp";
+import p6_shakira_shakira_rojo_elixir_edp_50ml from "@/assets/perfumes-premium-batch6/shakira-shakira-rojo-elixir-edp-50ml.webp";
+import p6_shakira_shakira_s_by_shakira_eau_florale_edt_50ml from "@/assets/perfumes-premium-batch6/shakira-shakira-s-by-shakira-eau-florale-edt-50ml.webp";
+import p6_smart_collection_arabe_smart_collection_no240_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no240-edp-25ml.webp";
+import p6_shakira_shakira_dance_edt_80ml from "@/assets/perfumes-premium-batch6/shakira-shakira-dance-edt-80ml.webp";
+import p6_smart_collection_arabe_smart_collection_no02_s_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no02-s-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no229_s_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no229-s-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no216_s_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no216-s-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no244_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no244-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no387_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no387-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no308_pour_homme_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no308-pour-homme-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no401_s_pour_homme_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no401-s-pour-homme-edp-25ml.webp";
+import p6_smart_collection_arabe_smart_collection_no394_edp_25ml from "@/assets/perfumes-premium-batch6/smart-collection-arabe-smart-collection-no394-edp-25ml.webp";
+import p6_jennifer_lopez_jennifer_lopez_miami_glow_edt_100ml from "@/assets/perfumes-premium-batch6/jennifer-lopez-jennifer-lopez-miami-glow-edt-100ml.webp";
+import p6_mauboussin_mauboussin_pour_lui_edp_100ml from "@/assets/perfumes-premium-batch6/mauboussin-mauboussin-pour-lui-edp-100ml.webp";
+import p6_maison_de_milan_maison_de_milan_faith_edp_100ml from "@/assets/perfumes-premium-batch6/maison-de-milan-maison-de-milan-faith-edp-100ml.webp";
+import p6_maison_de_milan_maison_de_milan_divine_edp_100ml from "@/assets/perfumes-premium-batch6/maison-de-milan-maison-de-milan-divine-edp-100ml.webp";
+import p6_maison_de_milan_maison_de_milan_bliss_rouge_edp_100ml from "@/assets/perfumes-premium-batch6/maison-de-milan-maison-de-milan-bliss-rouge-edp-100ml.webp";
+import p6_maison_de_milan_maison_de_milan_morning_edp_100ml from "@/assets/perfumes-premium-batch6/maison-de-milan-maison-de-milan-morning-edp-100ml.webp";
+import p6_maison_de_milan_maison_de_milan_karma_edp_100ml from "@/assets/perfumes-premium-batch6/maison-de-milan-maison-de-milan-karma-edp-100ml.webp";
+import p6_mauboussin_mauboussin_pour_lui_in_red_edp_100ml from "@/assets/perfumes-premium-batch6/mauboussin-mauboussin-pour-lui-in-red-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_basir_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-basir-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_alkawn_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-alkawn-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_abadeya_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-abadeya-edp-100ml.webp";
+import p6_mirada_arabe_mirada_verato_for_men_edp_100ml from "@/assets/perfumes-premium-batch6/mirada-arabe-mirada-verato-for-men-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_kaman_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-kaman-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_fada_gold_edp_m_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-fada-gold-edp-m-100ml.webp";
+import p6_mawwal_arabe_mawwal_fada_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-fada-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_mashaer_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-mashaer-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_rayhan_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-rayhan-edp-100ml.webp";
+import p6_mawwal_arabe_mawwal_athar_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-athar-edp-100ml.webp";
+
 export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "d9847555-4c32-411c-b06a-3c784ccec04a": burberryGoddess, // Burberry Goddess EDP Intense
   "e8a951f7-2e3e-4e75-844d-8c18f6d63c61": ckOne, // CK One EDT
@@ -773,6 +873,104 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "3354ae15-2e6a-41b8-ad84-ac9b34b29976": p5_faconnable_faconnable_legacy_edp_90ml, // Faconnable — FACONNABLE LEGACY EDP 90ML
   "d2b3f90c-c80d-481d-9691-3631dbf0feb4": p5_lattafa_arabe_lattafa_yara_yara_candy_edp_100ml_kit, // Lattafa — ARABE LATTAFA YARA + YARA CANDY EDP 100ML KIT
   "fa3eddbd-cab7-4ff5-ae75-67f23aa3ab00": p5_lovali_lovali_1_billion_edp_100ml, // Lovali — LOVALI 1 BILLION EDP 100ML
+  // === BATCH 6 ===
+  "fcfe86a0-3a74-4125-96b3-bd2e1f0b40de": p6_maison_alhambra_arabe_maison_alhambra_chants_tenderina_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA CHANTS TENDERINA EDP 100ML
+  "f3134d45-1d3a-4577-842d-0e4188be2ab0": p6_maison_alhambra_arabe_maison_alhambra_baroque_la_rouge_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA BAROQUE LA ROUGE EDP 100ML
+  "1f001b26-fa2c-421e-a46c-08a790e49e23": p6_maison_alhambra_arabe_maison_alhambra_glacier_gold_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA GLACIER GOLD EDP 100ML
+  "e6d7adb9-a7b1-4d49-ab39-4633ea0de115": p6_maison_alhambra_arabe_maison_alhambra_glacier_m_gold_edp_30ml, // Maison Alhambra — ARABE MAISON ALHAMBRA GLACIER M GOLD EDP 30ML
+  "0c2918cf-e0e2-4428-a2ea-f834cc86911d": p6_maison_alhambra_arabe_maison_alhambra_b_a_d_homme_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA B.A.D HOMME EDP 100ML
+  "4e0ee807-20d1-440f-8d9f-e6c9d203a53a": p6_lattafa_arabe_lattafa_yara_moi_edp_100ml, // Lattafa — ARABE LATTAFA YARA MOI EDP 100ML
+  "317a23f8-7157-4797-86bb-5f643aadb0bf": p6_maison_alhambra_arabe_maison_alhambra_dark_door_sport_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA DARK DOOR SPORT EDP 100ML
+  "01df4a7b-c3e7-49ac-8b19-696eea138cbd": p6_maison_alhambra_arabe_maison_alhambra_glacier_m_pour_homme_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA GLACIER M POUR HOMME EDP 100ML
+  "d5bb55cf-aaf4-4401-acc3-1b14acef412f": p6_maison_alhambra_arabe_maison_alhambra_jorg_di_m_prof_de_blu_edp_30, // Maison Alhambra — ARABE MAISON ALHAMBRA JORG DI M PROF DE BLU EDP 30
+  "cd90c8c6-a0be-4be7-81b6-cb2cb1d4f115": p6_maison_alhambra_arabe_maison_alhambra_glacier_ultra_edp_30ml, // Maison Alhambra — ARABE MAISON ALHAMBRA GLACIER ULTRA EDP 30ML
+  "91bba600-1012-4843-9d6e-7a6680c83045": p6_maison_alhambra_arabe_maison_alhambra_jorge_m_di_profumo_edp_30ml, // Maison Alhambra — ARABE MAISON ALHAMBRA JORGE M DI PROFUMO EDP 30ML
+  "2e5b265b-d1f3-40ef-b688-f49b0769fe02": p6_maison_alhambra_arabe_maison_alhambra_jorg_di_m_prof_de_blu_edp_100ml_735916, // Maison Alhambra — ARABE MAISON ALHAMBRA JORG DI M PROF DE BLU EDP 100ML(735916
+  "9a44e88c-1ad0-4f15-bb04-537c2295733f": p6_maison_alhambra_arabe_maison_alhambra_jorge_di_profumo_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA JORGE DI PROFUMO EDP 100ML
+  "ac88967b-03f8-4e99-8207-27982f6b72a3": p6_maison_alhambra_arabe_maison_alhambra_sceptre_bronzite_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA SCEPTRE BRONZITE EDP 100ML
+  "3be200c9-ba99-4137-a5dd-ba3560992109": p6_maison_alhambra_arabe_maison_alhambra_m_galactic_intense_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA M GALACTIC INTENSE EDP 100ML
+  "ba1e95b4-2d44-492f-8ca8-d76ceebe8ac6": p6_maison_alhambra_arabe_maison_alhambra_toro_pour_hom_glace_edp_100, // Maison Alhambra — ARABE MAISON ALHAMBRA TORO POUR HOM GLACE EDP 100
+  "cd3c3c63-ef5f-424e-bd69-5dd02be06b18": p6_maison_alhambra_arabe_maison_alhambra_your_m_touch_santal_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA YOUR M TOUCH SANTAL EDP 100ML
+  "4283daf5-71fd-4ddb-87b6-8085cf8c87dc": p6_maison_alhambra_arabe_maison_alhambra_your_touch_leather_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA YOUR TOUCH LEATHER EDP 100ML
+  "4c3ced3b-4dbe-49c2-806b-3a211bbb072f": p6_maison_alhambra_arabe_maison_alhambra_your_touch_edp_100ml, // Maison Alhambra — ARABE MAISON ALHAMBRA YOUR TOUCH EDP 100ML
+  "31afd98c-8de3-4d10-942b-7dd175dca595": p6_mawwal_arabe_mawwal_ra_if_edp_100ml, // Mawwal — ARABE MAWWAL RA`IF EDP 100ML
+  "c189edd6-a73b-410e-a0bd-e52ce7819ce6": p6_mercedes_benz_mercedes_benz_select_night_edp_100ml, // Mercedes Benz — MERCEDES BENZ SELECT NIGHT EDP 100ML
+  "5139b73f-5737-4c14-8387-821c2dac4fc6": p6_mawwal_arabe_mawwal_sama_edp_100ml, // Mawwal — ARABE MAWWAL SAMA EDP 100ML
+  "6f23ff4a-d482-4372-bf29-949b1d105986": p6_mawwal_arabe_mawwal_zuhoor_red_edp_100ml, // Mawwal — ARABE MAWWAL ZUHOOR RED EDP 100ML
+  "43f7daf2-7f52-427c-9eea-5d22e7605204": p6_mawwal_arabe_mawwal_sabeel_edp_100ml, // Mawwal — ARABE MAWWAL SABEEL EDP 100ML
+  "85d070eb-6d5d-4c00-9547-c0afbb50c540": p6_mawwal_arabe_mawwal_sitar_edp_100ml, // Mawwal — ARABE MAWWAL SITAR EDP 100ML
+  "d85aa0e6-0bee-4aea-8616-45139a507ad8": p6_mercedes_benz_mercedes_benz_the_move_edt_100ml, // Mercedes Benz — MERCEDES BENZ THE MOVE EDT 100ML
+  "1ba832a0-68bc-4fa4-aee5-dd8689f8e9d8": p6_mawwal_arabe_mawwal_saz_edp_100ml, // Mawwal — ARABE MAWWAL SAZ EDP 100ML
+  "39d983d5-9e3f-41a3-baef-9c69f1239a71": p6_mercedes_benz_mercedes_benz_man_intense_edt_100ml, // Mercedes Benz — MERCEDES BENZ MAN INTENSE EDT 100ML
+  "3ca5bb26-9827-4b96-b8ab-deebc5fab32f": p6_mercedes_benz_mercedes_benz_ultimate_for_men_edp_120ml, // Mercedes Benz — MERCEDES BENZ ULTIMATE FOR MEN EDP 120ML
+  "c143aa44-fa91-42bb-a170-9b12ff5c38c7": p6_mirada_arabe_mirada_verato_sport_edp_100ml, // Mirada — ARABE MIRADA VERATO SPORT EDP 100ML
+  "a667c3e6-5916-4f63-b2ea-aeb1b3c804b2": p6_montana_montana_collection_edition_4_edp_100ml, // Montana — MONTANA COLLECTION EDITION 4 EDP 100ML
+  "fbeab87a-49f2-4bc1-aa2e-b53d98c506d7": p6_mirada_arabe_mirada_perla_sara_edp_100ml, // Mirada — ARABE MIRADA PERLA SARA EDP 100ML
+  "141cea3b-c78f-4477-8f4b-343431118586": p6_montblanc_montblanc_explorer_extreme_parfum_100ml, // Montblanc — MONTBLANC EXPLORER EXTREME PARFUM 100ML
+  "06c6a22f-7f50-46b0-a83d-f95612289fd8": p6_montblanc_montblanc_explorer_edp_100ml, // Montblanc — MONTBLANC EXPLORER EDP 100ML
+  "1362a220-7e03-4aa4-ab53-952dd515efd5": p6_montblanc_montblanc_femme_individuelle_edt_75ml, // Montblanc — MONTBLANC FEMME INDIVIDUELLE EDT 75ML
+  "abb3d868-3a87-426b-8193-7fb4a8633971": p6_montblanc_montblanc_legend_blue_edp_100ml, // Montblanc — MONTBLANC LEGEND BLUE EDP 100ML
+  "ba044f4e-8bd4-409e-a845-46e91d81ebef": p6_montblanc_montblanc_legend_edt_100ml, // Montblanc — MONTBLANC LEGEND EDT 100ML
+  "e6d2891e-61d2-4843-8b07-14c04e31eef2": p6_morgan_morgan_black_edp_100ml, // Morgan — MORGAN BLACK EDP 100ML
+  "88696dbe-e53d-4bd7-a003-6d9210a436b6": p6_nasma_arabe_nasma_adam_edp_100ml, // Nasma — ARABE NASMA ADAM EDP 100ML
+  "532b2c73-6cb4-4833-a755-c2aa1efa4b51": p6_nazareno_gabrielli_nazareno_gabrielli_tough_boy_edt_100ml, // Nazareno Gabrielli — NAZARENO GABRIELLI TOUGH BOY EDT 100ML
+  "d58b489b-b631-4be6-91be-6427bc820439": p6_nasma_arabe_nasma_basima_edp_100ml, // Nasma — ARABE NASMA BASIMA EDP 100ML
+  "1c53621e-d860-4a7e-a01e-e729b4a0e980": p6_paris_hilton_paris_hilton_edp_100ml, // Paris Hilton — PARIS HILTON EDP 100ML
+  "c21fb8f8-efa2-4aa5-8072-93de3ee1a801": p6_nasma_arabe_nasma_nisrine_edp_100ml, // Nasma — ARABE NASMA NISRINE EDP 100ML
+  "c36ba5ff-460a-4f45-92ca-7fc6290b93a6": p6_nautica_nautica_voyage_edt_100ml, // Nautica — NAUTICA VOYAGE EDT 100ML
+  "914e6116-378c-4c6e-973a-a954e5981d1f": p6_pascal_morabito_pascal_morabito_or_boreal_edp_100ml, // Pascal Morabito — PASCAL MORABITO OR BOREAL EDP 100ML
+  "2d8120ee-10e5-4163-bece-787ddafb08c6": p6_nazareno_gabrielli_nazareno_gabrielli_eterea_edp_100ml, // Nazareno Gabrielli — NAZARENO GABRIELLI ETEREA EDP 100ML
+  "0fa06223-4a32-498d-ba03-b9073841f41a": p6_police_police_to_be_freetodare_edp_125m, // Police — POLICE TO BE FREETODARE EDP 125M
+  "9b208d0b-e10a-4d67-bc3c-9a541107d34c": p6_police_police_to_be_bad_guy_edt_125ml_shamp_agiv, // Police — POLICE TO BE BAD GUY EDT 125ML +SHAMP AGIV
+  "69d28af0-abc5-43d1-9c57-11fd478c6cca": p6_police_police_rich_guy_for_man_edt_50ml, // Police — POLICE RICH GUY FOR MAN EDT 50ML
+  "af3addfa-4a9b-4cb4-bdc5-9bb8035015f0": p6_prime_collection_prime_collection_marconi_red_c_edt_90ml, // Prime Collection — PRIME COLLECTION MARCONI RED C EDT 90ML
+  "621ecf85-7bea-426e-b557-34293cb0bf6c": p6_police_police_to_be_sweet_girl_edp_125ml, // Police — POLICE TO BE SWEET GIRL EDP 125ML
+  "47661bfb-7b9a-46cb-941d-3945dc3c38a4": p6_prime_collection_prime_collection_stamino_blue_edt_100ml, // Prime Collection — PRIME COLLECTION STAMINO BLUE EDT 100ML
+  "d3e2c0c1-fffa-4ecb-850b-6b59f0fd1c7b": p6_rasasi_arabe_rasasi_hawas_elixir_edp_r_100ml, // Rasasi — ARABE RASASI HAWAS ELIXIR EDP R 100ML
+  "d3c1e3a7-de90-4fff-ba1a-e1cb9719c16c": p6_rasasi_arabe_rasasi_hawas_for_him_edp_100ml, // Rasasi — ARABE RASASI HAWAS FOR HIM EDP 100ML
+  "b0017e3a-1eeb-4f9e-8d6f-ee1c86947e68": p6_rasasi_rasasi_hawas_black_edp_100ml_g, // Rasasi — RASASI HAWAS BLACK EDP 100ML G
+  "7529426c-a0d4-4c30-9656-83787787bd84": p6_replay_replay_green_on_me_for_man_edt_t_100ml, // Replay — REPLAY GREEN ON ME FOR MAN EDT T 100ML
+  "ea3acbac-d7cc-4b6d-8edf-c00590242c38": p6_reyane_tradition_reyane_tradition_one_day_oud_edp_100ml, // Reyane Tradition — REYANE TRADITION ONE DAY OUD EDP 100ML
+  "da658c97-33e9-4916-bd1a-63b25a999ca3": p6_riiffs_arabe_riiffs_golden_elixir_extrait_de_parfum_100ml_574041_e, // Riiffs — ARABE RIIFFS GOLDEN ELIXIR EXTRAIT DE PARFUM 100ML (574041 E
+  "c41b5b09-59be-400a-b2cc-83c09cc40dc3": p6_risala_arabe_risala_elitefayruz_edp_100ml, // Risala — ARABE RISALA ELITEFAYRUZ EDP 100ML
+  "c10c0510-deae-4142-b2a7-000068e0fb62": p6_risala_arabe_risala_elitehikmah_of_life_int_edp_100ml_5763, // Risala — ARABE RISALA ELITEHIKMAH OF LIFE INT EDP 100ML(5763
+  "aff8a430-0fe7-41fa-833a-17036701c607": p6_reyane_tradition_reyane_tradition_gentle_elsatys_edp_100ml, // Reyane Tradition — REYANE TRADITION GENTLE ELSATYS EDP 100ML
+  "dcfba922-093d-4642-8033-33110ac5759f": p6_rasasi_arabe_rasasi_hawas_ice_edp_100ml, // Rasasi — ARABE RASASI HAWAS ICE EDP 100ML
+  "56b3039b-c100-42f2-ae86-ec8e9f96c168": p6_risala_arabe_risala_elitehikmah_of_life_edp_100ml, // Risala — ARABE RISALA ELITEHIKMAH OF LIFE EDP 100ML
+  "4c643375-e482-4d68-9baf-a9ee49fc8b06": p6_risala_arabe_risala_elitevittorio_monaco_edp_100ml_196863, // Risala — ARABE RISALA ELITEVITTORIO MONACO EDP 100ML (196863
+  "86e91012-d5f4-422c-af6a-aa037fde5c3d": p6_risala_arabe_risala_elitemuluki_extreme_edp_100ml_m, // Risala — ARABE RISALA ELITEMULUKI EXTREME EDP 100ML M
+  "09e0a204-9250-41eb-9b87-ec19120c553d": p6_risala_arabe_risala_elitevittorio_milano_edp_100ml_196856, // Risala — ARABE RISALA ELITEVITTORIO MILANO EDP 100ML (196856
+  "4b1b5872-ceb4-4340-80fc-5cd02049a68f": p6_shakira_shakira_dance_red_midnight_edt_80ml, // Shakira — SHAKIRA DANCE RED MIDNIGHT EDT 80ML
+  "5665031d-8a1a-41f6-b938-7fd264a603ff": p6_shakira_shakira_rojo_elixir_edp_50ml, // Shakira — SHAKIRA ROJO ELIXIR EDP 50ML
+  "869c9f1e-72eb-45fa-9976-b16cb1821570": p6_shakira_shakira_s_by_shakira_eau_florale_edt_50ml, // Shakira — SHAKIRA S BY SHAKIRA EAU FLORALE EDT 50ML
+  "75eab721-57e5-47c3-8ba0-56c3ee15c071": p6_smart_collection_arabe_smart_collection_no240_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO240 EDP 25ML
+  "a87bfb34-179b-4292-80f9-ea9252015919": p6_shakira_shakira_dance_edt_80ml, // Shakira — SHAKIRA DANCE EDT 80ML
+  "0e1d1fea-3b49-47c1-8941-e243880afe54": p6_smart_collection_arabe_smart_collection_no02_s_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO02 S EDP 25ML
+  "97fed4cd-8bcd-413f-9e4e-45db2c10c808": p6_smart_collection_arabe_smart_collection_no229_s_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO229 S EDP 25ML
+  "69375b7b-78df-4809-ba9b-2625f42ca4a2": p6_smart_collection_arabe_smart_collection_no216_s_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO216 S EDP 25ML
+  "fa9ad9a1-0847-425c-87d2-da92879e86fa": p6_smart_collection_arabe_smart_collection_no244_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO244 EDP 25ML
+  "205e832c-0aa1-49db-82e2-d656ce6575b6": p6_smart_collection_arabe_smart_collection_no387_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO387 EDP 25ML
+  "9a2e9d0a-50d7-42f6-b060-de9578599b08": p6_smart_collection_arabe_smart_collection_no308_pour_homme_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO308 POUR HOMME EDP 25ML
+  "789dabc9-69f2-42b9-b1fe-2f142fb601c7": p6_smart_collection_arabe_smart_collection_no401_s_pour_homme_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO401 S POUR HOMME EDP 25ML
+  "df96327f-8fd4-4b5f-bd9a-4d080b33ef04": p6_smart_collection_arabe_smart_collection_no394_edp_25ml, // Smart Collection — ARABE SMART COLLECTION NO394 EDP 25ML
+  "227f3c8f-52b8-43e6-90e9-bf4850f1c40b": p6_jennifer_lopez_jennifer_lopez_miami_glow_edt_100ml, // Jennifer Lopez — JENNIFER LOPEZ MIAMI GLOW EDT 100ML
+  "90c16b90-9e72-48f5-932c-1c8cabc8bc85": p6_mauboussin_mauboussin_pour_lui_edp_100ml, // Mauboussin — MAUBOUSSIN POUR LUI EDP 100ML
+  "380c7616-3a94-46fe-af26-e6d63a7986f4": p6_maison_de_milan_maison_de_milan_faith_edp_100ml, // Maison de Milan — MAISON DE MILAN FAITH EDP 100ML
+  "82266871-592e-45d8-9be0-ffcb6bef3139": p6_maison_de_milan_maison_de_milan_divine_edp_100ml, // Maison de Milan — MAISON DE MILAN DIVINE EDP 100ML
+  "97355452-bb7c-457d-895e-e7fd5af326fa": p6_maison_de_milan_maison_de_milan_bliss_rouge_edp_100ml, // Maison de Milan — MAISON DE MILAN BLISS ROUGE EDP 100ML
+  "9b30729e-16cd-45bb-b9e6-ab123ba85c9c": p6_maison_de_milan_maison_de_milan_morning_edp_100ml, // Maison de Milan — MAISON DE MILAN MORNING EDP 100ML
+  "5a2252d9-4d44-44d4-91d5-2d64c2501ee4": p6_maison_de_milan_maison_de_milan_karma_edp_100ml, // Maison de Milan — MAISON DE MILAN KARMA EDP 100ML
+  "7226fc4e-1e73-4861-8f7b-00d33940f567": p6_mauboussin_mauboussin_pour_lui_in_red_edp_100ml, // Mauboussin — MAUBOUSSIN POUR LUI IN RED EDP 100ML
+  "ce3d6633-89e2-41a6-a430-a16566c26f7e": p6_mawwal_arabe_mawwal_basir_edp_100ml, // Mawwal — ARABE MAWWAL BASIR EDP 100ML
+  "353f024b-2f2b-4230-8da1-192294cba645": p6_mawwal_arabe_mawwal_alkawn_edp_100ml, // Mawwal — ARABE MAWWAL ALKAWN EDP 100ML
+  "0f811258-c0aa-4ce7-b1d8-1c52d87c9ef9": p6_mawwal_arabe_mawwal_abadeya_edp_100ml, // Mawwal — ARABE MAWWAL ABADEYA EDP 100ML
+  "e5f69f2a-95a4-416b-ae36-9be6053291fc": p6_mirada_arabe_mirada_verato_for_men_edp_100ml, // Mirada — ARABE MIRADA VERATO FOR MEN EDP 100ML
+  "b3e3dfeb-26c0-4afe-ae92-45c6d28d83b8": p6_mawwal_arabe_mawwal_kaman_edp_100ml, // Mawwal — ARABE MAWWAL KAMAN EDP 100ML
+  "5f770490-a3cf-4d59-a84a-e46930cb3bc2": p6_mawwal_arabe_mawwal_fada_gold_edp_m_100ml, // Mawwal — ARABE MAWWAL FADA GOLD EDP M 100ML
+  "bf6fb9f2-8a93-4507-a262-a55d11bde633": p6_mawwal_arabe_mawwal_fada_edp_100ml, // Mawwal — ARABE MAWWAL FADA EDP 100ML
+  "5721fb78-a961-4932-9a7e-babd5e51fbd7": p6_mawwal_arabe_mawwal_mashaer_edp_100ml, // Mawwal — ARABE MAWWAL MASHAER EDP 100ML
+  "24606337-8c83-4e87-b8ed-7515347fbf96": p6_mawwal_arabe_mawwal_rayhan_edp_100ml, // Mawwal — ARABE MAWWAL RAYHAN EDP 100ML
+  "b18d8d92-b0d9-4064-b07d-8567f5ff4210": p6_mawwal_arabe_mawwal_athar_edp_100ml, // Mawwal — ARABE MAWWAL ATHAR EDP 100ML
 };
 
 /**
