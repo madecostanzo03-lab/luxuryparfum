@@ -492,6 +492,14 @@ import p6_mawwal_arabe_mawwal_mashaer_edp_100ml from "@/assets/perfumes-premium-
 import p6_mawwal_arabe_mawwal_rayhan_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-rayhan-edp-100ml.webp";
 import p6_mawwal_arabe_mawwal_athar_edp_100ml from "@/assets/perfumes-premium-batch6/mawwal-arabe-mawwal-athar-edp-100ml.webp";
 
+// === BATCH 7 (parcial — 6 imágenes generadas antes del 402) ===
+import p7_gabriela_sabatini from "@/assets/perfumes-premium-batch7/gabriela-sabatini-gabriela-sabatini-edt-60ml.webp";
+import p7_jennifer_lopez_live from "@/assets/perfumes-premium-batch7/jennifer-lopez-jennifer-lopez-live-edp-100ml.webp";
+import p7_shakira_rock from "@/assets/perfumes-premium-batch7/shakira-shakira-rock-by-shakira-edt-80ml.webp";
+import p7_smart_443 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no443-edp-25ml.webp";
+import p7_smart_446 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no446-edp-25ml.webp";
+import p7_smart_448 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no448-edp-25ml.webp";
+
 export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "d9847555-4c32-411c-b06a-3c784ccec04a": burberryGoddess, // Burberry Goddess EDP Intense
   "e8a951f7-2e3e-4e75-844d-8c18f6d63c61": ckOne, // CK One EDT
@@ -971,6 +979,14 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "5721fb78-a961-4932-9a7e-babd5e51fbd7": p6_mawwal_arabe_mawwal_mashaer_edp_100ml, // Mawwal — ARABE MAWWAL MASHAER EDP 100ML
   "24606337-8c83-4e87-b8ed-7515347fbf96": p6_mawwal_arabe_mawwal_rayhan_edp_100ml, // Mawwal — ARABE MAWWAL RAYHAN EDP 100ML
   "b18d8d92-b0d9-4064-b07d-8567f5ff4210": p6_mawwal_arabe_mawwal_athar_edp_100ml, // Mawwal — ARABE MAWWAL ATHAR EDP 100ML
+
+  // === BATCH 7 (parcial) ===
+  "cdf0f920-f1a9-4682-aaf2-73e023bdd6ee": p7_gabriela_sabatini, // Gabriela Sabatini EDT 60ML
+  "09d00298-159c-4733-a268-8399cfb4f922": p7_jennifer_lopez_live, // Jennifer Lopez Live EDP 100ML
+  "152a0d25-bfa2-4c62-b173-5a96fb4543b6": p7_shakira_rock, // Shakira Rock! EDT 80ML
+  "44250224-5136-4882-9b0b-2d6fec862f9d": p7_smart_443, // Smart Collection Nº443 EDP 25ML
+  "c64aa705-a3e6-428e-882e-d34097d1fc23": p7_smart_446, // Smart Collection Nº446 EDP 25ML
+  "f7142c16-7420-4df4-8acb-ec43f273dae7": p7_smart_448, // Smart Collection Nº448 EDP 25ML
 };
 
 /**
