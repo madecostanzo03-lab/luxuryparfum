@@ -500,6 +500,58 @@ import p7_smart_443 from "@/assets/perfumes-premium-batch7/smart-collection-arab
 import p7_smart_446 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no446-edp-25ml.webp";
 import p7_smart_448 from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no448-edp-25ml.webp";
 
+// === BATCH 7 (final — 50 imágenes restantes para 100% cobertura) ===
+import p7_smart_collection_arabe_smart_collection_no443_edp_25ml from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no443-edp-25ml.webp";
+import p7_smart_collection_arabe_smart_collection_no446_edp_25ml from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no446-edp-25ml.webp";
+import p7_smart_collection_arabe_smart_collection_no448_edp_25ml from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no448-edp-25ml.webp";
+import p7_smart_collection_arabe_smart_collection_no52_s_pour_homme_edp_25ml from "@/assets/perfumes-premium-batch7/smart-collection-arabe-smart-collection-no52-s-pour-homme-edp-25ml.webp";
+import p7_sospiro_sospiro_basso_edp_100ml from "@/assets/perfumes-premium-batch7/sospiro-sospiro-basso-edp-100ml.webp";
+import p7_sospiro_sospiro_erba_leather_edp_100ml from "@/assets/perfumes-premium-batch7/sospiro-sospiro-erba-leather-edp-100ml.webp";
+import p7_sppc_sppc_cyrus_writer_anonymous_parfum_100ml from "@/assets/perfumes-premium-batch7/sppc-sppc-cyrus-writer-anonymous-parfum-100ml.webp";
+import p7_sppc_sppc_cyrus_writer_gold_edp_100ml from "@/assets/perfumes-premium-batch7/sppc-sppc-cyrus-writer-gold-edp-100ml.webp";
+import p7_sppc_sppc_sistelle_venitienne_edp_105ml from "@/assets/perfumes-premium-batch7/sppc-sppc-sistelle-venitienne-edp-105ml.webp";
+import p7_sppc_sppc_yves_de_sistelle_monogramme_edp_100ml from "@/assets/perfumes-premium-batch7/sppc-sppc-yves-de-sistelle-monogramme-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_1967_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-1967-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_1998_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-1998-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_2002_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-2002-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_aurora_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-aurora-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_azzurro_terra_collec_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-azzurro-terra-collec-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_black_alloy_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-black-alloy-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_d_oro_terra_collection_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-d-oro-terra-collection-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_femme_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-femme-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_homme_elixir_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-homme-elixir-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_homme_sport_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-homme-sport-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_ikario_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-ikario-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_la_priere_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-la-priere-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_les_fleurs_black_dahlia_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-les-fleurs-black-dahlia-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_les_fleurs_brunnera_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-les-fleurs-brunnera-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_les_fleurs_camellia_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-les-fleurs-camellia-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_los_angeles_edp_30ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-los-angeles-edp-30ml.webp";
+import p7_stella_dustin_stella_dustin_lumina_black_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-lumina-black-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_lumina_gold_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-lumina-gold-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_marine_alloy_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-marine-alloy-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_marrakech_edp_30ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-marrakech-edp-30ml.webp";
+import p7_stella_dustin_stella_dustin_rosso_terra_collection_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-rosso-terra-collection-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_royal_london_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-royal-london-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_royal_oud_crystal_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-royal-oud-crystal-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_silver_alloy_edp_d_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-silver-alloy-edp-d-100ml.webp";
+import p7_stella_dustin_stella_dustin_solar_topaz_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-solar-topaz-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_spring_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-spring-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_summer_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-summer-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_sunrise_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-sunrise-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_venezia_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-venezia-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_verona_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-verona-edp-100ml.webp";
+import p7_stella_dustin_stella_dustin_xodo_jaque_silva_edp_100ml from "@/assets/perfumes-premium-batch7/stella-dustin-stella-dustin-xodo-jaque-silva-edp-100ml.webp";
+import p7_the_social_scent_arabe_the_social_scent_the_party_goers_edp_100ml from "@/assets/perfumes-premium-batch7/the-social-scent-arabe-the-social-scent-the-party-goers-edp-100ml.webp";
+import p7_tiffany_co_tiffany_co_love_for_him_edt_90ml_h from "@/assets/perfumes-premium-batch7/tiffany-co-tiffany-co-love-for-him-edt-90ml-h.webp";
+import p7_ulric_de_varens_ulric_de_varens_night_edt_100ml from "@/assets/perfumes-premium-batch7/ulric-de-varens-ulric-de-varens-night-edt-100ml.webp";
+import p7_umbro_umbro_action_edt_100ml_deo_150ml_kit from "@/assets/perfumes-premium-batch7/umbro-umbro-action-edt-100ml-deo-150ml-kit.webp";
+import p7_victorio_lucchino_victorio_lucchino_aguas_flor_n5_jazm_exot_edt_150 from "@/assets/perfumes-premium-batch7/victorio-lucchino-victorio-lucchino-aguas-flor-n5-jazm-exot-edt-150.webp";
+import p7_victorio_lucchino_victorio_lucchino_aguas_intense_n9_noche_enigmatica_edt_150ml from "@/assets/perfumes-premium-batch7/victorio-lucchino-victorio-lucchino-aguas-intense-n9-noche-enigmatica-edt-150ml.webp";
+import p7_victorio_lucchino_victorio_lucchino_aguas_masc_n3_seduccion_magnetica_edt_150ml from "@/assets/perfumes-premium-batch7/victorio-lucchino-victorio-lucchino-aguas-masc-n3-seduccion-magnetica-edt-150ml.webp";
+import p7_victorio_lucchino_victorio_lucchino_aguas_sport_n10_libertad_extrema_edt_150ml from "@/assets/perfumes-premium-batch7/victorio-lucchino-victorio-lucchino-aguas-sport-n10-libertad-extrema-edt-150ml.webp";
+import p7_victorio_lucchino_victorio_lucchino_aguas_sport_n11_evasion_polar_edt_150ml from "@/assets/perfumes-premium-batch7/victorio-lucchino-victorio-lucchino-aguas-sport-n11-evasion-polar-edt-150ml.webp";
+
 export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "d9847555-4c32-411c-b06a-3c784ccec04a": burberryGoddess, // Burberry Goddess EDP Intense
   "e8a951f7-2e3e-4e75-844d-8c18f6d63c61": ckOne, // CK One EDT
@@ -987,6 +1039,56 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "44250224-5136-4882-9b0b-2d6fec862f9d": p7_smart_443, // Smart Collection Nº443 EDP 25ML
   "c64aa705-a3e6-428e-882e-d34097d1fc23": p7_smart_446, // Smart Collection Nº446 EDP 25ML
   "f7142c16-7420-4df4-8acb-ec43f273dae7": p7_smart_448, // Smart Collection Nº448 EDP 25ML
+  '2739d061-d48f-44b8-add8-fd54b652985d': p7_smart_collection_arabe_smart_collection_no443_edp_25ml, // ARABE SMART COLLECTION NO600 EDP 25ML
+  '26097fc2-b644-44bc-8502-b846e8c851af': p7_smart_collection_arabe_smart_collection_no446_edp_25ml, // ARABE SMART COLLECTION NO527 S EDP 25ML
+  '11dfad8f-5e9e-4f13-be28-880dc568bc50': p7_smart_collection_arabe_smart_collection_no448_edp_25ml, // ARABE SMART COLLECTION NO579 S EDP 25ML
+  'f6b7952b-2e13-4b0c-b4bc-4bc132b05db6': p7_smart_collection_arabe_smart_collection_no52_s_pour_homme_edp_25ml, // ARABE SMART COLLECTION NO52 S POUR HOMME EDP 25ML
+  '35bcd326-0994-423e-8ae5-5e7100eee3c3': p7_sospiro_sospiro_basso_edp_100ml, // SOSPIRO BASSO EDP 100ML
+  '330ca1b1-aa8c-4e9a-93ea-8274138e923a': p7_sospiro_sospiro_erba_leather_edp_100ml, // SOSPIRO ERBA LEATHER EDP 100ML
+  '8dc1df4f-da2f-46c1-9f15-fd4c339182e5': p7_sppc_sppc_cyrus_writer_anonymous_parfum_100ml, // SPPC CYRUS WRITER ANONYMOUS PARFUM 100ML
+  '1a3759ae-ac96-431a-9c26-646fdbd2278c': p7_sppc_sppc_cyrus_writer_gold_edp_100ml, // SPPC CYRUS WRITER GOLD EDP 100ML
+  'ae6299de-f5bf-4cbd-84e7-918bf3c85dde': p7_sppc_sppc_sistelle_venitienne_edp_105ml, // SPPC SISTELLE VENITIENNE EDP 105ML
+  'd91b161f-ac96-4b24-95f5-7dcaee61112b': p7_sppc_sppc_yves_de_sistelle_monogramme_edp_100ml, // SPPC YVES DE SISTELLE MONOGRAMME EDP 100ML
+  '3f4ee0e5-cbd2-4440-9b2c-ae264f4af1ae': p7_stella_dustin_stella_dustin_1967_edp_100ml, // STELLA DUSTIN 1967 EDP 100ML
+  '46030b1b-de18-4b73-bd98-a0560885fd3d': p7_stella_dustin_stella_dustin_1998_edp_100ml, // STELLA DUSTIN 1998 EDP 100ML
+  'f62b3c26-8de6-48ff-b60b-c978eb8869d0': p7_stella_dustin_stella_dustin_2002_edp_100ml, // STELLA DUSTIN 2002 EDP 100ML
+  'ea5f924e-5fe2-47d1-b014-927314e66e91': p7_stella_dustin_stella_dustin_aurora_edp_100ml, // STELLA DUSTIN AURORA EDP 100ML
+  'e2e4cdae-a955-4bb2-af9e-b4368743f772': p7_stella_dustin_stella_dustin_azzurro_terra_collec_edp_100ml, // STELLA DUSTIN AZZURRO TERRA COLLEC EDP 100ML
+  'e20e326f-3dce-42e7-9c48-a1b9bccf73a3': p7_stella_dustin_stella_dustin_black_alloy_edp_100ml, // STELLA DUSTIN BLACK ALLOY EDP 100ML
+  '2eb1fdbc-85dc-49d1-842e-3202b6363129': p7_stella_dustin_stella_dustin_d_oro_terra_collection_edp_100ml, // STELLA DUSTIN D'ORO TERRA COLLECTION EDP 100ML
+  '0439dd8b-4b3b-4e07-b1c1-868653b70a3c': p7_stella_dustin_stella_dustin_femme_edp_100ml, // STELLA DUSTIN FEMME EDP 100ML
+  'cd63ba0f-7bd4-4274-a932-eb7ef522c912': p7_stella_dustin_stella_dustin_homme_elixir_edp_100ml, // STELLA DUSTIN HOMME ELIXIR EDP 100ML
+  'bc2a3f98-fd84-4b27-83e8-7197983122ec': p7_stella_dustin_stella_dustin_homme_sport_edp_100ml, // STELLA DUSTIN HOMME SPORT EDP 100ML
+  '3613634b-017d-41b7-8951-1c6eaf95dc15': p7_stella_dustin_stella_dustin_ikario_edp_100ml, // STELLA DUSTIN IKARIO EDP 100ML
+  '309fa905-418e-4e0f-9d1d-1f4d391b05c3': p7_stella_dustin_stella_dustin_la_priere_edp_100ml, // STELLA DUSTIN LA PRIERE EDP 100ML
+  'e43d3fa4-575d-4e73-93d1-9fb5c54043f9': p7_stella_dustin_stella_dustin_les_fleurs_black_dahlia_edp_100ml, // STELLA DUSTIN LES FLEURS BLACK DAHLIA EDP 100ML
+  '05bc0589-0232-4591-a9b3-d1aab345d065': p7_stella_dustin_stella_dustin_les_fleurs_brunnera_edp_100ml, // STELLA DUSTIN LES FLEURS BRUNNERA EDP 100ML
+  'a957ab16-cbfd-47fc-a5e8-274fc1976dbb': p7_stella_dustin_stella_dustin_les_fleurs_camellia_edp_100ml, // STELLA DUSTIN LES FLEURS CAMELLIA EDP 100ML
+  'b825a604-673e-4c59-aab8-9a83d366df61': p7_stella_dustin_stella_dustin_los_angeles_edp_30ml, // STELLA DUSTIN LOS ANGELES EDP 30ML
+  '9f6f3058-28ad-4570-adef-d401fa67c158': p7_stella_dustin_stella_dustin_lumina_black_edp_100ml, // STELLA DUSTIN LUMINA BLACK EDP 100ML
+  '8b2cba6d-cc51-4bcd-a46a-e194aed73e17': p7_stella_dustin_stella_dustin_lumina_gold_edp_100ml, // STELLA DUSTIN LUMINA GOLD EDP 100ML
+  'cb687152-3cb8-4d9c-a02d-22c1f055b133': p7_stella_dustin_stella_dustin_marine_alloy_edp_100ml, // STELLA DUSTIN MARINE ALLOY EDP 100ML
+  '425c8089-bdd2-41fd-b6d7-989b0b8cb2c8': p7_stella_dustin_stella_dustin_marrakech_edp_30ml, // STELLA DUSTIN MARRAKECH EDP 30ML
+  '720dc76c-ddc1-4477-a39c-48662537971c': p7_stella_dustin_stella_dustin_rosso_terra_collection_edp_100ml, // STELLA DUSTIN ROSSO TERRA COLLECTION EDP 100ML
+  '354b2fff-356d-454c-8c03-e7416c249889': p7_stella_dustin_stella_dustin_royal_london_edp_100ml, // STELLA DUSTIN ROYAL LONDON EDP 100ML
+  'ef99a543-0b5b-4f4c-aff8-99b2c97f162d': p7_stella_dustin_stella_dustin_royal_oud_crystal_edp_100ml, // STELLA DUSTIN ROYAL OUD CRYSTAL EDP 100ML
+  '545f54f9-ae2c-4db3-806f-71cc1e7cb980': p7_stella_dustin_stella_dustin_silver_alloy_edp_d_100ml, // STELLA DUSTIN SILVER ALLOY EDP D 100ML
+  'fd40014e-6cea-4670-8688-aca178b22bc8': p7_stella_dustin_stella_dustin_solar_topaz_edp_100ml, // STELLA DUSTIN SOLAR TOPAZ EDP 100ML
+  '215bce64-2206-4f4f-9e5f-1ac9c383d655': p7_stella_dustin_stella_dustin_spring_edp_100ml, // STELLA DUSTIN SPRING EDP 100ML
+  '7e834bfa-a5cf-4f3a-aa61-b79c9204df6c': p7_stella_dustin_stella_dustin_summer_edp_100ml, // STELLA DUSTIN SUMMER EDP 100ML
+  '4d3c3fbd-2314-4d1d-8a10-bb318cf61f5d': p7_stella_dustin_stella_dustin_sunrise_edp_100ml, // STELLA DUSTIN SUNRISE EDP 100ML
+  '001087e8-e929-4c3c-9d6c-05bf469de226': p7_stella_dustin_stella_dustin_venezia_edp_100ml, // STELLA DUSTIN VENEZIA EDP 100ML
+  '60fb3b2e-a06b-4f24-bf02-2117f6af87fb': p7_stella_dustin_stella_dustin_verona_edp_100ml, // STELLA DUSTIN VERONA EDP 100ML
+  '00d3d874-9658-4d51-aa39-1072a4d0e007': p7_stella_dustin_stella_dustin_xodo_jaque_silva_edp_100ml, // STELLA DUSTIN XODO JAQUE SILVA EDP 100ML
+  'b6ef3047-d6a2-4a8b-bf5b-2f81087e739b': p7_the_social_scent_arabe_the_social_scent_the_party_goers_edp_100ml, // ARABE THE SOCIAL SCENT THE PARTY GOERS EDP 100ML
+  '8b76ac53-9b5b-402d-a51c-88be316b0387': p7_tiffany_co_tiffany_co_love_for_him_edt_90ml_h, // TIFFANY & CO. LOVE FOR HIM EDT 90ML H
+  'e751477d-6ae1-496e-a8e1-61b7ee7903dc': p7_ulric_de_varens_ulric_de_varens_night_edt_100ml, // ULRIC DE VARENS NIGHT EDT 100ML
+  '89b3e325-5802-458d-9b62-6978c72f9305': p7_umbro_umbro_action_edt_100ml_deo_150ml_kit, // UMBRO ACTION EDT 100ML+DEO 150ML KIT
+  '5537ca30-d944-410d-97e4-3dfa71014e6f': p7_victorio_lucchino_victorio_lucchino_aguas_flor_n5_jazm_exot_edt_150, // VICTORIO&LUCCHINO AGUAS FLOR N5 JAZM EXOT EDT 150
+  '782ca7d7-4081-4200-af71-dc1d1c9be8bb': p7_victorio_lucchino_victorio_lucchino_aguas_intense_n9_noche_enigmatica_edt_150ml, // VICTORIO&LUCCHINO AGUAS INTENSE N9 NOCHE ENIGMATICA EDT 150ML
+  'd1ef4c05-0ddd-41ef-b062-490d8b45fae8': p7_victorio_lucchino_victorio_lucchino_aguas_masc_n3_seduccion_magnetica_edt_150ml, // VICTORIO&LUCCHINO AGUAS MASC N3 SEDUCCION MAGNETICA EDT 150ML
+  '93d647af-f571-47cc-98e1-572876c72864': p7_victorio_lucchino_victorio_lucchino_aguas_sport_n10_libertad_extrema_edt_150ml, // VICTORIO&LUCCHINO AGUAS SPORT N10 LIBERTAD EXTREMA EDT 150ML
+  '7cd6e6c9-c24e-427d-b679-abb0d70cc838': p7_victorio_lucchino_victorio_lucchino_aguas_sport_n11_evasion_polar_edt_150ml, // VICTORIO&LUCCHINO AGUAS SPORT N11 EVASION POLAR EDT 150ML
 };
 
 /**
