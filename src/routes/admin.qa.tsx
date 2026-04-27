@@ -30,6 +30,9 @@ type Check = {
 
 const ARS_PATTERNS = /(ARS|AR\$|\$\s?\d|pesos?|\$AR|tipo de cambio|cotizaci[oó]n)/i;
 
+const escapeHtml = (s: string) =>
+  String(s).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]!));
+
 function AdminQAPage() {
   const [authed, setAuthed] = useState<boolean | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
