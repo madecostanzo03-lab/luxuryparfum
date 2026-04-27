@@ -14,6 +14,7 @@ import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
   id: '/sobre-nosotros',
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPreciosRoute = AdminPreciosRouteImport.update({
+  id: '/admin/precios',
+  path: '/admin/precios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/precios': typeof AdminPreciosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/precios': typeof AdminPreciosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,33 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/precios': typeof AdminPreciosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalogo' | '/login' | '/marcas' | '/sobre-nosotros'
+  fullPaths:
+    | '/'
+    | '/catalogo'
+    | '/login'
+    | '/marcas'
+    | '/sobre-nosotros'
+    | '/admin/precios'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalogo' | '/login' | '/marcas' | '/sobre-nosotros'
-  id: '__root__' | '/' | '/catalogo' | '/login' | '/marcas' | '/sobre-nosotros'
+  to:
+    | '/'
+    | '/catalogo'
+    | '/login'
+    | '/marcas'
+    | '/sobre-nosotros'
+    | '/admin/precios'
+  id:
+    | '__root__'
+    | '/'
+    | '/catalogo'
+    | '/login'
+    | '/marcas'
+    | '/sobre-nosotros'
+    | '/admin/precios'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +105,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
+  AdminPreciosRoute: typeof AdminPreciosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/precios': {
+      id: '/admin/precios'
+      path: '/admin/precios'
+      fullPath: '/admin/precios'
+      preLoaderRoute: typeof AdminPreciosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
+  AdminPreciosRoute: AdminPreciosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
