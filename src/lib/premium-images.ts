@@ -1095,11 +1095,26 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
  * Devuelve la imagen premium si existe override para este perfume,
  * o la URL original del proveedor en caso contrario.
  */
+/**
+ * FIDELIDAD REAL OBLIGATORIA (decisión del cliente, abril 2026):
+ * Las imágenes generadas por IA no garantizan fidelidad al frasco real
+ * (color de tapa, etiqueta, forma exacta). Para evitar mostrar productos
+ * que no coinciden con lo que el cliente recibe, DESACTIVAMOS los overrides
+ * IA y usamos siempre la imagen oficial del proveedor (image_url en DB).
+ *
+ * El fondo azul oscuro premium se mantiene a nivel CSS en SmartImage,
+ * por lo que la estética uniforme se conserva sin alterar el frasco real.
+ *
+ * Para reactivar (parcial o total): cambiar USE_AI_OVERRIDES a true
+ * o filtrar por IDs específicos donde sí tengamos imagen oficial validada.
+ */
+const USE_AI_OVERRIDES = false;
+
 export function resolvePerfumeImage(
   perfumeId: string | undefined,
   fallback: string | null | undefined,
 ): { src: string | null | undefined; isPremium: boolean } {
-  if (perfumeId && PREMIUM_IMAGE_OVERRIDES[perfumeId]) {
+  if (USE_AI_OVERRIDES && perfumeId && PREMIUM_IMAGE_OVERRIDES[perfumeId]) {
     return { src: PREMIUM_IMAGE_OVERRIDES[perfumeId], isPremium: true };
   }
   return { src: fallback, isPremium: false };
