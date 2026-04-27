@@ -979,6 +979,14 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "5721fb78-a961-4932-9a7e-babd5e51fbd7": p6_mawwal_arabe_mawwal_mashaer_edp_100ml, // Mawwal — ARABE MAWWAL MASHAER EDP 100ML
   "24606337-8c83-4e87-b8ed-7515347fbf96": p6_mawwal_arabe_mawwal_rayhan_edp_100ml, // Mawwal — ARABE MAWWAL RAYHAN EDP 100ML
   "b18d8d92-b0d9-4064-b07d-8567f5ff4210": p6_mawwal_arabe_mawwal_athar_edp_100ml, // Mawwal — ARABE MAWWAL ATHAR EDP 100ML
+
+  // === BATCH 7 (parcial) ===
+  "cdf0f920-f1a9-4682-aaf2-73e023bdd6ee": p7_gabriela_sabatini, // Gabriela Sabatini EDT 60ML
+  "09d00298-159c-4733-a268-8399cfb4f922": p7_jennifer_lopez_live, // Jennifer Lopez Live EDP 100ML
+  "152a0d25-bfa2-4c62-b173-5a96fb4543b6": p7_shakira_rock, // Shakira Rock! EDT 80ML
+  "44250224-5136-4882-9b0b-2d6fec862f9d": p7_smart_443, // Smart Collection Nº443 EDP 25ML
+  "c64aa705-a3e6-428e-882e-d34097d1fc23": p7_smart_446, // Smart Collection Nº446 EDP 25ML
+  "f7142c16-7420-4df4-8acb-ec43f273dae7": p7_smart_448, // Smart Collection Nº448 EDP 25ML
 };
 
 /**
