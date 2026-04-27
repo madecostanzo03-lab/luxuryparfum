@@ -190,6 +190,109 @@ import p3_women_secret_women_secret_rouge_seduction from "@/assets/perfumes-prem
  * Si el perfume está acá, se usa esta imagen y se renderiza SIN tratamiento
  * de blend (preserveBg=true) porque ya viene perfecta del estudio.
  */
+
+// === BATCH 4: 100 imágenes editorial premium (fondo navy uniforme) ===
+import p4_adyan_arabe_adyan_thamniyat_flora_extrait_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-thamniyat-flora-extrait-100ml.webp";
+import p4_adyan_arabe_adyan_musc_mango_extrait_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-musc-mango-extrait-100ml.webp";
+import p4_adyan_arabe_adyan_dalia_noir_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-dalia-noir-edp-100ml.webp";
+import p4_adyan_arabe_adyan_dalia_ciel_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-dalia-ciel-edp-100ml.webp";
+import p4_adyan_arabe_adyan_riviera_extrait_de_parfum_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-riviera-extrait-de-parfum-100ml.webp";
+import p4_adyan_arabe_adyan_norah_amour_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-norah-amour-edp-100ml.webp";
+import p4_adyan_arabe_adyan_sharf_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-sharf-edp-100ml.webp";
+import p4_adyan_arabe_adyan_oud_essential_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-oud-essential-edp-100ml.webp";
+import p4_adyan_arabe_adyan_samara_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-samara-edp-100ml.webp";
+import p4_adyan_arabe_adyan_rehla_edp_100ml from "@/assets/perfumes-premium-batch4/adyan-arabe-adyan-rehla-edp-100ml.webp";
+import p4_afnan_arabe_afnan_supremacy_not_only_intense_edp_h_150ml_2775_bols from "@/assets/perfumes-premium-batch4/afnan-arabe-afnan-supremacy-not-only-intense-edp-h-150ml-2775-bols.webp";
+import p4_afnan_arabe_afnan_turathi_blue_edp_90ml from "@/assets/perfumes-premium-batch4/afnan-arabe-afnan-turathi-blue-edp-90ml.webp";
+import p4_afnan_arabe_afnan_supremacy_pour_homme_edp_100ml from "@/assets/perfumes-premium-batch4/afnan-arabe-afnan-supremacy-pour-homme-edp-100ml.webp";
+import p4_afnan_arabe_afnan_9pm_edp_100ml from "@/assets/perfumes-premium-batch4/afnan-arabe-afnan-9pm-edp-100ml.webp";
+import p4_ajmal_arabe_ajmal_aristocrat_marrom_edp_75ml from "@/assets/perfumes-premium-batch4/ajmal-arabe-ajmal-aristocrat-marrom-edp-75ml.webp";
+import p4_ajmal_arabe_ajmal_blu_edp_90ml from "@/assets/perfumes-premium-batch4/ajmal-arabe-ajmal-blu-edp-90ml.webp";
+import p4_ajmal_arabe_ajmal_my_stellar_edp_100ml from "@/assets/perfumes-premium-batch4/ajmal-arabe-ajmal-my-stellar-edp-100ml.webp";
+import p4_ajmal_arabe_ajmal_scarlet_bloom_edp_100ml from "@/assets/perfumes-premium-batch4/ajmal-arabe-ajmal-scarlet-bloom-edp-100ml.webp";
+import p4_al_haramain_arabe_al_haramain_l_aventure_knight_edp_100ml from "@/assets/perfumes-premium-batch4/al-haramain-arabe-al-haramain-l-aventure-knight-edp-100ml.webp";
+import p4_al_wataniah_arabe_al_wataniah_bareeq_al_dhahab_edp_100ml from "@/assets/perfumes-premium-batch4/al-wataniah-arabe-al-wataniah-bareeq-al-dhahab-edp-100ml.webp";
+import p4_al_wataniah_arabe_al_wataniah_tibyan_edp_100ml from "@/assets/perfumes-premium-batch4/al-wataniah-arabe-al-wataniah-tibyan-edp-100ml.webp";
+import p4_al_wataniah_arabe_al_wataniah_kenz_al_malik_edp_100ml from "@/assets/perfumes-premium-batch4/al-wataniah-arabe-al-wataniah-kenz-al-malik-edp-100ml.webp";
+import p4_al_wataniah_arabe_al_wataniah_shagaf_al_ward_edp_100ml from "@/assets/perfumes-premium-batch4/al-wataniah-arabe-al-wataniah-shagaf-al-ward-edp-100ml.webp";
+import p4_al_wataniah_arabe_al_wataniah_sultan_al_lail_a_edp_100ml from "@/assets/perfumes-premium-batch4/al-wataniah-arabe-al-wataniah-sultan-al-lail-a-edp-100ml.webp";
+import p4_al_wataniah_arabe_al_wataniah_graphite_edp_100ml from "@/assets/perfumes-premium-batch4/al-wataniah-arabe-al-wataniah-graphite-edp-100ml.webp";
+import p4_ariana_grande_ariana_grande_cloud_edp_100ml from "@/assets/perfumes-premium-batch4/ariana-grande-ariana-grande-cloud-edp-100ml.webp";
+import p4_ariana_grande_ariana_grande_cloud_2_0_edp_intense_100ml from "@/assets/perfumes-premium-batch4/ariana-grande-ariana-grande-cloud-2-0-edp-intense-100ml.webp";
+import p4_ariana_grande_ariana_grande_sweet_like_candy_edp_100ml from "@/assets/perfumes-premium-batch4/ariana-grande-ariana-grande-sweet-like-candy-edp-100ml.webp";
+import p4_armaf_arabe_armaf_delights_island_breeze_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-delights-island-breeze-edp-100ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_intense_parfum_150ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-intense-parfum-150ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_woman_edp_200ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-woman-edp-200ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_precieux_i_extrait_s_55ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-precieux-i-extrait-s-55ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_lionheart_man_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-lionheart-man-edp-100ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_iconic_blue_edp_105ml_in from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-iconic-blue-edp-105ml-in.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_ntense_edt_105ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-ntense-edt-105ml.webp";
+import p4_armaf_arabe_armaf_delights_island_bliss_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-delights-island-bliss-edp-100ml.webp";
+import p4_armaf_arabe_armaf_dubai_nights_a_midnight_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-dubai-nights-a-midnight-edp-100ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_sillage_edp_105ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-sillage-edp-105ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_lionhea_woman_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-lionhea-woman-edp-100ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_urban_a_elixir_edp_105ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-urban-a-elixir-edp-105ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_urban_a_man_edp_105ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-urban-a-man-edp-105ml.webp";
+import p4_armaf_arabe_armaf_shk_i_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-shk-i-edp-100ml.webp";
+import p4_armaf_arabe_armaf_shk_ii_edp_100ml_a from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-shk-ii-edp-100ml-a.webp";
+import p4_armaf_arabe_armaf_connoisseur_women_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-connoisseur-women-edp-100ml.webp";
+import p4_armaf_arabe_armaf_club_de_nuit_intense_woman_edp_105ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-club-de-nuit-intense-woman-edp-105ml.webp";
+import p4_armaf_arabe_armaf_connoisseur_man_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-connoisseur-man-edp-100ml.webp";
+import p4_armaf_arabe_armaf_odyssey_tyrant_edp_100ml_arabe_armaf_odyssey_mandarin_sky_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-odyssey-tyrant-edp-100ml-arabe-armaf-odyssey-mandarin-sky-edp-100ml.webp";
+import p4_armaf_arabe_armaf_odyssey_wild_one_gold_edit_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-odyssey-wild-one-gold-edit-edp-100ml.webp";
+import p4_armaf_arabe_armaf_odyssey_aoud_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-odyssey-aoud-edp-100ml.webp";
+import p4_armaf_arabe_armaf_odyssey_homme_a_edp_100ml from "@/assets/perfumes-premium-batch4/armaf-arabe-armaf-odyssey-homme-a-edp-100ml.webp";
+import p4_arqus_arabe_arqus_uno_mil_edp_100ml from "@/assets/perfumes-premium-batch4/arqus-arabe-arqus-uno-mil-edp-100ml.webp";
+import p4_arqus_arabe_arqus_magnate_men_edp_a_100ml from "@/assets/perfumes-premium-batch4/arqus-arabe-arqus-magnate-men-edp-a-100ml.webp";
+import p4_arrogance_arrogance_uomo_anniversary_edp_100ml from "@/assets/perfumes-premium-batch4/arrogance-arrogance-uomo-anniversary-edp-100ml.webp";
+import p4_avar_arabe_avar_collection_blue_royale_n101_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-blue-royale-n101-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_vip_first_bl_n105_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-vip-first-bl-n105-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_one_goldy_n103_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-one-goldy-n103-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_robot_n108_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-robot-n108-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_hero_save_n102_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-hero-save-n102-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_vyrtus_n104_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-vyrtus-n104-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_bakhar_rose_n014_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-bakhar-rose-n014-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_bakhar_gold_n015_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-bakhar-gold-n015-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_scanlover_n008_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-scanlover-n008-edp-30ml.webp";
+import p4_avar_arabe_avar_collection_yaareh_n010_edp_30ml from "@/assets/perfumes-premium-batch4/avar-arabe-avar-collection-yaareh-n010-edp-30ml.webp";
+import p4_benetton_benetton_colors_woman_rose_intenso_edp_80ml from "@/assets/perfumes-premium-batch4/benetton-benetton-colors-woman-rose-intenso-edp-80ml.webp";
+import p4_benetton_benetton_colors_man_green_edt_100ml from "@/assets/perfumes-premium-batch4/benetton-benetton-colors-man-green-edt-100ml.webp";
+import p4_benetton_benetton_love_yourself_edt_ns_80ml from "@/assets/perfumes-premium-batch4/benetton-benetton-love-yourself-edt-ns-80ml.webp";
+import p4_benetton_benetton_colors_man_black_intenso_edp_100ml from "@/assets/perfumes-premium-batch4/benetton-benetton-colors-man-black-intenso-edp-100ml.webp";
+import p4_benetton_benetton_colors_man_blue_edt_60ml from "@/assets/perfumes-premium-batch4/benetton-benetton-colors-man-blue-edt-60ml.webp";
+import p4_benetton_benetton_colors_man_black_edt_60ml from "@/assets/perfumes-premium-batch4/benetton-benetton-colors-man-black-edt-60ml.webp";
+import p4_bespoke_bespoke_caramel_amber_and_cashmere_edp_100ml from "@/assets/perfumes-premium-batch4/bespoke-bespoke-caramel-amber-and-cashmere-edp-100ml.webp";
+import p4_bespoke_bespoke_oriental_woods_and_amber_edp_100ml from "@/assets/perfumes-premium-batch4/bespoke-bespoke-oriental-woods-and-amber-edp-100ml.webp";
+import p4_bespoke_bespoke_jasmine_y_chocolate_berries_edp_100ml from "@/assets/perfumes-premium-batch4/bespoke-bespoke-jasmine-y-chocolate-berries-edp-100ml.webp";
+import p4_billie_eilish_billie_eilish_n_2_edp_100ml from "@/assets/perfumes-premium-batch4/billie-eilish-billie-eilish-n-2-edp-100ml.webp";
+import p4_blauer_blauer_the_journey_boston_1936_edp_80ml from "@/assets/perfumes-premium-batch4/blauer-blauer-the-journey-boston-1936-edp-80ml.webp";
+import p4_born_in_france_born_in_france_flower_kiss_edp_100ml from "@/assets/perfumes-premium-batch4/born-in-france-born-in-france-flower-kiss-edp-100ml.webp";
+import p4_born_in_france_born_in_france_pura_vida_edp_85ml from "@/assets/perfumes-premium-batch4/born-in-france-born-in-france-pura-vida-edp-85ml.webp";
+import p4_born_in_france_born_in_france_la_va_edp_85ml from "@/assets/perfumes-premium-batch4/born-in-france-born-in-france-la-va-edp-85ml.webp";
+import p4_born_in_france_born_in_france_game_of_kings_edp_85ml from "@/assets/perfumes-premium-batch4/born-in-france-born-in-france-game-of-kings-edp-85ml.webp";
+import p4_born_in_france_born_in_france_eclipse_edp_100ml from "@/assets/perfumes-premium-batch4/born-in-france-born-in-france-eclipse-edp-100ml.webp";
+import p4_boulevard_boulevard_grands_edp_100ml from "@/assets/perfumes-premium-batch4/boulevard-boulevard-grands-edp-100ml.webp";
+import p4_boulevard_boulevard_haussmann_edp_100ml from "@/assets/perfumes-premium-batch4/boulevard-boulevard-haussmann-edp-100ml.webp";
+import p4_britney_spears_britney_spears_candied_fantasy_edt_100ml from "@/assets/perfumes-premium-batch4/britney-spears-britney-spears-candied-fantasy-edt-100ml.webp";
+import p4_britney_spears_britney_spears_fantasy_edp_100ml from "@/assets/perfumes-premium-batch4/britney-spears-britney-spears-fantasy-edp-100ml.webp";
+import p4_britney_spears_britney_spears_blissful_fantasy_edt_100ml from "@/assets/perfumes-premium-batch4/britney-spears-britney-spears-blissful-fantasy-edt-100ml.webp";
+import p4_britney_spears_britney_spears_curious_edp_100ml from "@/assets/perfumes-premium-batch4/britney-spears-britney-spears-curious-edp-100ml.webp";
+import p4_chloe_chloe_edp_50ml from "@/assets/perfumes-premium-batch4/chloe-chloe-edp-50ml.webp";
+import p4_chloe_chloe_nomade_edp_75ml from "@/assets/perfumes-premium-batch4/chloe-chloe-nomade-edp-75ml.webp";
+import p4_christian_dior_christian_dior_sauvage_elixir_100ml from "@/assets/perfumes-premium-batch4/christian-dior-christian-dior-sauvage-elixir-100ml.webp";
+import p4_christian_dior_christian_dior_sauvage_eau_forte_parfum_100ml from "@/assets/perfumes-premium-batch4/christian-dior-christian-dior-sauvage-eau-forte-parfum-100ml.webp";
+import p4_christian_dior_christian_dior_miss_dior_edp_100ml from "@/assets/perfumes-premium-batch4/christian-dior-christian-dior-miss-dior-edp-100ml.webp";
+import p4_christian_dior_christian_dior_fahrenheit_edt_200ml from "@/assets/perfumes-premium-batch4/christian-dior-christian-dior-fahrenheit-edt-200ml.webp";
+import p4_coach_coach_new_york_edp_90ml from "@/assets/perfumes-premium-batch4/coach-coach-new-york-edp-90ml.webp";
+import p4_dar_el_ward_arabe_dar_el_ward_houbi_edp_100ml_e from "@/assets/perfumes-premium-batch4/dar-el-ward-arabe-dar-el-ward-houbi-edp-100ml-e.webp";
+import p4_david_beckham_david_beckham_bold_instinct_edp_75ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-bold-instinct-edp-75ml.webp";
+import p4_david_beckham_david_beckham_instinct_edp_75ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-instinct-edp-75ml.webp";
+import p4_david_beckham_david_beckham_classic_blue_edt_100ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-classic-blue-edt-100ml.webp";
+import p4_david_beckham_david_beckham_classic_edt_b_100ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-classic-edt-b-100ml.webp";
+import p4_david_beckham_david_beckham_classic_homme_edt_100ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-classic-homme-edt-100ml.webp";
+import p4_david_beckham_david_beckham_true_instinct_dolc_edp_50ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-true-instinct-dolc-edp-50ml.webp";
+import p4_david_beckham_david_beckham_classic_homme_b_edt_50ml from "@/assets/perfumes-premium-batch4/david-beckham-david-beckham-classic-homme-b-edt-50ml.webp";
+
 export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "d9847555-4c32-411c-b06a-3c784ccec04a": burberryGoddess, // Burberry Goddess EDP Intense
   "e8a951f7-2e3e-4e75-844d-8c18f6d63c61": ckOne, // CK One EDT
@@ -372,6 +475,108 @@ export const PREMIUM_IMAGE_OVERRIDES: Record<string, string> = {
   "610f4e73-832d-4d4f-82da-0fb4c2f728aa": p3_women_secret_women_secret_intimate_daydream, // Women Secret — Women Secret Intimate Daydream
   "8d42c358-f1de-4a84-b3ad-fcc088467e84": p3_women_secret_women_secret_rose_seduction, // Women Secret — Women Secret Rose Seduction
   "86e29710-8294-4edb-9919-f03498652eff": p3_women_secret_women_secret_rouge_seduction, // Women Secret — Women Secret Rouge Seduction
+  // --- BATCH 4 ---
+  "e56d6d86-8c1b-4961-bbf8-64a279c9b918": p4_adyan_arabe_adyan_thamniyat_flora_extrait_100ml, // Adyan — ARABE ADYAN THAMNIYAT FLORA EXTRAIT 100ML
+  "b8dc99ac-5379-4f7b-93ed-9cf982d8ff91": p4_adyan_arabe_adyan_musc_mango_extrait_100ml, // Adyan — ARABE ADYAN MUSC MANGO EXTRAIT 100ML
+  "fcab65b5-26b0-47d9-80b2-a3a3a5e06562": p4_adyan_arabe_adyan_dalia_noir_edp_100ml, // Adyan — ARABE ADYAN DALIA NOIR EDP 100ML
+  "d1bead43-5ac6-48b3-bd49-9565675883de": p4_adyan_arabe_adyan_dalia_ciel_edp_100ml, // Adyan — ARABE ADYAN DALIA CIEL EDP 100ML
+  "defb1703-d8eb-4ac6-9c72-3adf71a50ea1": p4_adyan_arabe_adyan_riviera_extrait_de_parfum_100ml, // Adyan — ARABE ADYAN RIVIERA EXTRAIT DE PARFUM 100ML
+  "f45ed93c-74b5-428b-9722-e068c840b4f7": p4_adyan_arabe_adyan_norah_amour_edp_100ml, // Adyan — ARABE ADYAN NORAH AMOUR EDP 100ML
+  "f5efe262-8425-484e-97fd-1b4aaa685c98": p4_adyan_arabe_adyan_sharf_edp_100ml, // Adyan — ARABE ADYAN SHARF EDP 100ML
+  "fb35d93d-f191-4526-9ed7-558b09c6245e": p4_adyan_arabe_adyan_oud_essential_edp_100ml, // Adyan — ARABE ADYAN OUD ESSENTIAL EDP 100ML
+  "1d000ca7-15b1-4fe8-a4c8-40fc56251d37": p4_adyan_arabe_adyan_samara_edp_100ml, // Adyan — ARABE ADYAN SAMARA EDP 100ML
+  "d371500f-2736-435c-87a7-b4943f9a362f": p4_adyan_arabe_adyan_rehla_edp_100ml, // Adyan — ARABE ADYAN REHLA EDP 100ML
+  "b8708121-5e85-4456-848d-c7651618e521": p4_afnan_arabe_afnan_supremacy_not_only_intense_edp_h_150ml_2775_bols, // Afnan — ARABE AFNAN SUPREMACY NOT ONLY INTENSE EDP H 150ML(2775+BOLS
+  "5dbc9971-185c-4ed6-b92b-b413f9db11ed": p4_afnan_arabe_afnan_turathi_blue_edp_90ml, // Afnan — ARABE AFNAN TURATHI BLUE EDP 90ML
+  "a9645e68-0663-4579-9c6f-067f96937363": p4_afnan_arabe_afnan_supremacy_pour_homme_edp_100ml, // Afnan — ARABE AFNAN SUPREMACY POUR HOMME EDP 100ML
+  "95978541-d4d2-44af-ad07-dca824031ce7": p4_afnan_arabe_afnan_9pm_edp_100ml, // Afnan — ARABE AFNAN 9PM EDP 100ML
+  "8094863d-9fb3-40e6-bc6c-176ec117d64c": p4_ajmal_arabe_ajmal_aristocrat_marrom_edp_75ml, // Ajmal — ARABE AJMAL ARISTOCRAT MARROM EDP 75ML
+  "944e1f53-9133-4c81-bd8b-81b4df463f5d": p4_ajmal_arabe_ajmal_blu_edp_90ml, // Ajmal — ARABE AJMAL BLU EDP 90ML
+  "fe8b8c1a-dab7-4d3a-adb0-dc9fc5df5540": p4_ajmal_arabe_ajmal_my_stellar_edp_100ml, // Ajmal — ARABE AJMAL MY STELLAR EDP 100ML
+  "1f13ddff-e801-4f0b-b436-d005f66dad5e": p4_ajmal_arabe_ajmal_scarlet_bloom_edp_100ml, // Ajmal — ARABE AJMAL SCARLET BLOOM EDP 100ML
+  "a97bdd3e-e594-4d7b-b754-e881b1e82c16": p4_al_haramain_arabe_al_haramain_l_aventure_knight_edp_100ml, // Al Haramain — ARABE AL HARAMAIN L AVENTURE KNIGHT EDP 100ML
+  "e4960619-d851-44bc-ac5e-060a32d68255": p4_al_wataniah_arabe_al_wataniah_bareeq_al_dhahab_edp_100ml, // Al Wataniah — ARABE AL WATANIAH BAREEQ AL DHAHAB EDP 100ML
+  "fc778bb0-2da0-4132-a601-619b25dfa578": p4_al_wataniah_arabe_al_wataniah_tibyan_edp_100ml, // Al Wataniah — ARABE AL WATANIAH TIBYAN EDP 100ML
+  "d0872090-8b0a-4268-bb25-c2f863128576": p4_al_wataniah_arabe_al_wataniah_kenz_al_malik_edp_100ml, // Al Wataniah — ARABE AL WATANIAH KENZ AL MALIK EDP 100ML
+  "e66c3363-8d78-47cc-975b-8234bbdcd233": p4_al_wataniah_arabe_al_wataniah_shagaf_al_ward_edp_100ml, // Al Wataniah — ARABE AL WATANIAH SHAGAF AL WARD EDP 100ML
+  "5bb6b4fd-d3c5-4ed5-ae10-c5843982cac8": p4_al_wataniah_arabe_al_wataniah_sultan_al_lail_a_edp_100ml, // Al Wataniah — ARABE AL WATANIAH SULTAN AL LAIL A EDP 100ML
+  "dbe7ede2-2b4e-4628-b124-4df56b35d4d6": p4_al_wataniah_arabe_al_wataniah_graphite_edp_100ml, // Al Wataniah — ARABE AL WATANIAH GRAPHITE EDP 100ML
+  "45ee41ed-38b6-4bbf-ad5f-d460be0c0b36": p4_ariana_grande_ariana_grande_cloud_edp_100ml, // Ariana Grande — ARIANA GRANDE CLOUD EDP 100ML
+  "c23c3547-7a50-4046-880c-ed2799b86147": p4_ariana_grande_ariana_grande_cloud_2_0_edp_intense_100ml, // Ariana Grande — ARIANA GRANDE CLOUD 2.0 EDP INTENSE 100ML
+  "983506fe-0138-43d5-a737-7b617000fee0": p4_ariana_grande_ariana_grande_sweet_like_candy_edp_100ml, // Ariana Grande — ARIANA GRANDE SWEET LIKE CANDY EDP 100ML
+  "001b4d7a-b92a-4b97-8a19-223010ccb11c": p4_armaf_arabe_armaf_delights_island_breeze_edp_100ml, // Armaf — ARABE ARMAF DELIGHTS ISLAND BREEZE EDP 100ML
+  "bdcc919a-cb49-4db8-ba13-c24c6eca2179": p4_armaf_arabe_armaf_club_de_nuit_intense_parfum_150ml, // Armaf — ARABE ARMAF CLUB DE NUIT INTENSE PARFUM 150ML
+  "e14ca551-9932-4d41-a1d5-826dc951335e": p4_armaf_arabe_armaf_club_de_nuit_woman_edp_200ml, // Armaf — ARABE ARMAF CLUB DE NUIT WOMAN EDP 200ML
+  "d4fa875c-f383-4ae7-af93-04da695224b8": p4_armaf_arabe_armaf_club_de_nuit_precieux_i_extrait_s_55ml, // Armaf — ARABE ARMAF CLUB DE NUIT PRECIEUX I EXTRAIT S 55ML
+  "a629aedc-5658-4357-b4cb-9305c0f4bfd3": p4_armaf_arabe_armaf_club_de_nuit_lionheart_man_edp_100ml, // Armaf — ARABE ARMAF CLUB DE NUIT LIONHEART MAN EDP 100ML
+  "061d6769-374c-482c-8723-0a532a788152": p4_armaf_arabe_armaf_club_de_nuit_iconic_blue_edp_105ml_in, // Armaf — ARABE ARMAF CLUB DE NUIT ICONIC BLUE EDP 105ML IN
+  "a550e605-44c2-4a20-9ddf-b6c6888777b7": p4_armaf_arabe_armaf_club_de_nuit_ntense_edt_105ml, // Armaf — ARABE ARMAF CLUB DE NUIT NTENSE EDT 105ML
+  "6a3ff8ef-3af0-47d8-acab-e90f0336f687": p4_armaf_arabe_armaf_delights_island_bliss_edp_100ml, // Armaf — ARABE ARMAF DELIGHTS ISLAND BLISS EDP 100ML
+  "23942848-d351-4a6e-942a-26c9ce0f4c65": p4_armaf_arabe_armaf_dubai_nights_a_midnight_edp_100ml, // Armaf — ARABE ARMAF DUBAI NIGHTS A MIDNIGHT EDP 100ML
+  "cdbe2c93-822d-450c-9cb6-70ed74783315": p4_armaf_arabe_armaf_club_de_nuit_sillage_edp_105ml, // Armaf — ARABE ARMAF CLUB DE NUIT SILLAGE EDP 105ML
+  "49c3f759-fc12-491e-9c8f-537c4efa7efa": p4_armaf_arabe_armaf_club_de_nuit_lionhea_woman_edp_100ml, // Armaf — ARABE ARMAF CLUB DE NUIT LIONHEA WOMAN EDP 100ML
+  "39ffaa90-9678-4562-8fa2-028d68cd8877": p4_armaf_arabe_armaf_club_de_nuit_urban_a_elixir_edp_105ml, // Armaf — ARABE ARMAF CLUB DE NUIT URBAN A ELIXIR EDP 105ML
+  "872c98a0-22cf-42b0-bf68-127072758844": p4_armaf_arabe_armaf_club_de_nuit_urban_a_man_edp_105ml, // Armaf — ARABE ARMAF CLUB DE NUIT URBAN A MAN EDP 105ML
+  "aef7f0fb-8e74-4ee0-8fa5-9310757f99f2": p4_armaf_arabe_armaf_shk_i_edp_100ml, // Armaf — ARABE ARMAF SHK I EDP 100ML
+  "66a09d4d-5b4e-4211-84fc-a8a072f30704": p4_armaf_arabe_armaf_shk_ii_edp_100ml_a, // Armaf — ARABE ARMAF SHK II EDP 100ML A
+  "108b729e-925d-4030-9962-4630f99f0a92": p4_armaf_arabe_armaf_connoisseur_women_edp_100ml, // Armaf — ARABE ARMAF CONNOISSEUR WOMEN EDP 100ML
+  "c5662602-1718-4c07-a24d-abe365a1e7f7": p4_armaf_arabe_armaf_club_de_nuit_intense_woman_edp_105ml, // Armaf — ARABE ARMAF CLUB DE NUIT INTENSE WOMAN EDP 105ML
+  "e0daadff-f95c-493c-9a59-b6b64b31a3aa": p4_armaf_arabe_armaf_connoisseur_man_edp_100ml, // Armaf — ARABE ARMAF CONNOISSEUR MAN EDP 100ML
+  "421758c8-7748-40cc-a340-9276ea0cf4b5": p4_armaf_arabe_armaf_odyssey_tyrant_edp_100ml_arabe_armaf_odyssey_mandarin_sky_edp_100ml, // Armaf — ARABE ARMAF ODYSSEY TYRANT EDP 100ML ARABE ARMAF ODYSSEY MANDARIN SKY EDP 100ML
+  "50d68680-bfc6-445f-8ff4-a7b9d75806ce": p4_armaf_arabe_armaf_odyssey_wild_one_gold_edit_edp_100ml, // Armaf — ARABE ARMAF ODYSSEY WILD ONE GOLD EDIT EDP 100ML
+  "d1a6def4-ded6-4860-a1d5-f1f2c8c26811": p4_armaf_arabe_armaf_odyssey_aoud_edp_100ml, // Armaf — ARABE ARMAF ODYSSEY AOUD EDP 100ML
+  "51066251-3ca0-43fb-bdd2-c1705a2181ff": p4_armaf_arabe_armaf_odyssey_homme_a_edp_100ml, // Armaf — ARABE ARMAF ODYSSEY HOMME A EDP 100ML
+  "330d10ec-fbd8-4437-b9be-a13993ca96d7": p4_arqus_arabe_arqus_uno_mil_edp_100ml, // Arqus — ARABE ARQUS UNO MIL EDP 100ML
+  "af8463bc-dc48-4a47-9686-caa4ff0c14da": p4_arqus_arabe_arqus_magnate_men_edp_a_100ml, // Arqus — ARABE ARQUS MAGNATE MEN EDP A 100ML
+  "03f301f8-5742-42d7-af9a-9e4cdfce64c8": p4_arrogance_arrogance_uomo_anniversary_edp_100ml, // Arrogance — ARROGANCE UOMO ANNIVERSARY EDP 100ML
+  "336f1779-9021-44d8-a8fa-16bff2eeabe7": p4_avar_arabe_avar_collection_blue_royale_n101_edp_30ml, // Avar — ARABE AVAR COLLECTION BLUE ROYALE N101 EDP 30ML
+  "12beb931-9b67-44e2-8f8d-82ff931b1d25": p4_avar_arabe_avar_collection_vip_first_bl_n105_edp_30ml, // Avar — ARABE AVAR COLLECTION VIP FIRST BL N105 EDP 30ML
+  "68b40a98-02aa-4bb3-9ff8-d39b263f3d4b": p4_avar_arabe_avar_collection_one_goldy_n103_edp_30ml, // Avar — ARABE AVAR COLLECTION ONE GOLDY N103 EDP 30ML
+  "c88a0c34-2ee4-441c-97c4-43be1a2f7a4c": p4_avar_arabe_avar_collection_robot_n108_edp_30ml, // Avar — ARABE AVAR COLLECTION ROBOT N108 EDP 30ML
+  "7bac4adf-a47e-4738-88a7-68fd4e84d6dc": p4_avar_arabe_avar_collection_hero_save_n102_edp_30ml, // Avar — ARABE AVAR COLLECTION HERO SAVE N102 EDP 30ML
+  "62e3c45f-4d2d-446c-868e-ca72276b71d3": p4_avar_arabe_avar_collection_vyrtus_n104_edp_30ml, // Avar — ARABE AVAR COLLECTION VYRTUS N104 EDP 30ML
+  "28417de1-127c-47fa-8ab9-8abcd5a2299d": p4_avar_arabe_avar_collection_bakhar_rose_n014_edp_30ml, // Avar — ARABE AVAR COLLECTION BAKHAR ROSE N014 EDP 30ML
+  "3b691235-7a9b-4b9d-8c07-46e24c7b5292": p4_avar_arabe_avar_collection_bakhar_gold_n015_edp_30ml, // Avar — ARABE AVAR COLLECTION BAKHAR GOLD N015 EDP 30ML
+  "51541467-9b7a-4697-915d-6c42f2081e9e": p4_avar_arabe_avar_collection_scanlover_n008_edp_30ml, // Avar — ARABE AVAR COLLECTION SCANLOVER N008 EDP 30ML
+  "94da39f9-a4d5-4d07-be51-1c7b3a47abc6": p4_avar_arabe_avar_collection_yaareh_n010_edp_30ml, // Avar — ARABE AVAR COLLECTION YAAREH N010 EDP 30ML
+  "364c24f5-7a3b-4125-917f-c9a7dcd0397c": p4_benetton_benetton_colors_woman_rose_intenso_edp_80ml, // Benetton — BENETTON COLORS WOMAN ROSE INTENSO EDP 80ML
+  "ccb92d33-c399-44c5-b35f-ff164bfcb892": p4_benetton_benetton_colors_man_green_edt_100ml, // Benetton — BENETTON COLORS MAN GREEN EDT 100ML
+  "a3f0f51a-4d57-410b-93f9-fe44797db851": p4_benetton_benetton_love_yourself_edt_ns_80ml, // Benetton — BENETTON LOVE YOURSELF EDT (NS) 80ML
+  "fce93f48-1078-40e9-aecb-14a799a2a5bb": p4_benetton_benetton_colors_man_black_intenso_edp_100ml, // Benetton — BENETTON COLORS MAN BLACK INTENSO EDP 100ML
+  "8667999c-014a-43bf-8a69-de870c12bd55": p4_benetton_benetton_colors_man_blue_edt_60ml, // Benetton — BENETTON COLORS MAN BLUE EDT 60ML
+  "d9e6aad9-9e48-4b88-b267-06e799f8d862": p4_benetton_benetton_colors_man_black_edt_60ml, // Benetton — BENETTON COLORS MAN BLACK EDT 60ML
+  "e990880f-f93c-4635-80df-50238df341cf": p4_bespoke_bespoke_caramel_amber_and_cashmere_edp_100ml, // Bespoke — BESPOKE CARAMEL AMBER AND CASHMERE EDP 100ML
+  "d5f26f05-1710-486d-9591-c3c218e58ceb": p4_bespoke_bespoke_oriental_woods_and_amber_edp_100ml, // Bespoke — BESPOKE ORIENTAL WOODS AND AMBER EDP 100ML
+  "47941d27-8dda-42d2-993d-24c4d6d4dda1": p4_bespoke_bespoke_jasmine_y_chocolate_berries_edp_100ml, // Bespoke — BESPOKE JASMINE Y CHOCOLATE BERRIES EDP 100ML
+  "4764c038-5dc1-4dd6-8908-f1ede1909ff9": p4_billie_eilish_billie_eilish_n_2_edp_100ml, // Billie Eilish — BILLIE EILISH N§2 EDP 100ML
+  "d8f5210f-3a53-4f08-ac61-534987c32ef1": p4_blauer_blauer_the_journey_boston_1936_edp_80ml, // Blauer — BLAUER THE JOURNEY BOSTON 1936 EDP 80ML
+  "9746033d-356d-41fb-9044-d84f70e48f08": p4_born_in_france_born_in_france_flower_kiss_edp_100ml, // Born in France — BORN IN FRANCE FLOWER KISS EDP 100ML
+  "e75072ab-d7d7-4eb6-a54e-fbd898edc795": p4_born_in_france_born_in_france_pura_vida_edp_85ml, // Born in France — BORN IN FRANCE PURA VIDA EDP 85ML
+  "64e51ce1-1efd-4b07-b933-01caedcfb99e": p4_born_in_france_born_in_france_la_va_edp_85ml, // Born in France — BORN IN FRANCE LA VA EDP 85ML
+  "da79762c-acd6-441c-83d2-265fe412e7b2": p4_born_in_france_born_in_france_game_of_kings_edp_85ml, // Born in France — BORN IN FRANCE GAME OF KINGS EDP 85ML
+  "b92d321d-ff13-4480-b2c9-4fa290d79114": p4_born_in_france_born_in_france_eclipse_edp_100ml, // Born in France — BORN IN FRANCE ECLIPSE EDP 100ML
+  "8388c166-dd84-4ac5-be2e-96ab1773b779": p4_boulevard_boulevard_grands_edp_100ml, // Boulevard — BOULEVARD GRANDS EDP 100ML
+  "2aa8bf8e-b148-4d2f-a5b5-34659767d11b": p4_boulevard_boulevard_haussmann_edp_100ml, // Boulevard — BOULEVARD HAUSSMANN EDP 100ML
+  "b557767f-1cad-4c73-9174-6071b097f99c": p4_britney_spears_britney_spears_candied_fantasy_edt_100ml, // Britney Spears — BRITNEY SPEARS CANDIED FANTASY EDT 100ML
+  "106446fc-051c-4a67-97f6-6c5a184a035f": p4_britney_spears_britney_spears_fantasy_edp_100ml, // Britney Spears — BRITNEY SPEARS FANTASY EDP 100ML
+  "3b0b7d9b-f16f-45bb-9d6f-8e4520138c78": p4_britney_spears_britney_spears_blissful_fantasy_edt_100ml, // Britney Spears — BRITNEY SPEARS BLISSFUL FANTASY EDT 100ML
+  "1b0a12ff-5ee6-44a0-ae5e-cc337cd201b4": p4_britney_spears_britney_spears_curious_edp_100ml, // Britney Spears — BRITNEY SPEARS CURIOUS EDP 100ML
+  "10c01907-fc54-4bce-b5b6-998a2b97509a": p4_chloe_chloe_edp_50ml, // Chloe — CHLOE EDP 50ML
+  "65e348da-cc75-4236-a2dc-d276bed69496": p4_chloe_chloe_nomade_edp_75ml, // Chloe — CHLOE NOMADE EDP 75ML
+  "2f56ac72-f7fe-4c28-8013-7bcb43211f0b": p4_christian_dior_christian_dior_sauvage_elixir_100ml, // Christian Dior — CHRISTIAN DIOR SAUVAGE ELIXIR 100ML
+  "b6eb54d3-5a8a-499f-83b8-4293ff9f0351": p4_christian_dior_christian_dior_sauvage_eau_forte_parfum_100ml, // Christian Dior — CHRISTIAN DIOR SAUVAGE EAU FORTE PARFUM 100ML
+  "438ce21d-6139-4fd3-9975-4fff990557ba": p4_christian_dior_christian_dior_miss_dior_edp_100ml, // Christian Dior — CHRISTIAN DIOR MISS DIOR EDP 100ML
+  "ec6df0be-8b21-4463-b7d0-a5d16534f993": p4_christian_dior_christian_dior_fahrenheit_edt_200ml, // Christian Dior — CHRISTIAN DIOR FAHRENHEIT EDT 200ML
+  "c400eb21-9826-4986-bc0e-ebc3c2c2103c": p4_coach_coach_new_york_edp_90ml, // Coach — COACH NEW YORK EDP 90ML
+  "3d841ed2-0f2e-46d5-aa1d-6657d60993b0": p4_dar_el_ward_arabe_dar_el_ward_houbi_edp_100ml_e, // Dar el Ward — ARABE DAR EL WARD HOUBI EDP 100ML E
+  "79df23ba-36b3-40d6-b412-c5040806d903": p4_david_beckham_david_beckham_bold_instinct_edp_75ml, // David Beckham — DAVID BECKHAM BOLD INSTINCT EDP 75ML
+  "71305588-a423-4a09-b1ab-fdedcab25185": p4_david_beckham_david_beckham_instinct_edp_75ml, // David Beckham — DAVID BECKHAM INSTINCT EDP 75ML
+  "72fa19a8-ac1c-4ff3-8782-fd295e039772": p4_david_beckham_david_beckham_classic_blue_edt_100ml, // David Beckham — DAVID BECKHAM CLASSIC BLUE EDT 100ML
+  "9b433a4d-7647-4312-90ee-a083741aa002": p4_david_beckham_david_beckham_classic_edt_b_100ml, // David Beckham — DAVID BECKHAM CLASSIC EDT B 100ML
+  "5710d2ae-d860-4bd1-8a9a-cb596374ed0a": p4_david_beckham_david_beckham_classic_homme_edt_100ml, // David Beckham — DAVID BECKHAM CLASSIC HOMME EDT 100ML
+  "179aa3f5-a895-4668-944c-3fb65672d2b5": p4_david_beckham_david_beckham_true_instinct_dolc_edp_50ml, // David Beckham — DAVID BECKHAM TRUE INSTINCT DOLC EDP 50ML
+  "50a1415b-0a51-400a-8484-29fe93aafbc1": p4_david_beckham_david_beckham_classic_homme_b_edt_50ml, // David Beckham — DAVID BECKHAM CLASSIC HOMME B EDT 50ML
+
 };
 
 /**
