@@ -77,17 +77,17 @@ function HomePage() {
           />
 
           <h1
-            className="mt-7 sm:mt-10 text-[2.2rem] sm:text-6xl lg:text-[5.5rem] font-serif text-balance max-w-4xl leading-[1.05] tracking-tight fade-up"
+            className="mt-7 sm:mt-10 text-[2.4rem] sm:text-6xl lg:text-[5.5rem] font-serif text-balance max-w-4xl leading-[1.05] tracking-tight fade-up"
             style={{ animationDelay: "0.5s" }}
           >
-            Te ayudamos a encontrar tu <em className="text-accent">perfume ideal</em>
+            Elegí cómo querés que <em className="text-accent">te recuerden</em>
           </h1>
 
           <p
-            className="mt-6 sm:mt-9 max-w-md text-foreground/70 text-base sm:text-lg leading-relaxed brand-serif fade-up"
+            className="mt-6 sm:mt-9 max-w-md text-foreground/80 text-base sm:text-lg leading-relaxed brand-serif fade-up"
             style={{ animationDelay: "0.8s" }}
           >
-            No vendemos perfumes — elegimos tu presencia. Asesoramiento personalizado para que tu fragancia hable antes que vos.
+            Asesoramiento personalizado para que tu fragancia hable antes que vos.
           </p>
 
           <div
