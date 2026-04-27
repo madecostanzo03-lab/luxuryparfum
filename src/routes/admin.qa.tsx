@@ -225,6 +225,76 @@ function AdminQAPage() {
     );
   }
 
+  const downloadCSV = () => {
+    const rows = [
+      ["id", "label", "status", "detail"],
+      ...checks.map((c) => [c.id, c.label, c.status, c.detail]),
+    ];
+    if (stats) {
+      rows.push([], ["__stats__", "", "", ""]);
+      Object.entries(stats).forEach(([k, v]) => {
+        rows.push([k, "", "", typeof v === "object" ? JSON.stringify(v) : String(v)]);
+      });
+    }
+    const csv = rows
+      .map((r) => r.map((cell) => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `qa-catalogo-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadPDF = () => {
+    const totalPass = checks.filter((c) => c.status === "pass").length;
+    const totalWarn = checks.filter((c) => c.status === "warn").length;
+    const totalFail = checks.filter((c) => c.status === "fail").length;
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>QA Catálogo</title>
+<style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#111;padding:32px;max-width:900px;margin:auto}
+h1{font-family:Georgia,serif;font-size:26px;margin:0 0 4px}
+.sub{color:#666;font-size:12px;margin-bottom:20px}
+.summary{padding:12px 16px;border:1px solid #ddd;margin-bottom:20px;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{border:1px solid #ddd;padding:8px;text-align:left;vertical-align:top}
+th{background:#f5f5f5}
+.pass{color:#0a7d2c;font-weight:600}.warn{color:#b07a00;font-weight:600}.fail{color:#b00020;font-weight:600}
+.detail{font-family:ui-monospace,Menlo,monospace;color:#444;font-size:11px}
+h2{font-size:14px;margin:24px 0 8px}
+</style></head><body>
+<h1>QA final del catálogo</h1>
+<div class="sub">Generado ${new Date().toLocaleString("es-AR")}</div>
+<div class="summary"><strong>Resultado:</strong> ${totalPass} OK · ${totalWarn} advertencias · ${totalFail} errores</div>
+${stats ? `<h2>Resumen</h2><table>
+<tr><th>Métrica</th><th>Valor</th></tr>
+<tr><td>Perfumes totales</td><td>${stats.perfumes}</td></tr>
+<tr><td>En stock</td><td>${stats.inStock}</td></tr>
+<tr><td>Cola dudosa</td><td>${stats.queue}</td></tr>
+<tr><td>Confirmados</td><td>${stats.confirmados}</td></tr>
+<tr><td>Mantenidos</td><td>${stats.mantenidos}</td></tr>
+<tr><td>No encontrados</td><td>${stats.no_encontrados}</td></tr>
+<tr><td>Pendientes</td><td>${stats.pendientes}</td></tr>
+<tr><td>Manuales</td><td>${stats.manuales}</td></tr>
+<tr><td>Sin imagen</td><td>${stats.sinImagen}</td></tr>
+<tr><td>Sin precio</td><td>${stats.sinPrecio}</td></tr>
+<tr><td>Duplicados</td><td>${stats.duplicados}</td></tr>
+<tr><td>Render card</td><td>${stats.rendered.card}</td></tr>
+<tr><td>Render modal</td><td>${stats.rendered.modal}</td></tr>
+</table>` : ""}
+<h2>Detalle de checks</h2>
+<table>
+<tr><th>#</th><th>Check</th><th>Estado</th><th>Detalle</th></tr>
+${checks.map((c, i) => `<tr><td>${i + 1}</td><td>${escapeHtml(c.label)}</td><td class="${c.status}">${c.status.toUpperCase()}</td><td class="detail">${escapeHtml(c.detail)}</td></tr>`).join("")}
+</table>
+<script>window.onload=()=>{setTimeout(()=>window.print(),300)}</script>
+</body></html>`;
+    const w = window.open("", "_blank");
+    if (w) { w.document.write(html); w.document.close(); }
+  };
+
   const totalPass = checks.filter((c) => c.status === "pass").length;
   const totalWarn = checks.filter((c) => c.status === "warn").length;
   const totalFail = checks.filter((c) => c.status === "fail").length;
