@@ -14,6 +14,7 @@ import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminQaRoute = AdminQaRouteImport.update({
+  id: '/admin/qa',
+  path: '/admin/qa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPreciosRoute = AdminPreciosRouteImport.update({
   id: '/admin/precios',
   path: '/admin/precios',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/precios': typeof AdminPreciosRoute
+  '/admin/qa': typeof AdminQaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/precios': typeof AdminPreciosRoute
+  '/admin/qa': typeof AdminQaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/precios': typeof AdminPreciosRoute
+  '/admin/qa': typeof AdminQaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/marcas'
     | '/sobre-nosotros'
     | '/admin/precios'
+    | '/admin/qa'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/marcas'
     | '/sobre-nosotros'
     | '/admin/precios'
+    | '/admin/qa'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/marcas'
     | '/sobre-nosotros'
     | '/admin/precios'
+    | '/admin/qa'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
   AdminPreciosRoute: typeof AdminPreciosRoute
+  AdminQaRoute: typeof AdminQaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/qa': {
+      id: '/admin/qa'
+      path: '/admin/qa'
+      fullPath: '/admin/qa'
+      preLoaderRoute: typeof AdminQaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/precios': {
       id: '/admin/precios'
       path: '/admin/precios'
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
   AdminPreciosRoute: AdminPreciosRoute,
+  AdminQaRoute: AdminQaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
