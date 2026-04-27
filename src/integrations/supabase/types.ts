@@ -183,6 +183,51 @@ export type Database = {
           },
         ]
       }
+      price_review_queue: {
+        Row: {
+          created_at: string
+          diferencia: number | null
+          id: string
+          nombre_db: string
+          nombre_pdf_candidato: string | null
+          notas: string | null
+          perfume_id: string
+          precio_db: number
+          precio_pdf: number | null
+          score: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          diferencia?: number | null
+          id?: string
+          nombre_db: string
+          nombre_pdf_candidato?: string | null
+          notas?: string | null
+          perfume_id: string
+          precio_db: number
+          precio_pdf?: number | null
+          score?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          diferencia?: number | null
+          id?: string
+          nombre_db?: string
+          nombre_pdf_candidato?: string | null
+          notas?: string | null
+          perfume_id?: string
+          precio_db?: number
+          precio_pdf?: number | null
+          score?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
