@@ -327,6 +327,20 @@ ${checks.map((c, i) => `<tr><td>${i + 1}</td><td>${escapeHtml(c.label)}</td><td 
           <Link to="/catalogo" className="eyebrow text-[0.65rem] px-4 py-2 border border-border hover:border-accent hover:text-accent">
             Ver catálogo público
           </Link>
+          <button
+            onClick={downloadCSV}
+            disabled={loading || checks.length === 0}
+            className="eyebrow text-[0.65rem] px-4 py-2 border border-border hover:border-accent hover:text-accent disabled:opacity-40"
+          >
+            Descargar CSV
+          </button>
+          <button
+            onClick={downloadPDF}
+            disabled={loading || checks.length === 0}
+            className="eyebrow text-[0.65rem] px-4 py-2 border border-border hover:border-accent hover:text-accent disabled:opacity-40"
+          >
+            Descargar PDF
+          </button>
         </div>
       </header>
 
