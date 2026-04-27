@@ -301,9 +301,9 @@ function HomePage() {
       <section className="my-20 sm:my-32 text-center max-w-3xl mx-auto px-5 sm:px-6">
         <p className="eyebrow">Encontrá tu firma</p>
         <h2 className="mt-7 text-3xl sm:text-5xl font-serif leading-tight text-balance">
-          No es solo un perfume — es <em className="text-accent">cómo te van a recordar</em>.
+          Tu perfume también <em className="text-accent">habla por vos</em>.
         </h2>
-        <p className="mt-7 max-w-md mx-auto text-foreground/70 brand-serif text-base sm:text-lg leading-relaxed">
+        <p className="mt-7 max-w-md mx-auto text-foreground/75 brand-serif text-base sm:text-lg leading-relaxed">
           Contanos cómo querés que te perciban y te recomendamos la fragancia perfecta.
         </p>
         <a
