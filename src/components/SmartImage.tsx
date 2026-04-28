@@ -24,7 +24,7 @@ export function SmartImage({
   eager = false,
   preserveBg = false,
   forceProcess = false,
-  showDebug = true,
+  showDebug = false,
 }: {
   src: string | null | undefined;
   alt: string;
@@ -68,8 +68,9 @@ export function SmartImage({
   const showFallback = !src || errored;
   const finalSrc = processedSrc ?? src ?? "";
 
+  // Fondo azul profundo #0A0F2C (midnight navy) con iluminaci\u00f3n suave de tienda de lujo.
   const studioBg =
-    "radial-gradient(ellipse at 50% 30%, oklch(0.24 0.045 250) 0%, oklch(0.14 0.035 250) 55%, oklch(0.08 0.025 250) 100%)";
+    "radial-gradient(ellipse at 50% 28%, #182148 0%, #0F1638 45%, #0A0F2C 100%)";
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
