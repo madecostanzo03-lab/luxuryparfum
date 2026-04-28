@@ -156,8 +156,30 @@ function CatalogoPage() {
   }, [search.genero, search.tipo, search.max, search.q, search.destacado, selectedBrandId, search.marca, brands.length]);
 
   const update = (patch: Partial<typeof search>) => {
-    navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
+    navigate({
+      search: (prev: typeof search) => ({ ...prev, ...patch }),
+      replace: true,
+      resetScroll: false,
+    });
   };
+
+  // Buscador estable: input local controlado + debounce a la URL.
+  // Evita que cada tecla dispare navegación + re-fetch + scroll reset.
+  const [searchInput, setSearchInput] = useState(search.q);
+  // Sincronizar si la URL cambia desde fuera (ej. al limpiar filtros)
+  useEffect(() => {
+    setSearchInput(search.q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search.q]);
+  // Debounce: aplicar al state de URL 280ms después de la última tecla
+  useEffect(() => {
+    if (searchInput === search.q) return;
+    const t = setTimeout(() => {
+      update({ q: searchInput });
+    }, 280);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput]);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -240,8 +262,8 @@ function CatalogoPage() {
           <input
             type="search"
             placeholder="Buscar por nombre o marca..."
-            value={search.q}
-            onChange={(e) => update({ q: e.target.value })}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="w-full bg-input/40 border border-border pl-11 pr-4 py-3 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-accent transition-colors"
           />
         </div>
@@ -334,48 +356,52 @@ function CatalogoPage() {
             )}
           </div>
 
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[4/5] bg-card" />
-                  <div className="pt-5 space-y-2">
-                    <div className="h-2 bg-card w-1/3" />
-                    <div className="h-4 bg-card w-2/3" />
+          {/* Contenedor con min-height estable: el grid no salta cuando
+              cambian los resultados o aparece el mensaje "sin resultados" */}
+          <div style={{ minHeight: "60vh" }}>
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="aspect-[4/5] bg-card" />
+                    <div className="pt-5 space-y-2">
+                      <div className="h-2 bg-card w-1/3" />
+                      <div className="h-4 bg-card w-2/3" />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : perfumes.length === 0 ? (
-            <div className="py-20 text-center text-foreground/50">
-              <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
-              {hasActiveFilters && (
-                <button
-                  onClick={() => navigate({ search: resetSearch })}
-                  className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
-                >
-                  Limpiar filtros
-                </button>
-              )}
-            </div>
-          ) : (
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14 transition-opacity duration-300 ${
-                filtering ? "opacity-50" : "opacity-100"
-              }`}
-            >
-              {perfumes.map((p) => (
-                <PerfumeCard
-                  key={p.id}
-                  perfume={p}
-                  openInitial={search.p === p.id}
-                  initialVariantId={search.p === p.id ? search.v || null : null}
-                  onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
-                  onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
-                />
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            ) : perfumes.length === 0 ? (
+              <div className="py-20 text-center text-foreground/50">
+                <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
+                {hasActiveFilters && (
+                  <button
+                    onClick={() => navigate({ search: resetSearch, resetScroll: false })}
+                    className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
+                  >
+                    Limpiar filtros
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div
+                className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14 transition-opacity duration-300 ${
+                  filtering ? "opacity-50" : "opacity-100"
+                }`}
+              >
+                {perfumes.map((p) => (
+                  <PerfumeCard
+                    key={p.id}
+                    perfume={p}
+                    openInitial={search.p === p.id}
+                    initialVariantId={search.p === p.id ? search.v || null : null}
+                    onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
+                    onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

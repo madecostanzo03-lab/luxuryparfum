@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { removeWhiteBackground } from "@/lib/remove-white-bg";
 
 /**
- * Imagen con lazy loading, fade-in al cargar, skeleton de fondo y
- * fallback elegante (placeholder con inicial) si falla o no carga.
+ * Imagen del catálogo con remoción REAL de fondo blanco.
  *
- * UNIFICACIÓN VISUAL PREMIUM:
- * Todas las imágenes se renderizan sobre un mismo "estudio" oscuro azul-noir
- * con viñeta y un reflejo superior dorado muy sutil. Esto neutraliza la
- * mezcla de fondos blancos / grises / mockups que vienen del proveedor y
- * hace que el catálogo entero se sienta editorial y coherente.
+ * Pipeline:
+ *   1. Renderizamos la imagen original sobre el "estudio oscuro premium".
+ *   2. En paralelo, intentamos procesarla con removeWhiteBackground():
+ *      flood-fill desde los bordes que detecta SOLO el fondo blanco
+ *      conectado al borde y lo vuelve transparente (alpha=0).
+ *   3. Si la remoción funciona, swap por la versión con transparencia real.
+ *      Si falla (CORS, imagen ya transparente, casos raros), nos quedamos
+ *      con la original — sin blend, sin difuminado.
  *
- * - Para imágenes con fondo claro (lo más común en perfumes), usamos
- *   `mix-blend-multiply` que las funde con el fondo oscuro premium.
- * - Para imágenes con fondo oscuro o ya editoriales, usar `preserveBg`.
- * - El placeholder de fallback mantiene la misma paleta para no romper el ritmo.
+ * `preserveBg` evita el procesamiento (para imágenes editoriales premium
+ * que ya vienen con fondo oscuro).
  */
 export function SmartImage({
   src,
@@ -30,37 +31,44 @@ export function SmartImage({
   className?: string;
   imgClassName?: string;
   eager?: boolean;
-  /**
-   * Si true, NO se aplica el blend ni la mezcla con el fondo oscuro
-   * (úsalo cuando la imagen ya viene en estética premium / fondo oscuro).
-   */
   preserveBg?: boolean;
 }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
+  const [processedSrc, setProcessedSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setProcessedSrc(null);
+    if (!src || preserveBg) return;
+    // Procesamos asincrónicamente — no bloquea el render
+    removeWhiteBackground(src).then((out) => {
+      if (!cancelled && out) setProcessedSrc(out);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [src, preserveBg]);
 
   const showFallback = !src || errored;
+  const finalSrc = processedSrc ?? src ?? "";
 
-  // Fondo "estudio premium" reutilizado por la imagen real Y el fallback
   const studioBg =
     "radial-gradient(ellipse at 50% 30%, oklch(0.24 0.045 250) 0%, oklch(0.14 0.035 250) 55%, oklch(0.08 0.025 250) 100%)";
 
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
-      {/* Estudio oscuro premium (siempre presente para coherencia) */}
       <div
         className="absolute inset-0"
         style={{ background: studioBg }}
         aria-hidden
       />
 
-      {/* Skeleton shimmer mientras carga */}
       {!loaded && !showFallback && (
         <div className="absolute inset-0 bg-gradient-to-br from-card/40 via-secondary/20 to-card/40 animate-pulse" />
       )}
 
       {showFallback ? (
-        // Placeholder editorial premium: misma paleta, filete dorado, inicial serif
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="absolute top-6 left-6 right-6 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
           <span className="absolute bottom-6 left-6 right-6 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -74,70 +82,21 @@ export function SmartImage({
           </div>
         </div>
       ) : (
-        <>
-          {/*
-            CAPA ÚNICA — fusión sutil con el estudio:
-            En vez de un `multiply` agresivo (que hacía desaparecer frascos enteros
-            cuando la imagen del proveedor tenía mucho contraste), aplicamos:
-            - Una máscara radial muy suave que solo desvanece los bordes extremos
-              (donde están los recortes blancos típicos), dejando el frasco
-              completamente visible en el centro.
-            - Un realce de contraste/saturación leve para que el frasco "tenga
-              cuerpo" contra el fondo oscuro.
-            - Una sombra inferior para integrarlo con el estudio.
-            Resultado: el perfume SIEMPRE se ve, los bordes blancos se diluyen
-            con el azul, sin riesgo de quedarse sin imagen.
-          */}
-          {/*
-            Doble capa para fundir agresivamente fondos blancos del proveedor
-            con el estudio oscuro premium, SIN perder el frasco:
-            - Capa base con `multiply`: el blanco puro se vuelve transparente
-              contra el fondo oscuro, eliminando el rectángulo blanco.
-            - Capa superior idéntica con máscara radial muy suave: rescata
-              detalles del frasco (etiquetas, cap, líquido) que el multiply
-              podría apagar, sólo en el centro.
-            Resultado: ningún borde blanco visible, frasco siempre presente.
-          */}
-          <img
-            src={src!}
-            alt={alt}
-            loading={eager ? "eager" : "lazy"}
-            decoding="async"
-            onLoad={() => setLoaded(true)}
-            onError={() => setErrored(true)}
-            aria-hidden={preserveBg ? undefined : true}
-            style={
-              preserveBg
-                ? undefined
-                : {
-                    mixBlendMode: "multiply",
-                    filter: "contrast(1.08) saturate(1.05) brightness(1.04)",
-                  }
-            }
-            className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
-              loaded ? "opacity-100" : "opacity-0"
-            } ${imgClassName}`}
-          />
-          {!preserveBg && (
-            <img
-              src={src!}
-              alt={alt}
-              loading={eager ? "eager" : "lazy"}
-              decoding="async"
-              style={{
-                WebkitMaskImage:
-                  "radial-gradient(ellipse 62% 70% at 50% 52%, #000 38%, transparent 88%)",
-                maskImage:
-                  "radial-gradient(ellipse 62% 70% at 50% 52%, #000 38%, transparent 88%)",
-                filter:
-                  "contrast(1.05) saturate(1.12) brightness(1.05) drop-shadow(0 10px 22px rgba(0,0,0,0.55))",
-              }}
-              className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
-                loaded ? "opacity-95" : "opacity-0"
-              } ${imgClassName}`}
-            />
-          )}
-        </>
+        <img
+          src={finalSrc}
+          alt={alt}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          onLoad={() => setLoaded(true)}
+          onError={() => setErrored(true)}
+          style={{
+            filter:
+              "contrast(1.04) saturate(1.06) drop-shadow(0 12px 24px rgba(0,0,0,0.55))",
+          }}
+          className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
+            loaded ? "opacity-100" : "opacity-0"
+          } ${imgClassName}`}
+        />
       )}
 
       {/* Reflejo superior sutil — luz de estudio */}
@@ -150,7 +109,7 @@ export function SmartImage({
         aria-hidden
       />
 
-      {/* Drop shadow inferior bajo el frasco — flotación de estudio */}
+      {/* Sombra inferior bajo el frasco */}
       <div
         className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[8%] w-[55%] h-3 rounded-[50%] blur-md"
         style={{
