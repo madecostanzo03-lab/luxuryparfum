@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import { removeWhiteBackground } from "@/lib/remove-white-bg";
 
 /**
- * Imagen del catálogo con remoción REAL de fondo blanco.
+ * Imagen del catálogo del catálogo con remoción REAL y CONSERVADORA de fondo blanco.
  *
- * Pipeline:
- *   1. Renderizamos la imagen original sobre el "estudio oscuro premium".
- *   2. En paralelo, intentamos procesarla con removeWhiteBackground():
- *      flood-fill desde los bordes que detecta SOLO el fondo blanco
- *      conectado al borde y lo vuelve transparente (alpha=0).
- *   3. Si la remoción funciona, swap por la versión con transparencia real.
- *      Si falla (CORS, imagen ya transparente, casos raros), nos quedamos
- *      con la original — sin blend, sin difuminado.
- *
- * `preserveBg` evita el procesamiento (para imágenes editoriales premium
- * que ya vienen con fondo oscuro).
+ * Comportamiento:
+ *   1. Render inmediato de la imagen original (sin blend, sin multiply, sin blur,
+ *      sin lavado) sobre el fondo "estudio oscuro premium".
+ *   2. En paralelo, se intenta limpiar el fondo con removeWhiteBackground():
+ *      - Si funciona limpio: swap por la versión con transparencia binaria real.
+ *      - Si NO se puede resolver bien: la imagen original se queda como está.
+ *        No aplicamos ningún arreglo "semi". Estos casos quedan listados en
+ *        el CSV de revisión manual.
+ *   3. `preserveBg=true` desactiva el procesamiento (imágenes editoriales
+ *      premium ya vienen con fondo oscuro perfecto).
  */
 export function SmartImage({
   src,
@@ -41,9 +40,10 @@ export function SmartImage({
     let cancelled = false;
     setProcessedSrc(null);
     if (!src || preserveBg) return;
-    // Procesamos asincrónicamente — no bloquea el render
     removeWhiteBackground(src).then((out) => {
-      if (!cancelled && out) setProcessedSrc(out);
+      if (cancelled) return;
+      // Solo aplicamos si hay un resultado limpio. Si null → dejamos original.
+      if (out) setProcessedSrc(out);
     });
     return () => {
       cancelled = true;
@@ -90,6 +90,7 @@ export function SmartImage({
           onLoad={() => setLoaded(true)}
           onError={() => setErrored(true)}
           style={{
+            // Realce sutil — sin blur, sin lavado, sin pérdida de definición.
             filter:
               "contrast(1.04) saturate(1.06) drop-shadow(0 12px 24px rgba(0,0,0,0.55))",
           }}
