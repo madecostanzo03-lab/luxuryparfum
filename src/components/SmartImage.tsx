@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { removeWhiteBackground } from "@/lib/remove-white-bg";
+import { removeWhiteBackgroundWithReport, type RemovalStatus } from "@/lib/remove-white-bg";
 
 /**
  * Imagen del catálogo del catálogo con remoción REAL y CONSERVADORA de fondo blanco.
@@ -23,6 +23,8 @@ export function SmartImage({
   imgClassName = "",
   eager = false,
   preserveBg = false,
+  forceProcess = false,
+  showDebug = true,
 }: {
   src: string | null | undefined;
   alt: string;
@@ -31,24 +33,37 @@ export function SmartImage({
   imgClassName?: string;
   eager?: boolean;
   preserveBg?: boolean;
+  forceProcess?: boolean;
+  showDebug?: boolean;
 }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
   const [processedSrc, setProcessedSrc] = useState<string | null>(null);
+  const [status, setStatus] = useState<RemovalStatus | "original" | "processed-transparent">("original");
+  const [whiteRectVisible, setWhiteRectVisible] = useState<boolean | null>(null);
 
   useEffect(() => {
     let cancelled = false;
+    setLoaded(false);
+    setErrored(false);
     setProcessedSrc(null);
+    setWhiteRectVisible(null);
+    setStatus(preserveBg ? "original" : "original");
     if (!src || preserveBg) return;
-    removeWhiteBackground(src).then((out) => {
+    removeWhiteBackgroundWithReport(src, { force: forceProcess }).then((report) => {
       if (cancelled) return;
-      // Solo aplicamos si hay un resultado limpio. Si null → dejamos original.
-      if (out) setProcessedSrc(out);
+      setWhiteRectVisible(report.whiteRectVisible);
+      if (report.status === "ok" && report.output) {
+        setProcessedSrc(report.output);
+        setStatus("processed-transparent");
+      } else {
+        setStatus(report.status);
+      }
     });
     return () => {
       cancelled = true;
     };
-  }, [src, preserveBg]);
+  }, [src, preserveBg, forceProcess]);
 
   const showFallback = !src || errored;
   const finalSrc = processedSrc ?? src ?? "";
@@ -89,15 +104,23 @@ export function SmartImage({
           decoding="async"
           onLoad={() => setLoaded(true)}
           onError={() => setErrored(true)}
-          style={{
-            // Realce sutil — sin blur, sin lavado, sin pérdida de definición.
-            filter:
-              "contrast(1.04) saturate(1.06) drop-shadow(0 12px 24px rgba(0,0,0,0.55))",
-          }}
           className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
             loaded ? "opacity-100" : "opacity-0"
           } ${imgClassName}`}
         />
+      )}
+
+      {showDebug && !showFallback && (
+        <div className="pointer-events-none absolute left-2 top-2 z-20 flex max-w-[calc(100%-1rem)] flex-col items-start gap-1">
+          <span className="bg-background/90 border border-border px-2 py-1 text-[0.55rem] uppercase tracking-[0.12em] text-foreground/80">
+            {status === "ok" ? "processed-transparent" : status}
+          </span>
+          {whiteRectVisible !== null && (
+            <span className="bg-background/90 border border-border px-2 py-1 text-[0.55rem] uppercase tracking-[0.12em] text-foreground/70">
+              fondo blanco: {whiteRectVisible ? "sí" : "no"}
+            </span>
+          )}
+        </div>
       )}
 
       {/* Reflejo superior sutil — luz de estudio */}

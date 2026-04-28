@@ -16,6 +16,7 @@ import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
+import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
   id: '/sobre-nosotros',
@@ -52,6 +53,11 @@ const AdminPreciosRoute = AdminPreciosRouteImport.update({
   path: '/admin/precios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
+  id: '/api/public/image-proxy',
+  path: '/api/public/image-proxy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
+  '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
+  '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
+  '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/sobre-nosotros'
     | '/admin/precios'
     | '/admin/qa'
+    | '/api/public/image-proxy'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/sobre-nosotros'
     | '/admin/precios'
     | '/admin/qa'
+    | '/api/public/image-proxy'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/sobre-nosotros'
     | '/admin/precios'
     | '/admin/qa'
+    | '/api/public/image-proxy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   SobreNosotrosRoute: typeof SobreNosotrosRoute
   AdminPreciosRoute: typeof AdminPreciosRoute
   AdminQaRoute: typeof AdminQaRoute
+  ApiPublicImageProxyRoute: typeof ApiPublicImageProxyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPreciosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/image-proxy': {
+      id: '/api/public/image-proxy'
+      path: '/api/public/image-proxy'
+      fullPath: '/api/public/image-proxy'
+      preLoaderRoute: typeof ApiPublicImageProxyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   SobreNosotrosRoute: SobreNosotrosRoute,
   AdminPreciosRoute: AdminPreciosRoute,
   AdminQaRoute: AdminQaRoute,
+  ApiPublicImageProxyRoute: ApiPublicImageProxyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

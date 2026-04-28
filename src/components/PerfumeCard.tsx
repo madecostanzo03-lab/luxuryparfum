@@ -11,6 +11,22 @@ const PerfumeModal = lazy(() =>
   import("./PerfumeModal").then((m) => ({ default: m.PerfumeModal })),
 );
 
+const FORCE_BG_CLEANUP_TERMS = [
+  "sauvage elixir",
+  "fahrenheit",
+  "antonio banderas",
+  "fragluxe",
+  "stella dustin",
+  "good girl blush",
+  "le male",
+  "scandal",
+];
+
+function shouldForceBackgroundCleanup(perfume: Perfume, displayName: string): boolean {
+  const haystack = `${displayName} ${perfume.name} ${perfume.brand?.name ?? ""}`.toLowerCase();
+  return FORCE_BG_CLEANUP_TERMS.some((term) => haystack.includes(term));
+}
+
 
 export function PerfumeCard({
   perfume,
@@ -30,6 +46,7 @@ export function PerfumeCard({
   const variantsCount = perfume.variants?.length ?? 0;
   const hint = perfumeShortHint(perfume);
   const { src: imageSrc, isPremium } = resolvePerfumeImage(perfume.id, perfume.image_url);
+  const forceProcess = shouldForceBackgroundCleanup(perfume, displayName);
 
   useEffect(() => {
     setOpen(openInitial);
@@ -54,6 +71,7 @@ export function PerfumeCard({
             alt={`${displayName}${perfume.brand ? ` — ${perfume.brand.name}` : ""}`}
             fallbackInitial={displayName.charAt(0)}
             preserveBg={isPremium}
+            forceProcess={forceProcess}
             imgClassName="transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
           />
           {perfume.is_recommended && (
