@@ -262,8 +262,8 @@ function CatalogoPage() {
           <input
             type="search"
             placeholder="Buscar por nombre o marca..."
-            value={search.q}
-            onChange={(e) => update({ q: e.target.value })}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="w-full bg-input/40 border border-border pl-11 pr-4 py-3 text-sm placeholder:text-foreground/40 focus:outline-none focus:border-accent transition-colors"
           />
         </div>
