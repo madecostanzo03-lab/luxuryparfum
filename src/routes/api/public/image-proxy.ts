@@ -19,20 +19,42 @@ export const Route = createFileRoute("/api/public/image-proxy")({
           return new Response("Only https images are allowed", { status: 400 });
         }
 
-        const upstream = await fetch(target.toString(), {
-          headers: {
-            accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-            "user-agent": "Mozilla/5.0 (compatible; LuxuryParfumImagePreview/1.0)",
-          },
-        });
+        let upstream: Response;
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 10_000);
+          try {
+            upstream = await fetch(target.toString(), {
+              headers: {
+                accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+                "user-agent": "Mozilla/5.0 (compatible; LuxuryParfumImagePreview/1.0)",
+              },
+              signal: controller.signal,
+            });
+          } finally {
+            clearTimeout(timeout);
+          }
+        } catch (err) {
+          console.error("[image-proxy] fetch failed", target.toString(), err);
+          return new Response("Upstream unreachable", {
+            status: 502,
+            headers: { "access-control-allow-origin": "*" },
+          });
+        }
 
         if (!upstream.ok || !upstream.body) {
-          return new Response("Image fetch failed", { status: 502 });
+          return new Response("Image fetch failed", {
+            status: 502,
+            headers: { "access-control-allow-origin": "*" },
+          });
         }
 
         const contentType = upstream.headers.get("content-type") ?? "image/jpeg";
         if (!contentType.startsWith("image/")) {
-          return new Response("Not an image", { status: 415 });
+          return new Response("Not an image", {
+            status: 415,
+            headers: { "access-control-allow-origin": "*" },
+          });
         }
 
         return new Response(upstream.body, {
