@@ -26,7 +26,7 @@ export type RemovalReport = {
 
 const memCache = new Map<string, RemovalReport>();
 const inFlight = new Map<string, Promise<RemovalReport>>();
-const SS_PREFIX = "bg-cleanup-v5b::";
+const SS_PREFIX = "bg-cleanup-v5c::";
 
 const MAX_DIM = 1800;
 const MIN_EDGE_LIGHT_RATIO = 0.28;
@@ -318,13 +318,25 @@ function hasVisibleWhiteRectangle(px: Uint8ClampedArray, removed: Uint8Array, w:
   return checked > 0 && opaqueLight / checked > 0.06;
 }
 
+function proxiedUrl(url: string): string {
+  if (url.startsWith("data:") || url.startsWith("blob:") || url.startsWith("/")) return url;
+  try {
+    const parsed = new URL(url, window.location.origin);
+    if (parsed.origin === window.location.origin) return parsed.toString();
+    return `/api/public/image-proxy?url=${encodeURIComponent(parsed.toString())}`;
+  } catch {
+    return url;
+  }
+}
+
 function loadImage(url: string): Promise<HTMLImageElement> {
+  const safeUrl = proxiedUrl(url);
   const attempt = (withCors: boolean) => new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
     if (withCors) img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error("img load failed"));
-    img.src = url;
+    img.src = safeUrl;
   });
 
   return attempt(true).catch(() => attempt(false));
