@@ -156,8 +156,30 @@ function CatalogoPage() {
   }, [search.genero, search.tipo, search.max, search.q, search.destacado, selectedBrandId, search.marca, brands.length]);
 
   const update = (patch: Partial<typeof search>) => {
-    navigate({ search: (prev: typeof search) => ({ ...prev, ...patch }) });
+    navigate({
+      search: (prev: typeof search) => ({ ...prev, ...patch }),
+      replace: true,
+      resetScroll: false,
+    });
   };
+
+  // Buscador estable: input local controlado + debounce a la URL.
+  // Evita que cada tecla dispare navegación + re-fetch + scroll reset.
+  const [searchInput, setSearchInput] = useState(search.q);
+  // Sincronizar si la URL cambia desde fuera (ej. al limpiar filtros)
+  useEffect(() => {
+    setSearchInput(search.q);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search.q]);
+  // Debounce: aplicar al state de URL 280ms después de la última tecla
+  useEffect(() => {
+    if (searchInput === search.q) return;
+    const t = setTimeout(() => {
+      update({ q: searchInput });
+    }, 280);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput]);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
 
