@@ -356,48 +356,52 @@ function CatalogoPage() {
             )}
           </div>
 
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[4/5] bg-card" />
-                  <div className="pt-5 space-y-2">
-                    <div className="h-2 bg-card w-1/3" />
-                    <div className="h-4 bg-card w-2/3" />
+          {/* Contenedor con min-height estable: el grid no salta cuando
+              cambian los resultados o aparece el mensaje "sin resultados" */}
+          <div style={{ minHeight: "60vh" }}>
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="aspect-[4/5] bg-card" />
+                    <div className="pt-5 space-y-2">
+                      <div className="h-2 bg-card w-1/3" />
+                      <div className="h-4 bg-card w-2/3" />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : perfumes.length === 0 ? (
-            <div className="py-20 text-center text-foreground/50">
-              <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
-              {hasActiveFilters && (
-                <button
-                  onClick={() => navigate({ search: resetSearch })}
-                  className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
-                >
-                  Limpiar filtros
-                </button>
-              )}
-            </div>
-          ) : (
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14 transition-opacity duration-300 ${
-                filtering ? "opacity-50" : "opacity-100"
-              }`}
-            >
-              {perfumes.map((p) => (
-                <PerfumeCard
-                  key={p.id}
-                  perfume={p}
-                  openInitial={search.p === p.id}
-                  initialVariantId={search.p === p.id ? search.v || null : null}
-                  onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
-                  onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
-                />
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            ) : perfumes.length === 0 ? (
+              <div className="py-20 text-center text-foreground/50">
+                <p className="font-serif italic text-2xl">No hay perfumes para este filtro.</p>
+                {hasActiveFilters && (
+                  <button
+                    onClick={() => navigate({ search: resetSearch, resetScroll: false })}
+                    className="mt-6 eyebrow text-accent hover:opacity-70 transition-opacity"
+                  >
+                    Limpiar filtros
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div
+                className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14 transition-opacity duration-300 ${
+                  filtering ? "opacity-50" : "opacity-100"
+                }`}
+              >
+                {perfumes.map((p) => (
+                  <PerfumeCard
+                    key={p.id}
+                    perfume={p}
+                    openInitial={search.p === p.id}
+                    initialVariantId={search.p === p.id ? search.v || null : null}
+                    onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
+                    onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
