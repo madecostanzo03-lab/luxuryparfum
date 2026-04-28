@@ -26,7 +26,7 @@ export type RemovalReport = {
 
 const memCache = new Map<string, RemovalReport>();
 const inFlight = new Map<string, Promise<RemovalReport>>();
-const SS_PREFIX = "bg-cleanup-v5c::";
+const SS_PREFIX = "bg-cleanup-v6-navy::";
 
 const MAX_DIM = 1800;
 const MIN_EDGE_LIGHT_RATIO = 0.28;
