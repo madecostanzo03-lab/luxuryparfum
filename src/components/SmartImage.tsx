@@ -24,7 +24,7 @@ export function SmartImage({
   eager = false,
   preserveBg = false,
   forceProcess = false,
-  showDebug = true,
+  showDebug = false,
 }: {
   src: string | null | undefined;
   alt: string;
