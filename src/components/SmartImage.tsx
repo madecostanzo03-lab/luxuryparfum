@@ -88,6 +88,16 @@ export function SmartImage({
             Resultado: el perfume SIEMPRE se ve, los bordes blancos se diluyen
             con el azul, sin riesgo de quedarse sin imagen.
           */}
+          {/*
+            Doble capa para fundir agresivamente fondos blancos del proveedor
+            con el estudio oscuro premium, SIN perder el frasco:
+            - Capa base con `multiply`: el blanco puro se vuelve transparente
+              contra el fondo oscuro, eliminando el rectángulo blanco.
+            - Capa superior idéntica con máscara radial muy suave: rescata
+              detalles del frasco (etiquetas, cap, líquido) que el multiply
+              podría apagar, sólo en el centro.
+            Resultado: ningún borde blanco visible, frasco siempre presente.
+          */}
           <img
             src={src!}
             alt={alt}
@@ -95,22 +105,38 @@ export function SmartImage({
             decoding="async"
             onLoad={() => setLoaded(true)}
             onError={() => setErrored(true)}
+            aria-hidden={preserveBg ? undefined : true}
             style={
               preserveBg
                 ? undefined
                 : {
-                    WebkitMaskImage:
-                      "radial-gradient(ellipse 88% 92% at 50% 50%, #000 72%, transparent 100%)",
-                    maskImage:
-                      "radial-gradient(ellipse 88% 92% at 50% 50%, #000 72%, transparent 100%)",
-                    filter:
-                      "contrast(1.05) saturate(1.1) brightness(1.02) drop-shadow(0 8px 18px rgba(0,0,0,0.45))",
+                    mixBlendMode: "multiply",
+                    filter: "contrast(1.08) saturate(1.05) brightness(1.04)",
                   }
             }
-            className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
+            className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
               loaded ? "opacity-100" : "opacity-0"
             } ${imgClassName}`}
           />
+          {!preserveBg && (
+            <img
+              src={src!}
+              alt={alt}
+              loading={eager ? "eager" : "lazy"}
+              decoding="async"
+              style={{
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 62% 70% at 50% 52%, #000 38%, transparent 88%)",
+                maskImage:
+                  "radial-gradient(ellipse 62% 70% at 50% 52%, #000 38%, transparent 88%)",
+                filter:
+                  "contrast(1.05) saturate(1.12) brightness(1.05) drop-shadow(0 10px 22px rgba(0,0,0,0.55))",
+              }}
+              className={`relative w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
+                loaded ? "opacity-95" : "opacity-0"
+              } ${imgClassName}`}
+            />
+          )}
         </>
       )}
 
