@@ -26,7 +26,7 @@ export type RemovalReport = {
 
 const memCache = new Map<string, RemovalReport>();
 const inFlight = new Map<string, Promise<RemovalReport>>();
-const SS_PREFIX = "bg-cleanup-v5::";
+const SS_PREFIX = "bg-cleanup-v5b::";
 
 const MAX_DIM = 1800;
 const MIN_EDGE_LIGHT_RATIO = 0.28;
@@ -319,12 +319,13 @@ function hasVisibleWhiteRectangle(px: Uint8ClampedArray, removed: Uint8Array, w:
 }
 
 function loadImage(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
+  const attempt = (withCors: boolean) => new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.referrerPolicy = "no-referrer";
+    if (withCors) img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error("img load failed"));
     img.src = url;
   });
+
+  return attempt(true).catch(() => attempt(false));
 }
