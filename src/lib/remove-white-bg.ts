@@ -1,43 +1,53 @@
 /**
- * Remoción determinística y CONSERVADORA de fondo blanco.
+ * Remoción determinística de fondos claros de packshot (v4 — adaptativa).
  *
- * Principios:
- *   - SOLO se procesa la imagen si los 4 corners son blancos (claro indicio
- *     de packshot con fondo blanco real).
- *   - Flood-fill 4-vecinos desde TODOS los píxeles blancos del borde, con
- *     un umbral estricto (RGB ≥ 244 y diferencia entre canales ≤ 10).
- *   - El resultado se ACEPTA solo si quedó dentro de un rango razonable
- *     (10%–85% removido). Fuera de eso → null (revisión manual).
- *   - NO usamos blur, multiply, overlay, ni feather. El borde queda nítido.
- *   - Conservamos la resolución original — no down-scale agresivo. Solo se
- *     limita a un techo de 1600px para no explotar memoria/tiempo.
- *   - El alpha es binario (0 o 255). Sin halos translúcidos, sin lavado.
+ * Mejoras vs v3:
+ *   - Ya NO exige que las 4 esquinas sean blanco puro. Ahora muestrea TODO
+ *     el perímetro y calcula el color de fondo dominante adaptativo.
+ *   - Acepta blancos rotos, gris muy claro, blanco con compresión JPEG,
+ *     sombras suaves y fondos de estudio que no son blanco puro.
+ *   - El umbral de "es fondo" se calcula por imagen: el píxel se considera
+ *     fondo si está dentro de una distancia perceptual del color de fondo
+ *     muestreado y además es claro (luminancia ≥ 200).
+ *   - Flood-fill 4-vecinos desde TODO el perímetro (no solo blancos puros).
+ *   - Alpha BINARIO (0/255) → bordes nítidos, sin halo, sin lavado, sin blur.
+ *   - Validación de resultado: el área eliminada debe ser razonable (8%–92%)
+ *     y el "objeto" remanente debe tener masa central — si no, se descarta.
+ *   - Conserva resolución original (techo 1800px solo por memoria).
  *
- * Cache:
- *   - Memoria + sessionStorage (con quota guard).
- *   - Cache también incluye los URLs descartados (null) para no reintentar.
+ * Sin IA generativa. Sin blur. Sin multiply. Sin niebla. Sin reemplazo de
+ * imagen. Solo limpieza del fondo del proveedor.
  */
 
 const memCache = new Map<string, string | null>();
 const inFlight = new Map<string, Promise<string | null>>();
-const SS_PREFIX = "rmwbg::v3::";
+const SS_PREFIX = "rmwbg::v4::";
 
-// Umbrales estrictos: solo blanco "real"
-const WHITE_THRESHOLD = 244;
-const CHANNEL_SPREAD = 10;
+// Luminancia mínima para considerar un píxel como "claro" (fondo posible)
+const MIN_LIGHT_LUMA = 200;
+// Distancia perceptual máxima al color de fondo dominante (0–441 espacio RGB)
+const MAX_BG_DISTANCE = 26;
+// Para considerar el perímetro como "fondo de estudio claro": mediana de
+// luminancia del perímetro debe superar este umbral.
+const PERIMETER_MIN_MEDIAN_LUMA = 215;
+// El color del perímetro debe ser razonablemente uniforme (desviación baja)
+const PERIMETER_MAX_STDDEV = 22;
 
-// Aceptamos el resultado si removimos entre 10% y 85% del total
-const MIN_REMOVED = 0.1;
-const MAX_REMOVED = 0.85;
+// Aceptamos resultado si removemos entre 8% y 92% del total
+const MIN_REMOVED = 0.08;
+const MAX_REMOVED = 0.92;
 
-// Techo de resolución para procesar (mantiene la calidad original alta)
-const MAX_DIM = 1600;
+const MAX_DIM = 1800;
 
-function isWhitish(r: number, g: number, b: number): boolean {
-  if (r < WHITE_THRESHOLD || g < WHITE_THRESHOLD || b < WHITE_THRESHOLD) return false;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  return max - min <= CHANNEL_SPREAD;
+function luma(r: number, g: number, b: number): number {
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function dist(r1: number, g1: number, b1: number, r2: number, g2: number, b2: number): number {
+  const dr = r1 - r2;
+  const dg = g1 - g2;
+  const db = b1 - b2;
+  return Math.sqrt(dr * dr + dg * dg + db * db);
 }
 
 function readSession(url: string): string | null | undefined {
@@ -54,7 +64,7 @@ function writeSession(url: string, value: string | null) {
   try {
     if (value === null) {
       sessionStorage.setItem(SS_PREFIX + url, "__NULL__");
-    } else if (value.length < 350_000) {
+    } else if (value.length < 400_000) {
       sessionStorage.setItem(SS_PREFIX + url, value);
     }
   } catch {
@@ -62,7 +72,15 @@ function writeSession(url: string, value: string | null) {
   }
 }
 
-export type RemovalStatus = "ok" | "no-white-bg" | "too-little" | "too-much" | "load-error" | "tainted";
+export type RemovalStatus =
+  | "ok"
+  | "no-light-bg"
+  | "perimeter-not-uniform"
+  | "too-little"
+  | "too-much"
+  | "no-central-object"
+  | "load-error"
+  | "tainted";
 
 const statusCache = new Map<string, RemovalStatus>();
 
@@ -92,7 +110,6 @@ export async function removeWhiteBackground(url: string): Promise<string | null>
       return null;
     }
 
-    // Mantener resolución original con techo conservador
     const scale = Math.min(1, MAX_DIM / Math.max(img.naturalWidth, img.naturalHeight));
     const w = Math.max(1, Math.round(img.naturalWidth * scale));
     const h = Math.max(1, Math.round(img.naturalHeight * scale));
@@ -115,41 +132,97 @@ export async function removeWhiteBackground(url: string): Promise<string | null>
     const px = data.data;
     const total = w * h;
 
-    // Heurística: los 4 corners DEBEN ser blancos. Si no, no es packshot
-    // con fondo blanco — no tocar.
-    const cornerIdx = [
-      0,
-      (w - 1) * 4,
-      (h - 1) * w * 4,
-      ((h - 1) * w + (w - 1)) * 4,
-    ];
-    const cornersWhite = cornerIdx.filter((i) => isWhitish(px[i], px[i + 1], px[i + 2])).length;
-    if (cornersWhite < 4) {
-      statusCache.set(url, "no-white-bg");
+    // === Paso 1: Muestreo del perímetro ===
+    // Tomamos cada píxel del borde y calculamos: mediana de luminancia,
+    // color promedio del perímetro y desviación.
+    const perimSamples: number[][] = [];
+    const lumas: number[] = [];
+
+    const sampleBorderPixel = (x: number, y: number) => {
+      const i = (y * w + x) * 4;
+      const r = px[i], g = px[i + 1], b = px[i + 2];
+      perimSamples.push([r, g, b]);
+      lumas.push(luma(r, g, b));
+    };
+
+    for (let x = 0; x < w; x++) {
+      sampleBorderPixel(x, 0);
+      sampleBorderPixel(x, h - 1);
+    }
+    for (let y = 1; y < h - 1; y++) {
+      sampleBorderPixel(0, y);
+      sampleBorderPixel(w - 1, y);
+    }
+
+    lumas.sort((a, b) => a - b);
+    const medianLuma = lumas[Math.floor(lumas.length / 2)];
+
+    if (medianLuma < PERIMETER_MIN_MEDIAN_LUMA) {
+      // Perímetro no es claro → no es packshot con fondo claro. No tocar.
+      statusCache.set(url, "no-light-bg");
       return null;
     }
 
-    // BFS desde el borde
+    // Color de fondo dominante: promedio de los píxeles del perímetro
+    // cuya luminancia esté por encima de la mediana (descarta sombras
+    // del frasco que pudieran tocar el borde).
+    let sumR = 0, sumG = 0, sumB = 0, count = 0;
+    for (let i = 0; i < perimSamples.length; i++) {
+      const [r, g, b] = perimSamples[i];
+      if (luma(r, g, b) >= medianLuma) {
+        sumR += r; sumG += g; sumB += b; count++;
+      }
+    }
+    const bgR = sumR / count;
+    const bgG = sumG / count;
+    const bgB = sumB / count;
+
+    // Desviación del perímetro respecto al color de fondo
+    let varSum = 0;
+    for (let i = 0; i < perimSamples.length; i++) {
+      const [r, g, b] = perimSamples[i];
+      if (luma(r, g, b) >= MIN_LIGHT_LUMA) {
+        varSum += dist(r, g, b, bgR, bgG, bgB) ** 2;
+      }
+    }
+    const stddev = Math.sqrt(varSum / Math.max(1, count));
+
+    if (stddev > PERIMETER_MAX_STDDEV) {
+      // Perímetro inconsistente (no es fondo de estudio uniforme)
+      statusCache.set(url, "perimeter-not-uniform");
+      return null;
+    }
+
+    // === Paso 2: Predicado adaptativo ===
+    // Píxel es "fondo" si:
+    //   - es claro (luma ≥ MIN_LIGHT_LUMA), Y
+    //   - está cerca del color de fondo dominante
+    const isBg = (r: number, g: number, b: number): boolean => {
+      if (luma(r, g, b) < MIN_LIGHT_LUMA) return false;
+      return dist(r, g, b, bgR, bgG, bgB) <= MAX_BG_DISTANCE;
+    };
+
+    // === Paso 3: Flood-fill desde TODO el perímetro ===
     const visited = new Uint8Array(total);
     const queue: number[] = [];
 
-    const enqueueIfWhite = (x: number, y: number) => {
+    const enqueueIfBg = (x: number, y: number) => {
       const p = y * w + x;
       if (visited[p]) return;
       const i = p * 4;
-      if (isWhitish(px[i], px[i + 1], px[i + 2])) {
+      if (isBg(px[i], px[i + 1], px[i + 2])) {
         visited[p] = 1;
         queue.push(p);
       }
     };
 
     for (let x = 0; x < w; x++) {
-      enqueueIfWhite(x, 0);
-      enqueueIfWhite(x, h - 1);
+      enqueueIfBg(x, 0);
+      enqueueIfBg(x, h - 1);
     }
     for (let y = 0; y < h; y++) {
-      enqueueIfWhite(0, y);
-      enqueueIfWhite(w - 1, y);
+      enqueueIfBg(0, y);
+      enqueueIfBg(w - 1, y);
     }
 
     let head = 0;
@@ -162,9 +235,8 @@ export async function removeWhiteBackground(url: string): Promise<string | null>
         const np = p - 1;
         if (!visited[np]) {
           const ni = np * 4;
-          if (isWhitish(px[ni], px[ni + 1], px[ni + 2])) {
-            visited[np] = 1;
-            queue.push(np);
+          if (isBg(px[ni], px[ni + 1], px[ni + 2])) {
+            visited[np] = 1; queue.push(np);
           }
         }
       }
@@ -172,9 +244,8 @@ export async function removeWhiteBackground(url: string): Promise<string | null>
         const np = p + 1;
         if (!visited[np]) {
           const ni = np * 4;
-          if (isWhitish(px[ni], px[ni + 1], px[ni + 2])) {
-            visited[np] = 1;
-            queue.push(np);
+          if (isBg(px[ni], px[ni + 1], px[ni + 2])) {
+            visited[np] = 1; queue.push(np);
           }
         }
       }
@@ -182,9 +253,8 @@ export async function removeWhiteBackground(url: string): Promise<string | null>
         const np = p - w;
         if (!visited[np]) {
           const ni = np * 4;
-          if (isWhitish(px[ni], px[ni + 1], px[ni + 2])) {
-            visited[np] = 1;
-            queue.push(np);
+          if (isBg(px[ni], px[ni + 1], px[ni + 2])) {
+            visited[np] = 1; queue.push(np);
           }
         }
       }
@@ -192,18 +262,39 @@ export async function removeWhiteBackground(url: string): Promise<string | null>
         const np = p + w;
         if (!visited[np]) {
           const ni = np * 4;
-          if (isWhitish(px[ni], px[ni + 1], px[ni + 2])) {
-            visited[np] = 1;
-            queue.push(np);
+          if (isBg(px[ni], px[ni + 1], px[ni + 2])) {
+            visited[np] = 1; queue.push(np);
           }
         }
       }
     }
 
+    // === Paso 4: Validar que el objeto central sigue ahí ===
+    // Si el centro de la imagen quedó eliminado, algo salió mal.
+    const cx = (w >> 1);
+    const cy = (h >> 1);
+    let centralMass = 0;
+    const sampleR = Math.min(w, h) >> 3; // ventana 1/8
+    for (let dy = -sampleR; dy <= sampleR; dy++) {
+      for (let dx = -sampleR; dx <= sampleR; dx++) {
+        const xx = cx + dx;
+        const yy = cy + dy;
+        if (xx < 0 || yy < 0 || xx >= w || yy >= h) continue;
+        if (!visited[yy * w + xx]) centralMass++;
+      }
+    }
+    const centralArea = (sampleR * 2 + 1) ** 2;
+    if (centralMass / centralArea < 0.5) {
+      // Más de la mitad del centro fue clasificado como fondo → riesgo
+      // de comerse el frasco. Descartar.
+      statusCache.set(url, "no-central-object");
+      return null;
+    }
+
+    // === Paso 5: Aplicar alpha binario ===
     let removed = 0;
     for (let p = 0; p < total; p++) {
       if (visited[p]) {
-        // Alpha BINARIO — sin translucidez, sin halo, sin lavado
         px[p * 4 + 3] = 0;
         removed++;
       }
