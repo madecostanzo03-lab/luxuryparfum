@@ -142,6 +142,117 @@ export const skipCleanImage = createServerFn({ method: "POST" })
   });
 
 /**
+ * Cambia/crea el estado de un producto en pending_manual_images.
+ * NO toca image_url ni clean_image_url.
+ */
+export const setManualImageStatus = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        productId: z.string().uuid(),
+        status: z.enum(["manual_needed", "fallback_ok", "priority_pending"]),
+        notes: z.string().max(1000).optional(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    const userId = await verifyAdmin(data.accessToken);
+
+    // Validar perfume
+    const { data: p, error: pErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.productId)
+      .single();
+    if (pErr || !p) throw new Error("Perfume no encontrado");
+
+    const { error } = await supabaseAdmin
+      .from("pending_manual_images")
+      .upsert(
+        {
+          product_id: data.productId,
+          status: data.status,
+          notes: data.notes ?? null,
+          updated_by: userId,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "product_id" },
+      );
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+/**
+ * Subida manual directa para uno de los productos conocidos (los 8 manuales).
+ * Sube los bytes a clean-images/{productId}.png y actualiza
+ * perfumes.clean_image_url. NO toca image_url. Marca el estado como
+ * 'manual_needed' resuelto removiendo la fila de pending_manual_images.
+ *
+ * El cliente debe enviar la imagen como base64 (data URL o solo el payload).
+ */
+export const assignManualImage = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        productId: z.string().uuid(),
+        imageBase64: z.string().min(100), // sin data: prefix
+        contentType: z
+          .enum(["image/png", "image/jpeg", "image/webp"])
+          .default("image/png"),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    await verifyAdmin(data.accessToken);
+
+    const { data: perfume, error: pErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.productId)
+      .single();
+    if (pErr || !perfume) throw new Error("Perfume no encontrado");
+
+    // Decodificar base64 (acepta data URL o payload puro)
+    const raw = data.imageBase64.includes(",")
+      ? data.imageBase64.split(",")[1]
+      : data.imageBase64;
+    const bytes = Uint8Array.from(atob(raw), (c) => c.charCodeAt(0));
+    if (bytes.byteLength < 500) throw new Error("Imagen demasiado pequeña");
+    if (bytes.byteLength > 5 * 1024 * 1024)
+      throw new Error("Imagen excede 5MB");
+
+    const finalPath = `${data.productId}.png`;
+    const { error: upErr } = await supabaseAdmin.storage
+      .from(FINAL_BUCKET)
+      .upload(finalPath, bytes, {
+        contentType: data.contentType,
+        upsert: true,
+      });
+    if (upErr) throw new Error(`Upload failed: ${upErr.message}`);
+
+    const { data: pub } = supabaseAdmin.storage
+      .from(FINAL_BUCKET)
+      .getPublicUrl(finalPath);
+    const publicUrl = `${pub.publicUrl}?v=${Date.now()}`;
+
+    const { error: updErr } = await supabaseAdmin
+      .from("perfumes")
+      .update({ clean_image_url: publicUrl })
+      .eq("id", data.productId);
+    if (updErr) throw new Error(`Perfume update failed: ${updErr.message}`);
+
+    // Limpiar fila de pending_manual_images si existía
+    await supabaseAdmin
+      .from("pending_manual_images")
+      .delete()
+      .eq("product_id", data.productId);
+
+    return { ok: true, publicUrl };
+  });
+
+/**
  * Devuelve un signed URL temporal para previsualizar una imagen pendiente
  * (el bucket es privado).
  */
