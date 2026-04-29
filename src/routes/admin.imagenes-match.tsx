@@ -424,6 +424,17 @@ type ManualStatusRow = {
   updated_at: string;
 };
 
+type ReusableRow = {
+  id: string;
+  name: string;
+  base_name: string | null;
+  size_ml: number | null;
+  price: number;
+  image_url: string | null;
+  clean_image_url: string;
+  brand: { name: string; slug: string } | null;
+};
+
 function MissingCleanSection() {
   const [rows, setRows] = useState<MissingRow[] | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -436,9 +447,21 @@ function MissingCleanSection() {
   const [pendingUpload, setPendingUpload] = useState<
     { product: MissingRow; file: File; previewUrl: string } | null
   >(null);
+  // Catálogo de imágenes limpias reutilizables
+  const [reusable, setReusable] = useState<ReusableRow[]>([]);
+  // Tarjeta con panel de "Buscar imagen limpia existente" abierto
+  const [expandedReuseId, setExpandedReuseId] = useState<string | null>(null);
+  // Modo de listado dentro del panel: "search" | "variants" | "same_base"
+  const [reuseMode, setReuseMode] = useState<"search" | "variants" | "same_base">("search");
+  const [reuseSearch, setReuseSearch] = useState("");
+  // Confirmación de reutilización
+  const [pendingReuse, setPendingReuse] = useState<
+    { target: MissingRow; source: ReusableRow } | null
+  >(null);
 
   const setStatusFn = useServerFn(setManualImageStatus);
   const assignFn = useServerFn(assignManualImage);
+  const reuseFn = useServerFn(reuseCleanImage);
 
   const loadStatuses = async () => {
     const { data } = await supabase
