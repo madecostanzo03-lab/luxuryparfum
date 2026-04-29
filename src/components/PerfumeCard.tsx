@@ -45,7 +45,10 @@ export function PerfumeCard({
   const displayName = perfume.base_name ?? perfume.name;
   const variantsCount = perfume.variants?.length ?? 0;
   const hint = perfumeShortHint(perfume);
-  const { src: imageSrc, isPremium } = resolvePerfumeImage(perfume.id, perfume.image_url);
+  const { src: imageSrc, isPremium } = resolvePerfumeImage(
+    perfume.id,
+    perfume.clean_image_url ?? perfume.image_url,
+  );
   const forceProcess = shouldForceBackgroundCleanup(perfume, displayName);
 
   useEffect(() => {
