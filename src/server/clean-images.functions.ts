@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+// v2: token-based admin verification (no middleware)
 const PENDING_BUCKET = "clean-images-pending";
 const FINAL_BUCKET = "clean-images";
 
