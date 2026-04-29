@@ -417,6 +417,12 @@ function MissingCleanSection() {
   const [statuses, setStatuses] = useState<Map<string, ManualStatusRow>>(new Map());
   const [busyId, setBusyId] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
+  const [zoomUrl, setZoomUrl] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  // Estado del flujo de confirmación: producto + archivo + dataURL preview
+  const [pendingUpload, setPendingUpload] = useState<
+    { product: MissingRow; file: File; previewUrl: string } | null
+  >(null);
 
   const setStatusFn = useServerFn(setManualImageStatus);
   const assignFn = useServerFn(assignManualImage);
