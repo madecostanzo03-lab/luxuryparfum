@@ -483,13 +483,27 @@ function MissingCleanSection() {
     }
   };
 
-  const handleUploadFile = async (productId: string, file: File) => {
-    if (!accessToken || busyId) return;
+  // Paso 1: el usuario elige un archivo -> generamos preview y mostramos modal
+  const handlePickFile = (product: MissingRow, file: File) => {
     if (file.size > 5 * 1024 * 1024) {
       setMsg("Error: imagen excede 5MB");
       return;
     }
-    setBusyId(productId);
+    setMsg(null);
+    const previewUrl = URL.createObjectURL(file);
+    setPendingUpload({ product, file, previewUrl });
+  };
+
+  const cancelUpload = () => {
+    if (pendingUpload) URL.revokeObjectURL(pendingUpload.previewUrl);
+    setPendingUpload(null);
+  };
+
+  // Paso 2: confirmación visual explícita -> recién acá se sube y actualiza clean_image_url
+  const confirmUpload = async () => {
+    if (!accessToken || !pendingUpload || busyId) return;
+    const { product, file } = pendingUpload;
+    setBusyId(product.id);
     setMsg(null);
     try {
       const arr = new Uint8Array(await file.arrayBuffer());
@@ -500,16 +514,27 @@ function MissingCleanSection() {
         ? file.type
         : "image/png") as "image/png" | "image/jpeg" | "image/webp";
       await assignFn({
-        data: { accessToken, productId, imageBase64: b64, contentType: ct },
+        data: { accessToken, productId: product.id, imageBase64: b64, contentType: ct },
       });
-      setMsg("✓ Imagen subida y asignada");
-      // Recargar la lista (este producto desaparece porque ya tiene clean_image_url)
-      setRows((prev) => (prev ?? []).filter((r) => r.id !== productId));
+      setMsg("✓ Imagen confirmada y asignada");
+      setRows((prev) => (prev ?? []).filter((r) => r.id !== product.id));
       await loadStatuses();
+      URL.revokeObjectURL(pendingUpload.previewUrl);
+      setPendingUpload(null);
     } catch (e: any) {
       setMsg(`Error: ${e.message ?? e}`);
     } finally {
       setBusyId(null);
+    }
+  };
+
+  const copyId = async (id: string) => {
+    try {
+      await navigator.clipboard.writeText(id);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 1500);
+    } catch {
+      /* ignore */
     }
   };
 
