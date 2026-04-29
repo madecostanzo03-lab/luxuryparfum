@@ -773,6 +773,43 @@ function MissingCleanSection() {
                         />
                       </label>
                       <button
+                        type="button"
+                        disabled={busyId === r.id}
+                        onClick={() => openReusePanel(r.id)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border disabled:opacity-50 ${
+                          expandedReuseId === r.id
+                            ? "border-accent text-accent bg-accent/10"
+                            : "border-accent/60 text-accent hover:bg-accent/10"
+                        }`}
+                      >
+                        <Search size={12} />
+                        Buscar imagen limpia existente
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busyId === r.id}
+                        onClick={() => {
+                          setExpandedReuseId(r.id);
+                          setReuseMode("variants");
+                          setReuseSearch("");
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-border/60 text-foreground/80 hover:border-foreground/40 disabled:opacity-50"
+                      >
+                        Variantes del mismo perfume
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busyId === r.id}
+                        onClick={() => {
+                          setExpandedReuseId(r.id);
+                          setReuseMode("same_base");
+                          setReuseSearch("");
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-border/60 text-foreground/80 hover:border-foreground/40 disabled:opacity-50"
+                      >
+                        Mismo nombre base
+                      </button>
+                      <button
                         disabled={busyId === r.id}
                         onClick={() => handleSetStatus(r.id, "fallback_ok")}
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border ${
@@ -798,6 +835,116 @@ function MissingCleanSection() {
                       </button>
                       {busyId === r.id && <Loader2 size={14} className="animate-spin text-accent" />}
                     </div>
+
+                    {/* Panel expandible: Buscar imagen limpia existente */}
+                    {expandedReuseId === r.id && (
+                      <div className="mt-4 border border-accent/30 bg-accent/5 p-3">
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          <span className="eyebrow text-[0.6rem] text-foreground/60">Modo:</span>
+                          {([
+                            ["search", "Búsqueda libre"],
+                            ["variants", "Variantes (misma marca)"],
+                            ["same_base", "Mismo nombre base"],
+                          ] as const).map(([m, label]) => (
+                            <button
+                              key={m}
+                              type="button"
+                              onClick={() => setReuseMode(m)}
+                              className={`px-2 py-1 text-[0.6rem] eyebrow border ${
+                                reuseMode === m
+                                  ? "border-accent text-accent bg-accent/10"
+                                  : "border-border/60 text-foreground/70 hover:border-foreground/40"
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+
+                        {reuseMode === "search" && (
+                          <div className="relative mb-3">
+                            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" />
+                            <input
+                              value={reuseSearch}
+                              onChange={(e) => setReuseSearch(e.target.value)}
+                              placeholder="Marca, nombre, ml, concentración o product_id…"
+                              className="w-full bg-input/40 border border-border pl-9 pr-3 py-2 text-xs focus:outline-none focus:border-accent"
+                            />
+                          </div>
+                        )}
+
+                        {(() => {
+                          const list = reuseListFor(r);
+                          if (list.length === 0) {
+                            return (
+                              <p className="text-xs text-foreground/50 italic py-3">
+                                {reuseMode === "search" && reuseSearch.trim().length < 2
+                                  ? "Escribí al menos 2 caracteres para buscar."
+                                  : "Sin coincidencias."}
+                              </p>
+                            );
+                          }
+                          return (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[420px] overflow-y-auto">
+                              {list.map((src) => (
+                                <div
+                                  key={src.id}
+                                  className="border border-border/50 bg-background p-2 flex gap-2"
+                                >
+                                  <div className="flex-shrink-0 grid grid-cols-2 gap-1 w-[140px]">
+                                    <div className="aspect-square bg-card border border-accent/40 overflow-hidden">
+                                      <img
+                                        src={src.clean_image_url}
+                                        alt=""
+                                        className="w-full h-full object-contain"
+                                        loading="lazy"
+                                      />
+                                    </div>
+                                    <div className="aspect-square bg-card border border-border/40 overflow-hidden">
+                                      {src.image_url ? (
+                                        <img
+                                          src={src.image_url}
+                                          alt=""
+                                          className="w-full h-full object-contain opacity-70"
+                                          loading="lazy"
+                                        />
+                                      ) : (
+                                        <span className="flex items-center justify-center h-full text-foreground/30 text-xs">—</span>
+                                      )}
+                                    </div>
+                                    <p className="text-[0.5rem] eyebrow text-accent text-center">limpia</p>
+                                    <p className="text-[0.5rem] eyebrow text-foreground/40 text-center">original</p>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">
+                                      {src.brand?.name ?? "—"}
+                                    </p>
+                                    <p className="text-xs font-serif leading-tight line-clamp-2 mt-0.5">
+                                      {src.base_name ?? src.name}
+                                    </p>
+                                    <p className="text-[0.65rem] text-foreground/60 mt-0.5">
+                                      {src.size_ml ? `${src.size_ml} ml` : "—"} · USD {src.price.toFixed(0)}
+                                    </p>
+                                    <code className="text-[0.55rem] font-mono text-foreground/40 block truncate mt-0.5">
+                                      {src.id}
+                                    </code>
+                                    <button
+                                      type="button"
+                                      disabled={busyId === r.id}
+                                      onClick={() => setPendingReuse({ target: r, source: src })}
+                                      className="mt-2 w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-2 bg-accent text-accent-foreground text-[0.6rem] eyebrow hover:bg-accent/90 disabled:opacity-50"
+                                    >
+                                      <CheckCircle2 size={11} />
+                                      Usar esta imagen limpia
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    )}
                   </div>
                 </div>
               );
