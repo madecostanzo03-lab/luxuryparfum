@@ -386,7 +386,7 @@ function AdminImagesMatchPage() {
         </div>
       )}
 
-      <MissingCleanSection />
+      {filter !== "manual" && <MissingCleanSection />}
     </div>
   );
 }
