@@ -562,36 +562,77 @@ function MissingCleanSection() {
         </p>
       )}
 
-      {/* SECCIÓN DESTACADA: 8 pendientes manuales */}
+      {/* SECCIÓN DESTACADA: 8 pendientes manuales — tarjetas grandes */}
       {rows !== null && manualPending.length > 0 && (
         <div className="mb-10 border-2 border-accent/40 bg-accent/5 p-4 sm:p-6">
           <h3 className="font-serif text-xl mb-1">8 pendientes manuales</h3>
           <p className="text-xs text-foreground/60 mb-5">
-            Origen bloqueado o no descargable. Subí una imagen alternativa (PNG/JPG/WEBP, máx 5MB)
-            o marcá el estado para no perder de vista cómo resolverlos.
+            Origen bloqueado o no descargable. Subí una imagen alternativa (PNG/JPG/WEBP, máx 5MB).
+            Vas a poder confirmar visualmente <strong>antes</strong> de que se aplique al catálogo.
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
             {manualPending.map((r) => {
               const st = statuses.get(r.id);
               const motive = MANUAL_PENDING_MOTIVES[r.id];
               return (
-                <div key={r.id} className="border border-border/50 bg-background p-3 flex gap-3">
-                  {r.image_url ? (
-                    <img src={r.image_url} alt="" className="w-20 h-20 object-contain bg-card flex-shrink-0" loading="lazy" />
-                  ) : (
-                    <div className="w-20 h-20 bg-card flex items-center justify-center text-foreground/30 flex-shrink-0">—</div>
-                  )}
+                <div key={r.id} className="border border-border/50 bg-background p-4 flex flex-col sm:flex-row gap-4">
+                  {/* Imagen actual GRANDE (≥220px desktop) */}
+                  <div className="flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => r.image_url && setZoomUrl(r.image_url)}
+                      className="group relative block w-full sm:w-[220px] h-[220px] bg-card border border-border/40 overflow-hidden"
+                      title="Click para ampliar"
+                    >
+                      {r.image_url ? (
+                        <>
+                          <img src={r.image_url} alt="" className="w-full h-full object-contain" loading="lazy" />
+                          <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors">
+                            <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </span>
+                        </>
+                      ) : (
+                        <span className="absolute inset-0 flex items-center justify-center text-foreground/30 text-3xl font-serif">—</span>
+                      )}
+                    </button>
+                    {r.image_url && (
+                      <a
+                        href={r.image_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-1 text-[0.6rem] eyebrow text-foreground/60 hover:text-accent"
+                      >
+                        <ExternalLink size={11} /> Abrir en pestaña nueva
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Datos + acciones */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">{r.brand?.name ?? "—"}</p>
-                    <p className="font-serif text-sm leading-tight line-clamp-2">{r.base_name ?? r.name}</p>
-                    <p className="text-[0.65rem] text-foreground/50 mt-0.5">
-                      {r.size_ml ? `${r.size_ml}ml` : "—"} · USD {r.price.toFixed(0)}
+                    <p className="text-[0.65rem] eyebrow text-foreground/50">{r.brand?.name ?? "—"}</p>
+                    <p className="font-serif text-lg leading-tight mt-0.5">{r.base_name ?? r.name}</p>
+                    <p className="text-xs text-foreground/60 mt-1">
+                      {r.size_ml ? `${r.size_ml} ml` : "—"} · USD {r.price.toFixed(0)}
                     </p>
-                    <p className="text-[0.6rem] text-destructive mt-1 line-clamp-1">⚠ {motive}</p>
-                    <p className="text-[0.55rem] text-foreground/40 font-mono mt-0.5 truncate">{r.id}</p>
+
+                    <div className="mt-2 flex items-center gap-2">
+                      <code className="text-[0.6rem] font-mono text-foreground/50 truncate">{r.id}</code>
+                      <button
+                        type="button"
+                        onClick={() => copyId(r.id)}
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[0.55rem] eyebrow border border-border/60 text-foreground/60 hover:text-accent hover:border-accent/60"
+                        title="Copiar product_id"
+                      >
+                        {copiedId === r.id ? <Check size={10} /> : <Copy size={10} />}
+                        {copiedId === r.id ? "Copiado" : "Copiar ID"}
+                      </button>
+                    </div>
+
+                    <p className="text-[0.65rem] text-destructive mt-2">⚠ {motive}</p>
+
                     {st && (
-                      <p className="mt-1 text-[0.6rem] eyebrow text-accent">
+                      <p className="mt-2 text-[0.6rem] eyebrow text-accent">
                         Estado: {st.status === "fallback_ok"
                           ? "Fallback aceptable"
                           : st.status === "priority_pending"
@@ -600,9 +641,9 @@ function MissingCleanSection() {
                       </p>
                     )}
 
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      <label className="inline-flex items-center gap-1 px-2 py-1 text-[0.6rem] eyebrow border border-accent/60 text-accent bg-accent/5 hover:bg-accent/15 cursor-pointer disabled:opacity-50">
-                        <Upload size={11} />
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <label className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-accent/60 text-accent bg-accent/5 hover:bg-accent/15 cursor-pointer ${busyId === r.id ? "opacity-50 pointer-events-none" : ""}`}>
+                        <Upload size={12} />
                         Subir imagen
                         <input
                           type="file"
@@ -611,7 +652,7 @@ function MissingCleanSection() {
                           disabled={busyId === r.id}
                           onChange={(e) => {
                             const f = e.target.files?.[0];
-                            if (f) handleUploadFile(r.id, f);
+                            if (f) handlePickFile(r, f);
                             e.target.value = "";
                           }}
                         />
@@ -619,33 +660,139 @@ function MissingCleanSection() {
                       <button
                         disabled={busyId === r.id}
                         onClick={() => handleSetStatus(r.id, "fallback_ok")}
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-[0.6rem] eyebrow border ${
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border ${
                           st?.status === "fallback_ok"
                             ? "border-accent text-accent bg-accent/10"
                             : "border-border/60 text-foreground/70 hover:border-foreground/40"
                         } disabled:opacity-50`}
                       >
-                        <ShieldCheck size={11} />
+                        <ShieldCheck size={12} />
                         Fallback OK
                       </button>
                       <button
                         disabled={busyId === r.id}
                         onClick={() => handleSetStatus(r.id, "priority_pending")}
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-[0.6rem] eyebrow border ${
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border ${
                           st?.status === "priority_pending"
                             ? "border-destructive text-destructive bg-destructive/10"
                             : "border-border/60 text-foreground/70 hover:border-foreground/40"
                         } disabled:opacity-50`}
                       >
-                        <Flag size={11} />
+                        <Flag size={12} />
                         Prioridad
                       </button>
-                      {busyId === r.id && <Loader2 size={12} className="animate-spin text-accent" />}
+                      {busyId === r.id && <Loader2 size={14} className="animate-spin text-accent" />}
                     </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Modal: zoom de imagen actual */}
+      {zoomUrl && (
+        <div
+          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6"
+          onClick={() => setZoomUrl(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setZoomUrl(null)}
+            className="absolute top-4 right-4 p-2 text-white/80 hover:text-white"
+            aria-label="Cerrar"
+          >
+            <X size={22} />
+          </button>
+          <img
+            src={zoomUrl}
+            alt="Imagen ampliada"
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
+      {/* Modal: confirmación de subida — comparación lado a lado */}
+      {pendingUpload && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div
+            className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <div>
+                <p className="eyebrow text-accent text-[0.65rem]">Confirmar imagen</p>
+                <h4 className="mt-1 font-serif text-xl">
+                  {pendingUpload.product.brand?.name ? `${pendingUpload.product.brand.name} — ` : ""}
+                  {pendingUpload.product.base_name ?? pendingUpload.product.name}
+                </h4>
+                <p className="text-xs text-foreground/60 mt-1">
+                  {pendingUpload.product.size_ml ? `${pendingUpload.product.size_ml} ml` : "—"} · USD {pendingUpload.product.price.toFixed(0)}
+                </p>
+                <code className="text-[0.6rem] font-mono text-foreground/50 mt-1 inline-block">
+                  {pendingUpload.product.id}
+                </code>
+              </div>
+              <button
+                type="button"
+                onClick={cancelUpload}
+                className="p-1.5 text-foreground/60 hover:text-foreground"
+                aria-label="Cerrar"
+                disabled={busyId === pendingUpload.product.id}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+              <div>
+                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">Actual (fallback image_url)</p>
+                <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
+                  {pendingUpload.product.image_url ? (
+                    <img src={pendingUpload.product.image_url} alt="" className="w-full h-full object-contain" />
+                  ) : (
+                    <span className="text-foreground/30 text-4xl font-serif">—</span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <p className="eyebrow text-[0.6rem] text-accent mb-2">Nueva (a confirmar)</p>
+                <div className="aspect-square bg-card border border-accent/60 flex items-center justify-center overflow-hidden">
+                  <img src={pendingUpload.previewUrl} alt="" className="w-full h-full object-contain" />
+                </div>
+              </div>
+            </div>
+
+            <p className="text-[0.65rem] text-foreground/50 mb-4">
+              Al confirmar, se actualiza solo <code className="text-accent">clean_image_url</code>.
+              El <code>image_url</code> original queda intacto.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-end">
+              <button
+                type="button"
+                onClick={cancelUpload}
+                disabled={busyId === pendingUpload.product.id}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50"
+              >
+                Cancelar / elegir otra imagen
+              </button>
+              <button
+                type="button"
+                onClick={confirmUpload}
+                disabled={busyId === pendingUpload.product.id}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50"
+              >
+                {busyId === pendingUpload.product.id ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <CheckCircle2 size={14} />
+                )}
+                Confirmar esta imagen para este producto
+              </button>
+            </div>
           </div>
         </div>
       )}
