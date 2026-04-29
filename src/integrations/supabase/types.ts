@@ -44,6 +44,54 @@ export type Database = {
         }
         Relationships: []
       }
+      clean_image_import_queue: {
+        Row: {
+          assigned_perfume_id: string | null
+          confirmed_at: string | null
+          confirmed_by: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          original_filename: string
+          pending_path: string
+          phash: string | null
+          status: string
+          suggested_perfume_ids: string[]
+          suggestion_scores: number[]
+          updated_at: string
+        }
+        Insert: {
+          assigned_perfume_id?: string | null
+          confirmed_at?: string | null
+          confirmed_by?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          original_filename: string
+          pending_path: string
+          phash?: string | null
+          status?: string
+          suggested_perfume_ids?: string[]
+          suggestion_scores?: number[]
+          updated_at?: string
+        }
+        Update: {
+          assigned_perfume_id?: string | null
+          confirmed_at?: string | null
+          confirmed_by?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          original_filename?: string
+          pending_path?: string
+          phash?: string | null
+          status?: string
+          suggested_perfume_ids?: string[]
+          suggestion_scores?: number[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
@@ -110,6 +158,7 @@ export type Database = {
         Row: {
           base_name: string | null
           brand_id: string
+          clean_image_url: string | null
           concentration:
             | Database["public"]["Enums"]["concentration_type"]
             | null
@@ -132,6 +181,7 @@ export type Database = {
         Insert: {
           base_name?: string | null
           brand_id: string
+          clean_image_url?: string | null
           concentration?:
             | Database["public"]["Enums"]["concentration_type"]
             | null
@@ -154,6 +204,7 @@ export type Database = {
         Update: {
           base_name?: string | null
           brand_id?: string
+          clean_image_url?: string | null
           concentration?:
             | Database["public"]["Enums"]["concentration_type"]
             | null

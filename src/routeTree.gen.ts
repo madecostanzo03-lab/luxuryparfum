@@ -16,6 +16,7 @@ import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
+import { Route as AdminImagenesMatchRouteImport } from './routes/admin.imagenes-match'
 import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
@@ -53,6 +54,11 @@ const AdminPreciosRoute = AdminPreciosRouteImport.update({
   path: '/admin/precios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminImagenesMatchRoute = AdminImagenesMatchRouteImport.update({
+  id: '/admin/imagenes-match',
+  path: '/admin/imagenes-match',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
   id: '/api/public/image-proxy',
   path: '/api/public/image-proxy',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
   '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
   '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
   '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/imagenes-match'
     | '/admin/precios'
     | '/admin/qa'
     | '/api/public/image-proxy'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/imagenes-match'
     | '/admin/precios'
     | '/admin/qa'
     | '/api/public/image-proxy'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/imagenes-match'
     | '/admin/precios'
     | '/admin/qa'
     | '/api/public/image-proxy'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
+  AdminImagenesMatchRoute: typeof AdminImagenesMatchRoute
   AdminPreciosRoute: typeof AdminPreciosRoute
   AdminQaRoute: typeof AdminQaRoute
   ApiPublicImageProxyRoute: typeof ApiPublicImageProxyRoute
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPreciosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/imagenes-match': {
+      id: '/admin/imagenes-match'
+      path: '/admin/imagenes-match'
+      fullPath: '/admin/imagenes-match'
+      preLoaderRoute: typeof AdminImagenesMatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/image-proxy': {
       id: '/api/public/image-proxy'
       path: '/api/public/image-proxy'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
+  AdminImagenesMatchRoute: AdminImagenesMatchRoute,
   AdminPreciosRoute: AdminPreciosRoute,
   AdminQaRoute: AdminQaRoute,
   ApiPublicImageProxyRoute: ApiPublicImageProxyRoute,
