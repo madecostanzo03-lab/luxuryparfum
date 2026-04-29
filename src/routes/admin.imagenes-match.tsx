@@ -1059,6 +1059,111 @@ function MissingCleanSection() {
         </div>
       )}
 
+      {/* Modal: confirmación de reutilización de imagen limpia existente */}
+      {pendingReuse && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto">
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <div>
+                <p className="eyebrow text-accent text-[0.65rem]">Reutilizar imagen limpia</p>
+                <h4 className="mt-1 font-serif text-xl">Confirmar reutilización</h4>
+                <p className="text-xs text-foreground/60 mt-1">
+                  Se copiará el mismo <code className="text-accent">clean_image_url</code>.
+                  Nada se mueve, nada se borra, <code>image_url</code> queda intacto.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPendingReuse(null)}
+                className="p-1.5 text-foreground/60 hover:text-foreground"
+                aria-label="Cerrar"
+                disabled={busyId === pendingReuse.target.id}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+              {/* IZQ: producto destino (pendiente) */}
+              <div>
+                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">
+                  Producto pendiente (destino)
+                </p>
+                <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
+                  {pendingReuse.target.image_url ? (
+                    <img src={pendingReuse.target.image_url} alt="" className="w-full h-full object-contain" />
+                  ) : (
+                    <span className="text-foreground/30 text-4xl font-serif">—</span>
+                  )}
+                </div>
+                <div className="mt-3 text-xs">
+                  <p className="eyebrow text-[0.6rem] text-foreground/50">
+                    {pendingReuse.target.brand?.name ?? "—"}
+                  </p>
+                  <p className="font-serif text-base mt-0.5">
+                    {pendingReuse.target.base_name ?? pendingReuse.target.name}
+                  </p>
+                  <p className="text-foreground/60 mt-1">
+                    {pendingReuse.target.size_ml ? `${pendingReuse.target.size_ml} ml` : "—"} · USD {pendingReuse.target.price.toFixed(0)}
+                  </p>
+                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">
+                    {pendingReuse.target.id}
+                  </code>
+                </div>
+              </div>
+
+              {/* DER: producto fuente (con clean_image_url) */}
+              <div>
+                <p className="eyebrow text-[0.6rem] text-accent mb-2">
+                  Fuente elegida (clean_image_url)
+                </p>
+                <div className="aspect-square bg-card border border-accent/60 flex items-center justify-center overflow-hidden">
+                  <img src={pendingReuse.source.clean_image_url} alt="" className="w-full h-full object-contain" />
+                </div>
+                <div className="mt-3 text-xs">
+                  <p className="eyebrow text-[0.6rem] text-foreground/50">
+                    {pendingReuse.source.brand?.name ?? "—"}
+                  </p>
+                  <p className="font-serif text-base mt-0.5">
+                    {pendingReuse.source.base_name ?? pendingReuse.source.name}
+                  </p>
+                  <p className="text-foreground/60 mt-1">
+                    {pendingReuse.source.size_ml ? `${pendingReuse.source.size_ml} ml` : "—"} · USD {pendingReuse.source.price.toFixed(0)}
+                  </p>
+                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">
+                    {pendingReuse.source.id}
+                  </code>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => setPendingReuse(null)}
+                disabled={busyId === pendingReuse.target.id}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmReuse}
+                disabled={busyId === pendingReuse.target.id}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50"
+              >
+                {busyId === pendingReuse.target.id ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <CheckCircle2 size={14} />
+                )}
+                Confirmar reutilización
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Tabla general */}
       {rows === null ? (
         <div className="text-center py-12"><Loader2 className="inline animate-spin" /></div>
