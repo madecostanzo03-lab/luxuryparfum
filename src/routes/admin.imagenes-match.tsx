@@ -254,7 +254,7 @@ function AdminImagesMatchPage() {
       </div>
 
       {filter === "manual" ? (
-        <ManualPendingPanel />
+        <MissingCleanSection />
       ) : loading ? (
         <div className="text-center py-20"><Loader2 className="inline animate-spin" /></div>
       ) : !current ? (
