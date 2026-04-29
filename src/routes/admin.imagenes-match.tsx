@@ -582,6 +582,77 @@ function MissingCleanSection() {
     }
   };
 
+  // Helpers de búsqueda dentro del catálogo reutilizable
+  const normalize = (s: string) =>
+    s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  const baseKey = (r: { base_name: string | null; name: string }) =>
+    normalize((r.base_name ?? r.name).trim());
+
+  const reuseListFor = (target: MissingRow): ReusableRow[] => {
+    if (reuseMode === "variants") {
+      const targetBrand = target.brand?.slug ?? "";
+      const targetBase = baseKey(target);
+      // Misma marca y base_name parecido (incluye, o coincide en >=2 tokens)
+      const tokens = targetBase.split(/\s+/).filter((t) => t.length >= 3);
+      return reusable
+        .filter((r) => r.brand?.slug === targetBrand)
+        .filter((r) => {
+          const rb = baseKey(r);
+          if (rb.includes(targetBase) || targetBase.includes(rb)) return true;
+          const matches = tokens.filter((t) => rb.includes(t)).length;
+          return matches >= 2;
+        })
+        .slice(0, 30);
+    }
+    if (reuseMode === "same_base") {
+      const targetBase = baseKey(target);
+      return reusable.filter((r) => baseKey(r) === targetBase).slice(0, 30);
+    }
+    // search libre
+    const term = normalize(reuseSearch.trim());
+    if (term.length < 2) return [];
+    return reusable
+      .filter((r) => {
+        const hay = normalize(
+          `${r.brand?.name ?? ""} ${r.name} ${r.base_name ?? ""} ${r.size_ml ?? ""} ${r.id}`,
+        );
+        return hay.includes(term);
+      })
+      .slice(0, 30);
+  };
+
+  const openReusePanel = (productId: string) => {
+    setExpandedReuseId((cur) => (cur === productId ? null : productId));
+    setReuseMode("search");
+    setReuseSearch("");
+  };
+
+  const confirmReuse = async () => {
+    if (!accessToken || !pendingReuse || busyId) return;
+    const { target, source } = pendingReuse;
+    setBusyId(target.id);
+    setMsg(null);
+    try {
+      await reuseFn({
+        data: {
+          accessToken,
+          targetProductId: target.id,
+          sourceProductId: source.id,
+        },
+      });
+      setMsg(`✓ Imagen reutilizada de ${source.brand?.name ?? ""} ${source.base_name ?? source.name}`);
+      setRows((prev) => (prev ?? []).filter((r) => r.id !== target.id));
+      await loadStatuses();
+      setPendingReuse(null);
+      setExpandedReuseId(null);
+    } catch (e: any) {
+      setMsg(`Error: ${e.message ?? e}`);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   return (
     <section className="mt-16 pt-10 border-t border-border/40">
       <header className="mb-6">
