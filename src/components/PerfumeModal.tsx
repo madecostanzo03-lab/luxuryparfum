@@ -98,7 +98,10 @@ export function PerfumeModal({
         <div className="grid md:grid-cols-2">
           <div className="aspect-square md:aspect-auto md:min-h-[500px] bg-card">
             {(() => {
-              const { src, isPremium } = resolvePerfumeImage(perfume.id, perfume.image_url);
+              const { src, isPremium } = resolvePerfumeImage(
+                perfume.id,
+                perfume.clean_image_url ?? perfume.image_url,
+              );
               return (
                 <SmartImage
                   src={src}
