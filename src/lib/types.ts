@@ -33,6 +33,7 @@ export interface Perfume {
   notes: string | null;
   description: string | null;
   image_url: string | null;
+  clean_image_url: string | null;
   in_stock: boolean;
   is_recommended: boolean;
   is_bestseller: boolean;
