@@ -110,6 +110,36 @@ export type Database = {
         }
         Relationships: []
       }
+      pending_manual_images: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          product_id: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          product_id: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          product_id?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       perfume_variants: {
         Row: {
           concentration:
