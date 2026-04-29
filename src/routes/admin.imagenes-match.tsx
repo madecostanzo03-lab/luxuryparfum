@@ -8,6 +8,7 @@ import {
   getPendingImageUrl,
   setManualImageStatus,
   assignManualImage,
+  reuseCleanImage,
 } from "@/server/clean-images.functions";
 import { Loader2, CheckCircle2, SkipForward, Search, ChevronLeft, ChevronRight, Upload, Flag, ShieldCheck, ExternalLink, Copy, Check, X, ZoomIn } from "lucide-react";
 
@@ -423,6 +424,17 @@ type ManualStatusRow = {
   updated_at: string;
 };
 
+type ReusableRow = {
+  id: string;
+  name: string;
+  base_name: string | null;
+  size_ml: number | null;
+  price: number;
+  image_url: string | null;
+  clean_image_url: string;
+  brand: { name: string; slug: string } | null;
+};
+
 function MissingCleanSection() {
   const [rows, setRows] = useState<MissingRow[] | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -435,9 +447,21 @@ function MissingCleanSection() {
   const [pendingUpload, setPendingUpload] = useState<
     { product: MissingRow; file: File; previewUrl: string } | null
   >(null);
+  // Catálogo de imágenes limpias reutilizables
+  const [reusable, setReusable] = useState<ReusableRow[]>([]);
+  // Tarjeta con panel de "Buscar imagen limpia existente" abierto
+  const [expandedReuseId, setExpandedReuseId] = useState<string | null>(null);
+  // Modo de listado dentro del panel: "search" | "variants" | "same_base"
+  const [reuseMode, setReuseMode] = useState<"search" | "variants" | "same_base">("search");
+  const [reuseSearch, setReuseSearch] = useState("");
+  // Confirmación de reutilización
+  const [pendingReuse, setPendingReuse] = useState<
+    { target: MissingRow; source: ReusableRow } | null
+  >(null);
 
   const setStatusFn = useServerFn(setManualImageStatus);
   const assignFn = useServerFn(assignManualImage);
+  const reuseFn = useServerFn(reuseCleanImage);
 
   const loadStatuses = async () => {
     const { data } = await supabase
@@ -468,6 +492,14 @@ function MissingCleanSection() {
       }
       const { data } = await q.order("name");
       setRows((data as unknown as MissingRow[]) ?? []);
+
+      // Catálogo de imágenes limpias reutilizables (todos los perfumes con clean_image_url)
+      const { data: reusableData } = await supabase
+        .from("perfumes")
+        .select("id, name, base_name, size_ml, price, image_url, clean_image_url, brand:brands(name, slug)")
+        .not("clean_image_url", "is", null)
+        .order("name");
+      setReusable((reusableData as unknown as ReusableRow[]) ?? []);
 
       await loadStatuses();
     })();
@@ -547,6 +579,77 @@ function MissingCleanSection() {
       setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 1500);
     } catch {
       /* ignore */
+    }
+  };
+
+  // Helpers de búsqueda dentro del catálogo reutilizable
+  const normalize = (s: string) =>
+    s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  const baseKey = (r: { base_name: string | null; name: string }) =>
+    normalize((r.base_name ?? r.name).trim());
+
+  const reuseListFor = (target: MissingRow): ReusableRow[] => {
+    if (reuseMode === "variants") {
+      const targetBrand = target.brand?.slug ?? "";
+      const targetBase = baseKey(target);
+      // Misma marca y base_name parecido (incluye, o coincide en >=2 tokens)
+      const tokens = targetBase.split(/\s+/).filter((t) => t.length >= 3);
+      return reusable
+        .filter((r) => r.brand?.slug === targetBrand)
+        .filter((r) => {
+          const rb = baseKey(r);
+          if (rb.includes(targetBase) || targetBase.includes(rb)) return true;
+          const matches = tokens.filter((t) => rb.includes(t)).length;
+          return matches >= 2;
+        })
+        .slice(0, 30);
+    }
+    if (reuseMode === "same_base") {
+      const targetBase = baseKey(target);
+      return reusable.filter((r) => baseKey(r) === targetBase).slice(0, 30);
+    }
+    // search libre
+    const term = normalize(reuseSearch.trim());
+    if (term.length < 2) return [];
+    return reusable
+      .filter((r) => {
+        const hay = normalize(
+          `${r.brand?.name ?? ""} ${r.name} ${r.base_name ?? ""} ${r.size_ml ?? ""} ${r.id}`,
+        );
+        return hay.includes(term);
+      })
+      .slice(0, 30);
+  };
+
+  const openReusePanel = (productId: string) => {
+    setExpandedReuseId((cur) => (cur === productId ? null : productId));
+    setReuseMode("search");
+    setReuseSearch("");
+  };
+
+  const confirmReuse = async () => {
+    if (!accessToken || !pendingReuse || busyId) return;
+    const { target, source } = pendingReuse;
+    setBusyId(target.id);
+    setMsg(null);
+    try {
+      await reuseFn({
+        data: {
+          accessToken,
+          targetProductId: target.id,
+          sourceProductId: source.id,
+        },
+      });
+      setMsg(`✓ Imagen reutilizada de ${source.brand?.name ?? ""} ${source.base_name ?? source.name}`);
+      setRows((prev) => (prev ?? []).filter((r) => r.id !== target.id));
+      await loadStatuses();
+      setPendingReuse(null);
+      setExpandedReuseId(null);
+    } catch (e: any) {
+      setMsg(`Error: ${e.message ?? e}`);
+    } finally {
+      setBusyId(null);
     }
   };
 
@@ -670,6 +773,43 @@ function MissingCleanSection() {
                         />
                       </label>
                       <button
+                        type="button"
+                        disabled={busyId === r.id}
+                        onClick={() => openReusePanel(r.id)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border disabled:opacity-50 ${
+                          expandedReuseId === r.id
+                            ? "border-accent text-accent bg-accent/10"
+                            : "border-accent/60 text-accent hover:bg-accent/10"
+                        }`}
+                      >
+                        <Search size={12} />
+                        Buscar imagen limpia existente
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busyId === r.id}
+                        onClick={() => {
+                          setExpandedReuseId(r.id);
+                          setReuseMode("variants");
+                          setReuseSearch("");
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-border/60 text-foreground/80 hover:border-foreground/40 disabled:opacity-50"
+                      >
+                        Variantes del mismo perfume
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busyId === r.id}
+                        onClick={() => {
+                          setExpandedReuseId(r.id);
+                          setReuseMode("same_base");
+                          setReuseSearch("");
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-border/60 text-foreground/80 hover:border-foreground/40 disabled:opacity-50"
+                      >
+                        Mismo nombre base
+                      </button>
+                      <button
                         disabled={busyId === r.id}
                         onClick={() => handleSetStatus(r.id, "fallback_ok")}
                         className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border ${
@@ -695,6 +835,116 @@ function MissingCleanSection() {
                       </button>
                       {busyId === r.id && <Loader2 size={14} className="animate-spin text-accent" />}
                     </div>
+
+                    {/* Panel expandible: Buscar imagen limpia existente */}
+                    {expandedReuseId === r.id && (
+                      <div className="mt-4 border border-accent/30 bg-accent/5 p-3">
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          <span className="eyebrow text-[0.6rem] text-foreground/60">Modo:</span>
+                          {([
+                            ["search", "Búsqueda libre"],
+                            ["variants", "Variantes (misma marca)"],
+                            ["same_base", "Mismo nombre base"],
+                          ] as const).map(([m, label]) => (
+                            <button
+                              key={m}
+                              type="button"
+                              onClick={() => setReuseMode(m)}
+                              className={`px-2 py-1 text-[0.6rem] eyebrow border ${
+                                reuseMode === m
+                                  ? "border-accent text-accent bg-accent/10"
+                                  : "border-border/60 text-foreground/70 hover:border-foreground/40"
+                              }`}
+                            >
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+
+                        {reuseMode === "search" && (
+                          <div className="relative mb-3">
+                            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" />
+                            <input
+                              value={reuseSearch}
+                              onChange={(e) => setReuseSearch(e.target.value)}
+                              placeholder="Marca, nombre, ml, concentración o product_id…"
+                              className="w-full bg-input/40 border border-border pl-9 pr-3 py-2 text-xs focus:outline-none focus:border-accent"
+                            />
+                          </div>
+                        )}
+
+                        {(() => {
+                          const list = reuseListFor(r);
+                          if (list.length === 0) {
+                            return (
+                              <p className="text-xs text-foreground/50 italic py-3">
+                                {reuseMode === "search" && reuseSearch.trim().length < 2
+                                  ? "Escribí al menos 2 caracteres para buscar."
+                                  : "Sin coincidencias."}
+                              </p>
+                            );
+                          }
+                          return (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[420px] overflow-y-auto">
+                              {list.map((src) => (
+                                <div
+                                  key={src.id}
+                                  className="border border-border/50 bg-background p-2 flex gap-2"
+                                >
+                                  <div className="flex-shrink-0 grid grid-cols-2 gap-1 w-[140px]">
+                                    <div className="aspect-square bg-card border border-accent/40 overflow-hidden">
+                                      <img
+                                        src={src.clean_image_url}
+                                        alt=""
+                                        className="w-full h-full object-contain"
+                                        loading="lazy"
+                                      />
+                                    </div>
+                                    <div className="aspect-square bg-card border border-border/40 overflow-hidden">
+                                      {src.image_url ? (
+                                        <img
+                                          src={src.image_url}
+                                          alt=""
+                                          className="w-full h-full object-contain opacity-70"
+                                          loading="lazy"
+                                        />
+                                      ) : (
+                                        <span className="flex items-center justify-center h-full text-foreground/30 text-xs">—</span>
+                                      )}
+                                    </div>
+                                    <p className="text-[0.5rem] eyebrow text-accent text-center">limpia</p>
+                                    <p className="text-[0.5rem] eyebrow text-foreground/40 text-center">original</p>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">
+                                      {src.brand?.name ?? "—"}
+                                    </p>
+                                    <p className="text-xs font-serif leading-tight line-clamp-2 mt-0.5">
+                                      {src.base_name ?? src.name}
+                                    </p>
+                                    <p className="text-[0.65rem] text-foreground/60 mt-0.5">
+                                      {src.size_ml ? `${src.size_ml} ml` : "—"} · USD {src.price.toFixed(0)}
+                                    </p>
+                                    <code className="text-[0.55rem] font-mono text-foreground/40 block truncate mt-0.5">
+                                      {src.id}
+                                    </code>
+                                    <button
+                                      type="button"
+                                      disabled={busyId === r.id}
+                                      onClick={() => setPendingReuse({ target: r, source: src })}
+                                      className="mt-2 w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-2 bg-accent text-accent-foreground text-[0.6rem] eyebrow hover:bg-accent/90 disabled:opacity-50"
+                                    >
+                                      <CheckCircle2 size={11} />
+                                      Usar esta imagen limpia
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -803,6 +1053,111 @@ function MissingCleanSection() {
                   <CheckCircle2 size={14} />
                 )}
                 Confirmar esta imagen para este producto
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: confirmación de reutilización de imagen limpia existente */}
+      {pendingReuse && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto">
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <div>
+                <p className="eyebrow text-accent text-[0.65rem]">Reutilizar imagen limpia</p>
+                <h4 className="mt-1 font-serif text-xl">Confirmar reutilización</h4>
+                <p className="text-xs text-foreground/60 mt-1">
+                  Se copiará el mismo <code className="text-accent">clean_image_url</code>.
+                  Nada se mueve, nada se borra, <code>image_url</code> queda intacto.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPendingReuse(null)}
+                className="p-1.5 text-foreground/60 hover:text-foreground"
+                aria-label="Cerrar"
+                disabled={busyId === pendingReuse.target.id}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+              {/* IZQ: producto destino (pendiente) */}
+              <div>
+                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">
+                  Producto pendiente (destino)
+                </p>
+                <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
+                  {pendingReuse.target.image_url ? (
+                    <img src={pendingReuse.target.image_url} alt="" className="w-full h-full object-contain" />
+                  ) : (
+                    <span className="text-foreground/30 text-4xl font-serif">—</span>
+                  )}
+                </div>
+                <div className="mt-3 text-xs">
+                  <p className="eyebrow text-[0.6rem] text-foreground/50">
+                    {pendingReuse.target.brand?.name ?? "—"}
+                  </p>
+                  <p className="font-serif text-base mt-0.5">
+                    {pendingReuse.target.base_name ?? pendingReuse.target.name}
+                  </p>
+                  <p className="text-foreground/60 mt-1">
+                    {pendingReuse.target.size_ml ? `${pendingReuse.target.size_ml} ml` : "—"} · USD {pendingReuse.target.price.toFixed(0)}
+                  </p>
+                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">
+                    {pendingReuse.target.id}
+                  </code>
+                </div>
+              </div>
+
+              {/* DER: producto fuente (con clean_image_url) */}
+              <div>
+                <p className="eyebrow text-[0.6rem] text-accent mb-2">
+                  Fuente elegida (clean_image_url)
+                </p>
+                <div className="aspect-square bg-card border border-accent/60 flex items-center justify-center overflow-hidden">
+                  <img src={pendingReuse.source.clean_image_url} alt="" className="w-full h-full object-contain" />
+                </div>
+                <div className="mt-3 text-xs">
+                  <p className="eyebrow text-[0.6rem] text-foreground/50">
+                    {pendingReuse.source.brand?.name ?? "—"}
+                  </p>
+                  <p className="font-serif text-base mt-0.5">
+                    {pendingReuse.source.base_name ?? pendingReuse.source.name}
+                  </p>
+                  <p className="text-foreground/60 mt-1">
+                    {pendingReuse.source.size_ml ? `${pendingReuse.source.size_ml} ml` : "—"} · USD {pendingReuse.source.price.toFixed(0)}
+                  </p>
+                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">
+                    {pendingReuse.source.id}
+                  </code>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => setPendingReuse(null)}
+                disabled={busyId === pendingReuse.target.id}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmReuse}
+                disabled={busyId === pendingReuse.target.id}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50"
+              >
+                {busyId === pendingReuse.target.id ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <CheckCircle2 size={14} />
+                )}
+                Confirmar reutilización
               </button>
             </div>
           </div>

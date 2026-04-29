@@ -273,3 +273,60 @@ export const getPendingImageUrl = createServerFn({ method: "POST" })
     if (error || !signed) throw new Error(error?.message ?? "Sign failed");
     return { url: signed.signedUrl };
   });
+
+/**
+ * Reutiliza la clean_image_url de un perfume existente (sourceId) y la copia
+ * a otro perfume (targetId). NO mueve archivos en storage, NO borra nada,
+ * NO toca image_url. Sólo copia la URL ya pública.
+ *
+ * Útil cuando dos variantes (distintos ML) del mismo perfume comparten
+ * exactamente la misma imagen.
+ */
+export const reuseCleanImage = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        targetProductId: z.string().uuid(),
+        sourceProductId: z.string().uuid(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    await verifyAdmin(data.accessToken);
+
+    if (data.targetProductId === data.sourceProductId) {
+      throw new Error("Origen y destino son el mismo producto");
+    }
+
+    const { data: source, error: sErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id, clean_image_url")
+      .eq("id", data.sourceProductId)
+      .single();
+    if (sErr || !source) throw new Error("Perfume origen no encontrado");
+    if (!source.clean_image_url) {
+      throw new Error("El perfume origen no tiene clean_image_url");
+    }
+
+    const { data: target, error: tErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.targetProductId)
+      .single();
+    if (tErr || !target) throw new Error("Perfume destino no encontrado");
+
+    const { error: updErr } = await supabaseAdmin
+      .from("perfumes")
+      .update({ clean_image_url: source.clean_image_url })
+      .eq("id", data.targetProductId);
+    if (updErr) throw new Error(`Update failed: ${updErr.message}`);
+
+    // Limpiar fila pendiente si existía
+    await supabaseAdmin
+      .from("pending_manual_images")
+      .delete()
+      .eq("product_id", data.targetProductId);
+
+    return { ok: true, cleanImageUrl: source.clean_image_url };
+  });
