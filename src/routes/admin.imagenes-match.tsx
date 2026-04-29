@@ -379,18 +379,20 @@ function AdminImagesMatchPage() {
   );
 }
 
-const FAILED_DOWNLOAD_IDS = new Set<string>([
-  "ec6df0be-8b21-4463-b7d0-a5d16534f993",
-  "cff31433-8509-4091-977a-4546f24c0384",
-  "2f56ac72-f7fe-4c28-8013-7bcb43211f0b",
-  "9d925133-7526-4a3c-85b7-921774dbe9bb",
-  "fefca957-04c5-41a7-a29a-37da5a2249f0",
-  "eb2f7585-9869-488d-97bd-4da499ebcd40",
-  "afdac724-727a-4897-bde7-74982585f7a7",
-  "fab4b006-eef5-4d86-a342-305c0ec66738",
-  "1282378e-7de3-4f72-acf5-2ddf9a2ddb85",
-  "b825a604-673e-4c59-aab8-9a83d366df61",
-]);
+// Los 8 productos cuyo image_url original NO se pudo descargar
+// (CDN bloqueado / Instagram devuelve HTML / dominios anti-bot).
+// Mapping product_id -> motivo legible.
+const MANUAL_PENDING_MOTIVES: Record<string, string> = {
+  "ec6df0be-8b21-4463-b7d0-a5d16534f993": "dior.com 403 (anti-bot CDN)",
+  "cff31433-8509-4091-977a-4546f24c0384": "dior.com 403 (anti-bot CDN)",
+  "fab4b006-eef5-4d86-a342-305c0ec66738": "givenchybeauty.com 403",
+  "f62b3c26-8de6-48ff-b60b-c978eb8869d0": "Instagram devuelve HTML, no imagen",
+  "b825a604-673e-4c59-aab8-9a83d366df61": "tupi.com.py 403",
+  "545f54f9-ae2c-4db3-806f-71cc1e7cb980": "Instagram devuelve HTML, no imagen",
+  "4d3c3fbd-2314-4d1d-8a10-bb318cf61f5d": "Instagram devuelve HTML, no imagen",
+  "001087e8-e929-4c3c-9d6c-05bf469de226": "Instagram devuelve HTML, no imagen",
+};
+const MANUAL_PENDING_IDS = new Set(Object.keys(MANUAL_PENDING_MOTIVES));
 
 type MissingRow = {
   id: string;
@@ -402,11 +404,37 @@ type MissingRow = {
   brand: { name: string; slug: string } | null;
 };
 
+type ManualStatusRow = {
+  product_id: string;
+  status: "manual_needed" | "fallback_ok" | "priority_pending";
+  notes: string | null;
+  updated_at: string;
+};
+
 function MissingCleanSection() {
   const [rows, setRows] = useState<MissingRow[] | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [statuses, setStatuses] = useState<Map<string, ManualStatusRow>>(new Map());
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+
+  const setStatusFn = useServerFn(setManualImageStatus);
+  const assignFn = useServerFn(assignManualImage);
+
+  const loadStatuses = async () => {
+    const { data } = await supabase
+      .from("pending_manual_images")
+      .select("product_id, status, notes, updated_at");
+    const m = new Map<string, ManualStatusRow>();
+    (data ?? []).forEach((r: any) => m.set(r.product_id, r as ManualStatusRow));
+    setStatuses(m);
+  };
 
   useEffect(() => {
     (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setAccessToken(session?.access_token ?? null);
+
       const { data: hidden } = await supabase
         .from("brands")
         .select("id")
@@ -422,12 +450,62 @@ function MissingCleanSection() {
       }
       const { data } = await q.order("name");
       setRows((data as unknown as MissingRow[]) ?? []);
+
+      await loadStatuses();
     })();
   }, []);
 
   const total = rows?.length ?? 0;
-  const failed = rows?.filter((r) => FAILED_DOWNLOAD_IDS.has(r.id)).length ?? 0;
-  const ok = total - failed;
+  const manualPending = rows?.filter((r) => MANUAL_PENDING_IDS.has(r.id)) ?? [];
+  const otherPending = rows?.filter((r) => !MANUAL_PENDING_IDS.has(r.id)) ?? [];
+
+  const handleSetStatus = async (
+    productId: string,
+    status: "manual_needed" | "fallback_ok" | "priority_pending",
+  ) => {
+    if (!accessToken || busyId) return;
+    setBusyId(productId);
+    setMsg(null);
+    try {
+      await setStatusFn({ data: { accessToken, productId, status } });
+      await loadStatuses();
+      setMsg("✓ Estado guardado");
+    } catch (e: any) {
+      setMsg(`Error: ${e.message ?? e}`);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleUploadFile = async (productId: string, file: File) => {
+    if (!accessToken || busyId) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setMsg("Error: imagen excede 5MB");
+      return;
+    }
+    setBusyId(productId);
+    setMsg(null);
+    try {
+      const arr = new Uint8Array(await file.arrayBuffer());
+      let bin = "";
+      for (let i = 0; i < arr.length; i++) bin += String.fromCharCode(arr[i]);
+      const b64 = btoa(bin);
+      const ct = (file.type === "image/jpeg" || file.type === "image/webp"
+        ? file.type
+        : "image/png") as "image/png" | "image/jpeg" | "image/webp";
+      await assignFn({
+        data: { accessToken, productId, imageBase64: b64, contentType: ct },
+      });
+      setMsg("✓ Imagen subida y asignada");
+      // Recargar la lista (este producto desaparece porque ya tiene clean_image_url)
+      setRows((prev) => (prev ?? []).filter((r) => r.id !== productId));
+      await loadStatuses();
+    } catch (e: any) {
+      setMsg(`Error: ${e.message ?? e}`);
+    } finally {
+      setBusyId(null);
+    }
+  };
 
   return (
     <section className="mt-16 pt-10 border-t border-border/40">
@@ -435,18 +513,113 @@ function MissingCleanSection() {
         <p className="eyebrow text-accent">Revisión</p>
         <h2 className="mt-2 text-2xl md:text-3xl font-serif">Faltantes clean_image_url</h2>
         <p className="mt-2 text-sm text-foreground/60">
-          Productos no árabes activos que todavía no tienen imagen limpia confirmada.
-          Mantienen su <code className="text-accent">image_url</code> original como fallback en el catálogo.
+          Productos no árabes activos sin imagen limpia confirmada. Mantienen su
+          {" "}<code className="text-accent">image_url</code> original como fallback en el catálogo.
         </p>
       </header>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         <Stat label="Total faltantes" value={total} accent />
-        <Stat label="Original descargada" value={ok} />
-        <Stat label="Descarga fallida" value={failed} />
-        <Stat label="Ya con clean" value={267} />
+        <Stat label="8 pendientes manuales" value={manualPending.length} />
+        <Stat label="Otros faltantes" value={otherPending.length} />
+        <Stat label="Ya con clean" value={292} />
       </div>
 
+      {msg && (
+        <p className={`mb-4 text-xs ${msg.startsWith("Error") ? "text-red-400" : "text-accent"}`}>
+          {msg}
+        </p>
+      )}
+
+      {/* SECCIÓN DESTACADA: 8 pendientes manuales */}
+      {rows !== null && manualPending.length > 0 && (
+        <div className="mb-10 border-2 border-accent/40 bg-accent/5 p-4 sm:p-6">
+          <h3 className="font-serif text-xl mb-1">8 pendientes manuales</h3>
+          <p className="text-xs text-foreground/60 mb-5">
+            Origen bloqueado o no descargable. Subí una imagen alternativa (PNG/JPG/WEBP, máx 5MB)
+            o marcá el estado para no perder de vista cómo resolverlos.
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {manualPending.map((r) => {
+              const st = statuses.get(r.id);
+              const motive = MANUAL_PENDING_MOTIVES[r.id];
+              return (
+                <div key={r.id} className="border border-border/50 bg-background p-3 flex gap-3">
+                  {r.image_url ? (
+                    <img src={r.image_url} alt="" className="w-20 h-20 object-contain bg-card flex-shrink-0" loading="lazy" />
+                  ) : (
+                    <div className="w-20 h-20 bg-card flex items-center justify-center text-foreground/30 flex-shrink-0">—</div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">{r.brand?.name ?? "—"}</p>
+                    <p className="font-serif text-sm leading-tight line-clamp-2">{r.base_name ?? r.name}</p>
+                    <p className="text-[0.65rem] text-foreground/50 mt-0.5">
+                      {r.size_ml ? `${r.size_ml}ml` : "—"} · USD {r.price.toFixed(0)}
+                    </p>
+                    <p className="text-[0.6rem] text-destructive mt-1 line-clamp-1">⚠ {motive}</p>
+                    <p className="text-[0.55rem] text-foreground/40 font-mono mt-0.5 truncate">{r.id}</p>
+                    {st && (
+                      <p className="mt-1 text-[0.6rem] eyebrow text-accent">
+                        Estado: {st.status === "fallback_ok"
+                          ? "Fallback aceptable"
+                          : st.status === "priority_pending"
+                          ? "Prioridad pendiente"
+                          : "Manual requerido"}
+                      </p>
+                    )}
+
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      <label className="inline-flex items-center gap-1 px-2 py-1 text-[0.6rem] eyebrow border border-accent/60 text-accent bg-accent/5 hover:bg-accent/15 cursor-pointer disabled:opacity-50">
+                        <Upload size={11} />
+                        Subir imagen
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/webp"
+                          className="hidden"
+                          disabled={busyId === r.id}
+                          onChange={(e) => {
+                            const f = e.target.files?.[0];
+                            if (f) handleUploadFile(r.id, f);
+                            e.target.value = "";
+                          }}
+                        />
+                      </label>
+                      <button
+                        disabled={busyId === r.id}
+                        onClick={() => handleSetStatus(r.id, "fallback_ok")}
+                        className={`inline-flex items-center gap-1 px-2 py-1 text-[0.6rem] eyebrow border ${
+                          st?.status === "fallback_ok"
+                            ? "border-accent text-accent bg-accent/10"
+                            : "border-border/60 text-foreground/70 hover:border-foreground/40"
+                        } disabled:opacity-50`}
+                      >
+                        <ShieldCheck size={11} />
+                        Fallback OK
+                      </button>
+                      <button
+                        disabled={busyId === r.id}
+                        onClick={() => handleSetStatus(r.id, "priority_pending")}
+                        className={`inline-flex items-center gap-1 px-2 py-1 text-[0.6rem] eyebrow border ${
+                          st?.status === "priority_pending"
+                            ? "border-destructive text-destructive bg-destructive/10"
+                            : "border-border/60 text-foreground/70 hover:border-foreground/40"
+                        } disabled:opacity-50`}
+                      >
+                        <Flag size={11} />
+                        Prioridad
+                      </button>
+                      {busyId === r.id && <Loader2 size={12} className="animate-spin text-accent" />}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Tabla general */}
       {rows === null ? (
         <div className="text-center py-12"><Loader2 className="inline animate-spin" /></div>
       ) : rows.length === 0 ? (
@@ -461,14 +634,14 @@ function MissingCleanSection() {
                 <th className="p-3">Nombre</th>
                 <th className="p-3">ml</th>
                 <th className="p-3">USD</th>
-                <th className="p-3">Descarga</th>
+                <th className="p-3">Origen</th>
                 <th className="p-3">Motivo</th>
                 <th className="p-3">ID</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => {
-                const fail = FAILED_DOWNLOAD_IDS.has(r.id);
+                const manual = MANUAL_PENDING_IDS.has(r.id);
                 return (
                   <tr key={r.id} className="border-t border-border/30 hover:bg-card/30">
                     <td className="p-2">
@@ -483,18 +656,14 @@ function MissingCleanSection() {
                     <td className="p-2 text-foreground/60">{r.size_ml ?? "—"}</td>
                     <td className="p-2 text-foreground/60">{r.price.toFixed(0)}</td>
                     <td className="p-2">
-                      {fail ? (
-                        <span className="text-destructive eyebrow text-[0.55rem]">FALLÓ 403/418</span>
+                      {manual ? (
+                        <span className="text-destructive eyebrow text-[0.55rem]">MANUAL</span>
                       ) : (
-                        <span className="text-accent eyebrow text-[0.55rem]">OK</span>
+                        <span className="text-accent eyebrow text-[0.55rem]">RECUPERABLE</span>
                       )}
                     </td>
                     <td className="p-2 text-foreground/60">
-                      {!r.image_url
-                        ? "sin imagen original"
-                        : fail
-                        ? "CDN bloqueó descarga"
-                        : "sin match en cola pHash"}
+                      {manual ? MANUAL_PENDING_MOTIVES[r.id] : "pendiente de procesar"}
                     </td>
                     <td className="p-2 font-mono text-[0.55rem] text-foreground/40">{r.id.slice(0, 8)}…</td>
                   </tr>
