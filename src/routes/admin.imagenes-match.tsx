@@ -56,7 +56,7 @@ function AdminImagesMatchPage() {
 
   const [queue, setQueue] = useState<QueueRow[]>([]);
   const [perfumes, setPerfumes] = useState<Map<string, PerfumeLite>>(new Map());
-  const [filter, setFilter] = useState<"pending" | "confirmed" | "skipped">("pending");
+  const [filter, setFilter] = useState<"manual" | "pending" | "confirmed" | "skipped">("manual");
   const [cursor, setCursor] = useState(0);
 
   // signed URL de la imagen pendiente actual
@@ -228,7 +228,17 @@ function AdminImagesMatchPage() {
       </div>
 
       {/* Filtros */}
-      <div className="flex gap-2 mb-6 border-b border-border/40">
+      <div className="flex gap-2 mb-6 border-b border-border/40 flex-wrap">
+        <button
+          onClick={() => setFilter("manual")}
+          className={`px-4 py-2 text-xs eyebrow transition-colors ${
+            filter === "manual"
+              ? "border-b-2 border-accent text-accent"
+              : "text-destructive hover:text-foreground"
+          }`}
+        >
+          Manuales (8)
+        </button>
         {(["pending","confirmed","skipped"] as const).map((s) => (
           <button
             key={s}
@@ -243,7 +253,9 @@ function AdminImagesMatchPage() {
         ))}
       </div>
 
-      {loading ? (
+      {filter === "manual" ? (
+        <MissingCleanSection />
+      ) : loading ? (
         <div className="text-center py-20"><Loader2 className="inline animate-spin" /></div>
       ) : !current ? (
         <div className="text-center py-20 text-foreground/60 font-serif italic">
@@ -374,7 +386,7 @@ function AdminImagesMatchPage() {
         </div>
       )}
 
-      <MissingCleanSection />
+      {filter !== "manual" && <MissingCleanSection />}
     </div>
   );
 }
