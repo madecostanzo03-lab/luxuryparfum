@@ -1,19 +1,29 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const PENDING_BUCKET = "clean-images-pending";
 const FINAL_BUCKET = "clean-images";
 
-async function assertAdmin(ctx: { supabase: any; userId: string }) {
-  const { data, error } = await ctx.supabase
+/**
+ * Verifica que el access token pertenezca a un usuario con rol admin.
+ * Retorna el userId verificado.
+ */
+async function verifyAdmin(accessToken: string): Promise<string> {
+  if (!accessToken) throw new Error("Missing access token");
+  const { data: userData, error: uErr } = await supabaseAdmin.auth.getUser(accessToken);
+  if (uErr || !userData?.user) {
+    throw new Error("Invalid session");
+  }
+  const userId = userData.user.id;
+  const { data: roles, error: rErr } = await supabaseAdmin
     .from("user_roles")
     .select("role")
-    .eq("user_id", ctx.userId);
-  if (error) throw new Error(error.message);
-  const isAdmin = (data ?? []).some((r: { role: string }) => r.role === "admin");
+    .eq("user_id", userId);
+  if (rErr) throw new Error(`Role lookup failed: ${rErr.message}`);
+  const isAdmin = (roles ?? []).some((r: { role: string }) => r.role === "admin");
   if (!isAdmin) throw new Error("Forbidden: admin role required");
+  return userId;
 }
 
 /**
@@ -24,17 +34,17 @@ async function assertAdmin(ctx: { supabase: any; userId: string }) {
  * NO toca image_url. NO afecta otros campos del perfume.
  */
 export const confirmCleanImageMatch = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
   .inputValidator((input) =>
     z
       .object({
+        accessToken: z.string().min(10),
         queueId: z.string().uuid(),
         perfumeId: z.string().uuid(),
       })
       .parse(input),
   )
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+  .handler(async ({ data }) => {
+    const userId = await verifyAdmin(data.accessToken);
 
     // 1. Cargar fila de cola
     const { data: row, error: rowErr } = await supabaseAdmin
@@ -72,7 +82,7 @@ export const confirmCleanImageMatch = createServerFn({ method: "POST" })
       });
     if (upErr) throw new Error(`Upload failed: ${upErr.message}`);
 
-    // 5. URL pública
+    // 5. URL pública con cache-buster
     const { data: pub } = supabaseAdmin.storage
       .from(FINAL_BUCKET)
       .getPublicUrl(finalPath);
@@ -91,7 +101,7 @@ export const confirmCleanImageMatch = createServerFn({ method: "POST" })
       .update({
         status: "confirmed",
         assigned_perfume_id: data.perfumeId,
-        confirmed_by: context.userId,
+        confirmed_by: userId,
         confirmed_at: new Date().toISOString(),
       })
       .eq("id", data.queueId);
@@ -104,20 +114,24 @@ export const confirmCleanImageMatch = createServerFn({ method: "POST" })
 
 /**
  * Marca una imagen como saltada (no se aplica al catálogo).
- * Mantiene el archivo en pending por si se quiere revisar después.
  */
 export const skipCleanImage = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
   .inputValidator((input) =>
-    z.object({ queueId: z.string().uuid(), reason: z.string().max(500).optional() }).parse(input),
+    z
+      .object({
+        accessToken: z.string().min(10),
+        queueId: z.string().uuid(),
+        reason: z.string().max(500).optional(),
+      })
+      .parse(input),
   )
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+  .handler(async ({ data }) => {
+    const userId = await verifyAdmin(data.accessToken);
     const { error } = await supabaseAdmin
       .from("clean_image_import_queue")
       .update({
         status: "skipped",
-        confirmed_by: context.userId,
+        confirmed_by: userId,
         confirmed_at: new Date().toISOString(),
         notes: data.reason ?? null,
       })
@@ -131,10 +145,16 @@ export const skipCleanImage = createServerFn({ method: "POST" })
  * (el bucket es privado).
  */
 export const getPendingImageUrl = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input) => z.object({ pendingPath: z.string().min(1).max(500) }).parse(input))
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        pendingPath: z.string().min(1).max(500),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    await verifyAdmin(data.accessToken);
     const { data: signed, error } = await supabaseAdmin.storage
       .from(PENDING_BUCKET)
       .createSignedUrl(data.pendingPath, 60 * 60); // 1h

@@ -62,6 +62,7 @@ function AdminImagesMatchPage() {
   const [search, setSearch] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const confirmFn = useServerFn(confirmCleanImageMatch);
   const skipFn = useServerFn(skipCleanImage);
@@ -73,6 +74,7 @@ function AdminImagesMatchPage() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) { setAuthed(false); return; }
       setAuthed(true);
+      setAccessToken(session.access_token);
       const { data: roles } = await supabase
         .from("user_roles").select("role").eq("user_id", session.user.id);
       const admin = (roles ?? []).some((r) => r.role === "admin");
@@ -120,16 +122,16 @@ function AdminImagesMatchPage() {
     setPendingUrl(null);
     setSearch("");
     setMsg(null);
-    if (!current) return;
+    if (!current || !accessToken) return;
     (async () => {
       try {
-        const r = await getUrlFn({ data: { pendingPath: current.pending_path } });
+        const r = await getUrlFn({ data: { accessToken, pendingPath: current.pending_path } });
         setPendingUrl(r.url);
       } catch (e: any) {
-        setMsg(`Error cargando preview: ${e.message}`);
+        setMsg(`Error cargando preview: ${e.message ?? e}`);
       }
     })();
-  }, [current?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [current?.id, accessToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // reset cursor al cambiar filtro
   useEffect(() => { setCursor(0); }, [filter]);
@@ -144,27 +146,26 @@ function AdminImagesMatchPage() {
   }), [queue]);
 
   const handleConfirm = async (perfumeId: string) => {
-    if (!current || busy) return;
+    if (!current || busy || !accessToken) return;
     setBusy(true); setMsg(null);
     try {
-      await confirmFn({ data: { queueId: current.id, perfumeId } });
+      await confirmFn({ data: { accessToken, queueId: current.id, perfumeId } });
       setMsg("✓ Confirmado y publicado.");
       await loadAll();
-      // mantener cursor en la misma posición (siguiente pendiente)
     } catch (e: any) {
-      setMsg(`Error: ${e.message}`);
+      setMsg(`Error: ${e.message ?? e}`);
     } finally { setBusy(false); }
   };
 
   const handleSkip = async () => {
-    if (!current || busy) return;
+    if (!current || busy || !accessToken) return;
     setBusy(true); setMsg(null);
     try {
-      await skipFn({ data: { queueId: current.id } });
+      await skipFn({ data: { accessToken, queueId: current.id } });
       setMsg("Saltada.");
       await loadAll();
     } catch (e: any) {
-      setMsg(`Error: ${e.message}`);
+      setMsg(`Error: ${e.message ?? e}`);
     } finally { setBusy(false); }
   };
 
