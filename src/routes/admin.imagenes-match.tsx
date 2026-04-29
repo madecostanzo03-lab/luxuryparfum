@@ -371,7 +371,138 @@ function AdminImagesMatchPage() {
           </div>
         </div>
       )}
+
+      <MissingCleanSection />
     </div>
+  );
+}
+
+const FAILED_DOWNLOAD_IDS = new Set<string>([
+  "ec6df0be-8b21-4463-b7d0-a5d16534f993",
+  "cff31433-8509-4091-977a-4546f24c0384",
+  "2f56ac72-f7fe-4c28-8013-7bcb43211f0b",
+  "9d925133-7526-4a3c-85b7-921774dbe9bb",
+  "fefca957-04c5-41a7-a29a-37da5a2249f0",
+  "eb2f7585-9869-488d-97bd-4da499ebcd40",
+  "afdac724-727a-4897-bde7-74982585f7a7",
+  "fab4b006-eef5-4d86-a342-305c0ec66738",
+  "1282378e-7de3-4f72-acf5-2ddf9a2ddb85",
+  "b825a604-673e-4c59-aab8-9a83d366df61",
+]);
+
+type MissingRow = {
+  id: string;
+  name: string;
+  base_name: string | null;
+  size_ml: number | null;
+  price: number;
+  image_url: string | null;
+  brand: { name: string; slug: string } | null;
+};
+
+function MissingCleanSection() {
+  const [rows, setRows] = useState<MissingRow[] | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { data: hidden } = await supabase
+        .from("brands")
+        .select("id")
+        .in("slug", HIDDEN_BRAND_SLUGS);
+      const hiddenIds = (hidden ?? []).map((b) => b.id);
+      let q = supabase
+        .from("perfumes")
+        .select("id, name, base_name, size_ml, price, image_url, brand:brands(name, slug)")
+        .eq("in_stock", true)
+        .is("clean_image_url", null);
+      if (hiddenIds.length > 0) {
+        q = q.not("brand_id", "in", `(${hiddenIds.join(",")})`);
+      }
+      const { data } = await q.order("name");
+      setRows((data as unknown as MissingRow[]) ?? []);
+    })();
+  }, []);
+
+  const total = rows?.length ?? 0;
+  const failed = rows?.filter((r) => FAILED_DOWNLOAD_IDS.has(r.id)).length ?? 0;
+  const ok = total - failed;
+
+  return (
+    <section className="mt-16 pt-10 border-t border-border/40">
+      <header className="mb-6">
+        <p className="eyebrow text-accent">Revisión</p>
+        <h2 className="mt-2 text-2xl md:text-3xl font-serif">Faltantes clean_image_url</h2>
+        <p className="mt-2 text-sm text-foreground/60">
+          Productos no árabes activos que todavía no tienen imagen limpia confirmada.
+          Mantienen su <code className="text-accent">image_url</code> original como fallback en el catálogo.
+        </p>
+      </header>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <Stat label="Total faltantes" value={total} accent />
+        <Stat label="Original descargada" value={ok} />
+        <Stat label="Descarga fallida" value={failed} />
+        <Stat label="Ya con clean" value={267} />
+      </div>
+
+      {rows === null ? (
+        <div className="text-center py-12"><Loader2 className="inline animate-spin" /></div>
+      ) : rows.length === 0 ? (
+        <p className="text-foreground/60 italic">No hay productos faltantes.</p>
+      ) : (
+        <div className="overflow-x-auto border border-border/40">
+          <table className="w-full text-xs">
+            <thead className="bg-card/50 text-left eyebrow text-[0.6rem] text-foreground/60">
+              <tr>
+                <th className="p-3">Imagen</th>
+                <th className="p-3">Marca</th>
+                <th className="p-3">Nombre</th>
+                <th className="p-3">ml</th>
+                <th className="p-3">USD</th>
+                <th className="p-3">Descarga</th>
+                <th className="p-3">Motivo</th>
+                <th className="p-3">ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => {
+                const fail = FAILED_DOWNLOAD_IDS.has(r.id);
+                return (
+                  <tr key={r.id} className="border-t border-border/30 hover:bg-card/30">
+                    <td className="p-2">
+                      {r.image_url ? (
+                        <img src={r.image_url} alt="" className="w-12 h-12 object-contain bg-card" loading="lazy" />
+                      ) : (
+                        <div className="w-12 h-12 bg-card flex items-center justify-center text-foreground/30">—</div>
+                      )}
+                    </td>
+                    <td className="p-2 text-foreground/70">{r.brand?.name ?? "—"}</td>
+                    <td className="p-2 font-serif">{r.base_name ?? r.name}</td>
+                    <td className="p-2 text-foreground/60">{r.size_ml ?? "—"}</td>
+                    <td className="p-2 text-foreground/60">{r.price.toFixed(0)}</td>
+                    <td className="p-2">
+                      {fail ? (
+                        <span className="text-destructive eyebrow text-[0.55rem]">FALLÓ 403/418</span>
+                      ) : (
+                        <span className="text-accent eyebrow text-[0.55rem]">OK</span>
+                      )}
+                    </td>
+                    <td className="p-2 text-foreground/60">
+                      {!r.image_url
+                        ? "sin imagen original"
+                        : fail
+                        ? "CDN bloqueó descarga"
+                        : "sin match en cola pHash"}
+                    </td>
+                    <td className="p-2 font-mono text-[0.55rem] text-foreground/40">{r.id.slice(0, 8)}…</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
   );
 }
 
