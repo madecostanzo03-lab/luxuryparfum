@@ -9,7 +9,7 @@ import {
   setManualImageStatus,
   assignManualImage,
 } from "@/server/clean-images.functions";
-import { Loader2, CheckCircle2, SkipForward, Search, ChevronLeft, ChevronRight, Upload, Flag, ShieldCheck } from "lucide-react";
+import { Loader2, CheckCircle2, SkipForward, Search, ChevronLeft, ChevronRight, Upload, Flag, ShieldCheck, ExternalLink, Copy, Check, X, ZoomIn } from "lucide-react";
 
 export const Route = createFileRoute("/admin/imagenes-match")({
   head: () => ({
