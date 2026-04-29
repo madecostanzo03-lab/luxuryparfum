@@ -335,6 +335,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_clear_clean_image: {
+        Args: { _product_id: string }
+        Returns: undefined
+      }
+      admin_set_clean_image: {
+        Args: { _product_id: string; _url: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
