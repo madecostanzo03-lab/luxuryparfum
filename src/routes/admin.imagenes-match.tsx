@@ -56,7 +56,7 @@ function AdminImagesMatchPage() {
 
   const [queue, setQueue] = useState<QueueRow[]>([]);
   const [perfumes, setPerfumes] = useState<Map<string, PerfumeLite>>(new Map());
-  const [filter, setFilter] = useState<"pending" | "confirmed" | "skipped">("pending");
+  const [filter, setFilter] = useState<"manual" | "pending" | "confirmed" | "skipped">("manual");
   const [cursor, setCursor] = useState(0);
 
   // signed URL de la imagen pendiente actual
