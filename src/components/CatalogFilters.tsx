@@ -42,6 +42,7 @@ export function CatalogFilters({
           value={value.marca}
           onChange={(e) => onChange({ marca: e.target.value })}
           className="w-full bg-input/40 border border-border px-3 py-2.5 text-sm focus:outline-none focus:border-accent"
+          suppressHydrationWarning
         >
           <option value="">Todas</option>
           {brands.map((b) => (
