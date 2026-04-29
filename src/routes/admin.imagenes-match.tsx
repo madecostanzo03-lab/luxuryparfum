@@ -493,6 +493,14 @@ function MissingCleanSection() {
       const { data } = await q.order("name");
       setRows((data as unknown as MissingRow[]) ?? []);
 
+      // Catálogo de imágenes limpias reutilizables (todos los perfumes con clean_image_url)
+      const { data: reusableData } = await supabase
+        .from("perfumes")
+        .select("id, name, base_name, size_ml, price, image_url, clean_image_url, brand:brands(name, slug)")
+        .not("clean_image_url", "is", null)
+        .order("name");
+      setReusable((reusableData as unknown as ReusableRow[]) ?? []);
+
       await loadStatuses();
     })();
   }, []);
