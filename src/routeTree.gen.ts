@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
 import { Route as AdminImagenesMatchRouteImport } from './routes/admin.imagenes-match'
+import { Route as AdminImagenesDuplicadasRouteImport } from './routes/admin.imagenes-duplicadas'
 import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
@@ -59,6 +60,11 @@ const AdminImagenesMatchRoute = AdminImagenesMatchRouteImport.update({
   path: '/admin/imagenes-match',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminImagenesDuplicadasRoute = AdminImagenesDuplicadasRouteImport.update({
+  id: '/admin/imagenes-duplicadas',
+  path: '/admin/imagenes-duplicadas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
   id: '/api/public/image-proxy',
   path: '/api/public/image-proxy',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
   '/admin/qa': typeof AdminQaRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
     | '/admin/precios'
     | '/admin/qa'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
     | '/admin/precios'
     | '/admin/qa'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
     | '/admin/precios'
     | '/admin/qa'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
+  AdminImagenesDuplicadasRoute: typeof AdminImagenesDuplicadasRoute
   AdminImagenesMatchRoute: typeof AdminImagenesMatchRoute
   AdminPreciosRoute: typeof AdminPreciosRoute
   AdminQaRoute: typeof AdminQaRoute
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImagenesMatchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/imagenes-duplicadas': {
+      id: '/admin/imagenes-duplicadas'
+      path: '/admin/imagenes-duplicadas'
+      fullPath: '/admin/imagenes-duplicadas'
+      preLoaderRoute: typeof AdminImagenesDuplicadasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/image-proxy': {
       id: '/api/public/image-proxy'
       path: '/api/public/image-proxy'
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
+  AdminImagenesDuplicadasRoute: AdminImagenesDuplicadasRoute,
   AdminImagenesMatchRoute: AdminImagenesMatchRoute,
   AdminPreciosRoute: AdminPreciosRoute,
   AdminQaRoute: AdminQaRoute,

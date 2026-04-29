@@ -1,0 +1,634 @@
+{
+  "summary": {
+    "total_visible_analyzed": 323,
+    "unique_rendered_images": 320,
+    "shared_groups_detected": 23,
+    "ok_probable": 1,
+    "revision_recomendada": 8,
+    "error_probable": 14
+  },
+  "groups": [
+    {
+      "group_id": "G0001",
+      "rendered_image_url": "https://www.sephora.com/productimages/sku/s1127562-main-zoom.jpg",
+      "match_type": "rendered",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['edp', 'edt', 'homme', 'men']",
+      "products": [
+        {
+          "product_id": "fefca957-04c5-41a7-a29a-37da5a2249f0",
+          "brand": "Dolce & Gabbana",
+          "name": "DOLCE&GABBANA THE ONE FOR MEN EDT 100ML",
+          "size_ml": "100",
+          "price_usd": "76.30",
+          "has_clean": false
+        },
+        {
+          "product_id": "eb2f7585-9869-488d-97bd-4da499ebcd40",
+          "brand": "Dolce & Gabbana",
+          "name": "DOLCE&GABBANA THE ONE POUR HOMME EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "93.10",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0002",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+      "match_type": "rendered",
+      "source_type": "image_url",
+      "classification": "ok_probable",
+      "reason": "Mismo nombre exacto, solo difiere ml",
+      "products": [
+        {
+          "product_id": "deeafe4e-9887-44e6-a536-446a917402cd",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 50ML",
+          "size_ml": "50",
+          "price_usd": "93.80",
+          "has_clean": false
+        },
+        {
+          "product_id": "019c1662-8e02-4b94-bb60-d07f4a2a6d6f",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 80ML",
+          "size_ml": "80",
+          "price_usd": "103.60",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0003",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.83656.jpg",
+      "match_type": "rendered",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['alloy', 'black', 'spring']",
+      "products": [
+        {
+          "product_id": "e20e326f-3dce-42e7-9c48-a1b9bccf73a3",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN BLACK ALLOY EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "38.50",
+          "has_clean": false
+        },
+        {
+          "product_id": "215bce64-2206-4f4f-9e5f-1ac9c383d655",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN SPRING EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "22.40",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0004",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.74962.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['edp', 'intense', 'parfum']",
+      "products": [
+        {
+          "product_id": "aafcf3cf-1568-4a32-9ba8-06c1c099ba65",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE FAME INTENSE EDP 80ML",
+          "size_ml": "80",
+          "price_usd": "147.00",
+          "has_clean": true
+        },
+        {
+          "product_id": "88f22865-0a94-4cb6-b4f9-aef6d8b2616f",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE FAME PARFUM 80ML",
+          "size_ml": "80",
+          "price_usd": "121.10",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0005",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.297.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['men']",
+      "products": [
+        {
+          "product_id": "06c9d7ed-0088-4b50-80aa-3a63eb022770",
+          "brand": "Carolina Herrera",
+          "name": "CAROLINA HERRERA 212 NYC EDT 100ML",
+          "size_ml": "100",
+          "price_usd": "87.50",
+          "has_clean": true
+        },
+        {
+          "product_id": "97179d3c-95fd-4805-a634-ad3fbcd8dfa9",
+          "brand": "Carolina Herrera",
+          "name": "CAROLINA HERRERA 212 MEN NYC EDT 100ML",
+          "size_ml": "100",
+          "price_usd": "87.50",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0006",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.5921.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['edp', 'edt', 'men']",
+      "products": [
+        {
+          "product_id": "43289a58-fbfa-477b-bc3d-0d6ad466ed43",
+          "brand": "Animale",
+          "name": "ANIMALE ANIMALE FOR MEN EDT 100ML",
+          "size_ml": "100",
+          "price_usd": "36.40",
+          "has_clean": true
+        },
+        {
+          "product_id": "d26cda04-4b51-4af8-a5fc-003b7174bfa5",
+          "brand": "Animale",
+          "name": "ANIMALE EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "42.60",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0007",
+      "rendered_image_url": "https://m.media-amazon.com/images/I/71dXSEVvGkL.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "50a1415b-0a51-400a-8484-29fe93aafbc1",
+          "brand": "David Beckham",
+          "name": "DAVID BECKHAM CLASSIC HOMME B EDT 50ML",
+          "size_ml": "50",
+          "price_usd": "30.10",
+          "has_clean": true
+        },
+        {
+          "product_id": "5710d2ae-d860-4bd1-8a9a-cb596374ed0a",
+          "brand": "David Beckham",
+          "name": "DAVID BECKHAM CLASSIC HOMME EDT 100ML",
+          "size_ml": "100",
+          "price_usd": "35.00",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0008",
+      "rendered_image_url": "https://m.media-amazon.com/images/I/613Y5n1n44L._AC_UF1000,1000_QL80_.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "861f39b4-6a8d-4a7b-95f0-9ce7201168fe",
+          "brand": "Hugo Boss",
+          "name": "HUGO BOSS JEANS EDT 125ML",
+          "size_ml": "125",
+          "price_usd": "70.70",
+          "has_clean": true
+        },
+        {
+          "product_id": "5153ab2e-d53c-4d65-a571-bfcce07b957e",
+          "brand": "Hugo Boss",
+          "name": "HUGO BOSS JEANS EDT 75ML MH",
+          "size_ml": "75",
+          "price_usd": "59.50",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0009",
+      "rendered_image_url": "https://m.media-amazon.com/images/I/71qCI58qr3L._AC_UF350,350_QL80_.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "cfda7e87-2755-45b2-9912-4056e2bac48e",
+          "brand": "Issey Miyake",
+          "name": "ISSEY MIYAKE L'EAU D'ISSEY OUR M HOMME EDT 125ML H",
+          "size_ml": "125",
+          "price_usd": "55.30",
+          "has_clean": true
+        },
+        {
+          "product_id": "3115454c-8f24-47dc-816e-16788c6ba161",
+          "brand": "Issey Miyake",
+          "name": "ISSEY MIYAKE L`EAU D`ISSEY POUR HOMME EDT 200ML",
+          "size_ml": "200",
+          "price_usd": "81.90",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0010",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.95942.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "720dc76c-ddc1-4477-a39c-48662537971c",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN ROSSO TERRA COLLECTION EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "41.29",
+          "has_clean": true
+        },
+        {
+          "product_id": "2eb1fdbc-85dc-49d1-842e-3202b6363129",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN D'ORO TERRA COLLECTION EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "41.29",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0011",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.95938.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['black']",
+      "products": [
+        {
+          "product_id": "ea5f924e-5fe2-47d1-b014-927314e66e91",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN AURORA EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "41.30",
+          "has_clean": false
+        },
+        {
+          "product_id": "9f6f3058-28ad-4570-adef-d401fa67c158",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN LUMINA BLACK EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "42.60",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0012",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.611.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['intense']",
+      "products": [
+        {
+          "product_id": "45b28244-4d90-47e9-9ff1-fd830d3b9e13",
+          "brand": "Chanel",
+          "name": "CHANEL COCO MADEMOISELLE INTENSE EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "233.10",
+          "has_clean": false
+        },
+        {
+          "product_id": "b203aadf-fc61-4438-a48e-2a86d83a61b7",
+          "brand": "Chanel",
+          "name": "CHANEL COCO MADEMOISELLE EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "224.70",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0013",
+      "rendered_image_url": "https://m.media-amazon.com/images/I/711YdjoFNFL.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "9b433a4d-7647-4312-90ee-a083741aa002",
+          "brand": "David Beckham",
+          "name": "DAVID BECKHAM CLASSIC EDT B 100ML",
+          "size_ml": "100",
+          "price_usd": "35.00",
+          "has_clean": true
+        },
+        {
+          "product_id": "ebd74864-77ba-4614-8cd2-53a10e649e5a",
+          "brand": "David Beckham",
+          "name": "DAVID BECKHAM CLASSIC EDT 50ML",
+          "size_ml": "50",
+          "price_usd": "30.10",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0014",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Palabras de versión distintas entre productos: ['absolu', 'edp', 'intense', 'parfum']",
+      "products": [
+        {
+          "product_id": "deeafe4e-9887-44e6-a536-446a917402cd",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 50ML",
+          "size_ml": "50",
+          "price_usd": "93.80",
+          "has_clean": false
+        },
+        {
+          "product_id": "11811197-58ec-4f7b-9645-c38d077475ac",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE OLYMPEA EDP 80ML",
+          "size_ml": "80",
+          "price_usd": "101.50",
+          "has_clean": true
+        },
+        {
+          "product_id": "019c1662-8e02-4b94-bb60-d07f4a2a6d6f",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 80ML",
+          "size_ml": "80",
+          "price_usd": "103.60",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0015",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.79162.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "c658d883-e319-4682-af41-9ed743cdccf8",
+          "brand": "Carolina Herrera",
+          "name": "CAROLINA HERRERA 212 VIP BLACK NYC EDP 100M+BL100M (122495",
+          "size_ml": "",
+          "price_usd": "119.70",
+          "has_clean": true
+        },
+        {
+          "product_id": "343b7f2f-d284-4f0a-a5f5-d9872198708f",
+          "brand": "Carolina Herrera",
+          "name": "CAROLINA HERRERA 212 VIP BLACK NYC EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "92.40",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0016",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.6746.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Palabras de versión distintas entre productos: ['seduct', 'seduction']",
+      "products": [
+        {
+          "product_id": "c08a1c60-8022-4793-988c-685f27932fdc",
+          "brand": "Antonio Banderas",
+          "name": "ANTONIO BANDERAS BLACK SEDUCT EDT 200ML",
+          "size_ml": "200",
+          "price_usd": "31.50",
+          "has_clean": true
+        },
+        {
+          "product_id": "63b05f0d-136f-4865-b8dd-cf1a5c422c3d",
+          "brand": "Antonio Banderas",
+          "name": "ANTONIO BANDERAS BLACK SEDUCTION BAND EDT 100ML",
+          "size_ml": "100",
+          "price_usd": "30.00",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0017",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.89705.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "ce78415b-20fd-4b57-9c63-4107b40a3911",
+          "brand": "Calvin Klein",
+          "name": "CALVIN KLEIN ETERNITY AROMAT ESSENC PARFUM 100ML",
+          "size_ml": "100",
+          "price_usd": "84.00",
+          "has_clean": true
+        },
+        {
+          "product_id": "d9245152-b301-480a-ba76-a0a8b3027191",
+          "brand": "Calvin Klein",
+          "name": "CALVIN KLEIN ETERNITY AROMAT ESSENC PARFUM 50",
+          "size_ml": "",
+          "price_usd": "53.90",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0018",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.83656.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['alloy', 'black', 'elixir', 'homme', 'spring']",
+      "products": [
+        {
+          "product_id": "cd63ba0f-7bd4-4274-a932-eb7ef522c912",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN HOMME ELIXIR EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "47.60",
+          "has_clean": true
+        },
+        {
+          "product_id": "e20e326f-3dce-42e7-9c48-a1b9bccf73a3",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN BLACK ALLOY EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "38.50",
+          "has_clean": false
+        },
+        {
+          "product_id": "215bce64-2206-4f4f-9e5f-1ac9c383d655",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN SPRING EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "22.40",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0019",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.13064.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Mismo ml, palabras de versión distintas: ['edp', 'edt', 'intense']",
+      "products": [
+        {
+          "product_id": "b81a5449-49fd-4e48-a532-e1d323b02e55",
+          "brand": "Versace",
+          "name": "VERSACE YELLOW DIAMOND EDT 90ML",
+          "size_ml": "90",
+          "price_usd": "74.90",
+          "has_clean": true
+        },
+        {
+          "product_id": "06f61bde-f4a9-40bc-a321-8587a737e503",
+          "brand": "Versace",
+          "name": "VERSACE YELLOW DIAMOND INTENSE EDP 90ML",
+          "size_ml": "90",
+          "price_usd": "84.70",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0020",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.95937.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Palabras de versión distintas entre productos: ['camellia', 'marrakech']",
+      "products": [
+        {
+          "product_id": "a957ab16-cbfd-47fc-a5e8-274fc1976dbb",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN LES FLEURS CAMELLIA EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "34.20",
+          "has_clean": true
+        },
+        {
+          "product_id": "425c8089-bdd2-41fd-b6d7-989b0b8cb2c8",
+          "brand": "Stella Dustin",
+          "name": "STELLA DUSTIN MARRAKECH EDP 30ML",
+          "size_ml": "30",
+          "price_usd": "17.50",
+          "has_clean": false
+        }
+      ]
+    },
+    {
+      "group_id": "G0021",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.89717.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "revision_recomendada",
+      "reason": "Nombres distintos sin palabra de versión clara",
+      "products": [
+        {
+          "product_id": "989a5e66-3d52-4179-9cf7-7b9a7e303892",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE PHANTOM NTENSE EDP 100ML",
+          "size_ml": "100",
+          "price_usd": "97.30",
+          "has_clean": true
+        },
+        {
+          "product_id": "98b3be5e-bfb3-406d-8b33-200bc90e3d0f",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE PHANTOM NTENSE EDP 50ML IN",
+          "size_ml": "50",
+          "price_usd": "93.10",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0022",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.3747.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Palabras de versión distintas entre productos: ['edt', 'parfum']",
+      "products": [
+        {
+          "product_id": "ec88cae0-98e3-4c0c-bfba-6d0367c3c549",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE 1 MILLION EDT RA 100ML",
+          "size_ml": "100",
+          "price_usd": "79.00",
+          "has_clean": true
+        },
+        {
+          "product_id": "f6060ea7-bb0a-447c-9a35-4272d343a436",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE 1 MILLION PARFUM RA 50ML",
+          "size_ml": "50",
+          "price_usd": "79.10",
+          "has_clean": false
+        },
+        {
+          "product_id": "a0a7df02-d29e-4ff3-8830-66f7414d5cb5",
+          "brand": "Paco Rabanne",
+          "name": "PACO RABANNE 1 MILLION PARFUM 100ML",
+          "size_ml": "100",
+          "price_usd": "96.60",
+          "has_clean": true
+        }
+      ]
+    },
+    {
+      "group_id": "G0023",
+      "rendered_image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.8923.jpg",
+      "match_type": "original",
+      "source_type": "image_url",
+      "classification": "error_probable",
+      "reason": "Palabras de versión distintas entre productos: ['absolu', 'edp', 'edt']",
+      "products": [
+        {
+          "product_id": "76975ccf-2677-4c0d-a740-cd21585a5f12",
+          "brand": "Antonio Banderas",
+          "name": "ANTONIO BANDERAS THE SECRET ABSOLU EDP 50ML",
+          "size_ml": "50",
+          "price_usd": "26.60",
+          "has_clean": true
+        },
+        {
+          "product_id": "ccc83d61-0b39-4a6e-b5b4-3e742d0098e8",
+          "brand": "Antonio Banderas",
+          "name": "ANTONIO BANDERAS THE SECRET EDT A 100ML",
+          "size_ml": "100",
+          "price_usd": "30.10",
+          "has_clean": true
+        }
+      ]
+    }
+  ]
+}
