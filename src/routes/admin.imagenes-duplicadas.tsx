@@ -124,7 +124,10 @@ function AuditPage() {
         const data: Report = await r.json();
         setReport(data);
 
-        const ids = Array.from(new Set(data.groups.flatMap((g) => g.products.map((p) => p.product_id))));
+        const ids = Array.from(new Set([
+          ...data.groups.flatMap((g) => g.products.map((p) => p.product_id)),
+          ...CRITICAL_PRODUCTS.map((p) => p.product_id),
+        ]));
         if (ids.length) {
           const { data: rows, error: e } = await supabase
             .from("perfumes")
