@@ -102,9 +102,12 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-border/30 py-6 text-center">
+      <div className="border-t border-border/30 py-6 text-center space-y-2 px-4">
         <p className="eyebrow text-foreground/40 text-[0.6rem]">
           © {new Date().getFullYear()} Luxury Parfum — Todos los derechos reservados
+        </p>
+        <p className="brand-serif text-[0.65rem] text-foreground/35 max-w-xl mx-auto leading-relaxed">
+          Los precios están expresados en USD y se actualizan según la cotización del dólar del día.
         </p>
       </div>
     </footer>
