@@ -60,6 +60,12 @@ export function PerfumeCard({
       imageUrl: perfume.image_url,
     });
   const hasPrice = typeof perfume.price === "number" && perfume.price > 0;
+  // Detecta kits/combos por nombre: contienen "KIT", "+", "BODY", "DEO" combinados
+  const nameUpper = perfume.name.toUpperCase();
+  const isSet =
+    /\bKIT\b/.test(nameUpper) ||
+    /\+\s*(BODY|DEO|BL\d|LOTION)/i.test(perfume.name) ||
+    /BODY\s*LOTION/i.test(perfume.name);
 
   useEffect(() => {
     setOpen(openInitial);
