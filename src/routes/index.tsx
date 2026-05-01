@@ -169,22 +169,25 @@ function HomePage() {
             Conversamos por WhatsApp y te recomendamos la fragancia perfecta — según tu estilo, tu momento y cómo querés que te recuerden.
           </p>
 
-          {/* Criterios de asesoría — cards limpias, mobile friendly */}
+          {/* Criterios de asesoría — cards con íconos, mobile friendly */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto text-left">
             {[
-              { titulo: "Ocasión", desc: "Diaria, oficina, noche, evento" },
-              { titulo: "Estación", desc: "Primavera, verano, otoño, invierno" },
-              { titulo: "Estilo", desc: "Clásico, moderno, atrevido, minimal" },
-              { titulo: "Familia", desc: "Dulce, fresco, amaderado, intenso" },
-              { titulo: "Presencia", desc: "Elegante y sutil o impacto fuerte" },
-              { titulo: "Presupuesto", desc: "Joya accesible o icono de lujo" },
+              { titulo: "Ocasión", desc: "Diaria, oficina, noche, evento", icon: "🌙" },
+              { titulo: "Estación", desc: "Primavera, verano, otoño, invierno", icon: "🍂" },
+              { titulo: "Estilo", desc: "Clásico, moderno, atrevido, minimal", icon: "✨" },
+              { titulo: "Familia", desc: "Dulce, fresco, amaderado, intenso", icon: "🌸" },
+              { titulo: "Presencia", desc: "Elegante y sutil o impacto fuerte", icon: "💫" },
+              { titulo: "Presupuesto", desc: "Joya accesible o icono de lujo", icon: "💰" },
             ].map((c) => (
               <div
                 key={c.titulo}
-                className="border border-border/40 bg-background/40 backdrop-blur-sm p-4 sm:p-5 hover:border-accent/40 transition-colors duration-500"
+                className="border border-accent/20 bg-background/40 backdrop-blur-sm p-4 sm:p-5 hover:border-accent/50 transition-colors duration-500"
               >
-                <p className="brand-serif text-accent text-base sm:text-lg">{c.titulo}</p>
-                <p className="mt-1.5 text-[0.78rem] sm:text-sm text-foreground/55 leading-snug">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xl sm:text-2xl leading-none" aria-hidden>{c.icon}</span>
+                  <p className="brand-serif text-accent text-base sm:text-lg font-semibold">{c.titulo}</p>
+                </div>
+                <p className="mt-2 text-[0.78rem] sm:text-sm text-foreground/55 leading-snug">
                   {c.desc}
                 </p>
               </div>
@@ -325,20 +328,24 @@ function HomePage() {
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-12 py-16 sm:py-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
           {[
             {
+              icon: "🏅",
               title: "Perfumes originales",
               text: "100% auténticos. Trabajamos solo con casas de perfumería y distribuidores oficiales.",
             },
             {
+              icon: "🎯",
               title: "Selección curada",
               text: "Cada pieza es elegida una a una. No vendemos catálogo masivo: vendemos lo que recomendaríamos.",
             },
             {
+              icon: "💬",
               title: "Atención personalizada",
               text: "Te acompañamos por WhatsApp para encontrar la fragancia exacta para tu piel y tu momento.",
             },
           ].map((pillar) => (
             <div key={pillar.title} className="text-center md:text-left">
               <span className="divider-gold mb-5 mx-auto md:mx-0" />
+              <div className="text-3xl sm:text-4xl mb-3" aria-hidden>{pillar.icon}</div>
               <h3 className="text-xl sm:text-2xl font-serif tracking-tight">{pillar.title}</h3>
               <p className="mt-4 text-foreground/65 brand-serif text-[0.95rem] leading-relaxed">
                 {pillar.text}
