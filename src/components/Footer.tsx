@@ -110,6 +110,3 @@ export function Footer() {
     </footer>
   );
 }
-
-// Re-export para evitar warning de import sin uso si en el futuro lo querés mostrar literal
-export const _wa = WHATSAPP_NUMBER;
