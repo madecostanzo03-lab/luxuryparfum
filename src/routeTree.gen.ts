@@ -19,6 +19,7 @@ import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
 import { Route as AdminImagenesMatchRouteImport } from './routes/admin.imagenes-match'
 import { Route as AdminImagenesDuplicadasRouteImport } from './routes/admin.imagenes-duplicadas'
+import { Route as AdminFondosBlancosRouteImport } from './routes/admin.fondos-blancos'
 import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
@@ -71,6 +72,11 @@ const AdminImagenesDuplicadasRoute = AdminImagenesDuplicadasRouteImport.update({
   path: '/admin/imagenes-duplicadas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminFondosBlancosRoute = AdminFondosBlancosRouteImport.update({
+  id: '/admin/fondos-blancos',
+  path: '/admin/fondos-blancos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
   id: '/api/public/image-proxy',
   path: '/api/public/image-proxy',
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
   '/admin/precios': typeof AdminPreciosRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
     | '/admin/precios'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
     | '/admin/precios'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
     | '/admin/precios'
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
+  AdminFondosBlancosRoute: typeof AdminFondosBlancosRoute
   AdminImagenesDuplicadasRoute: typeof AdminImagenesDuplicadasRoute
   AdminImagenesMatchRoute: typeof AdminImagenesMatchRoute
   AdminPreciosRoute: typeof AdminPreciosRoute
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImagenesDuplicadasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/fondos-blancos': {
+      id: '/admin/fondos-blancos'
+      path: '/admin/fondos-blancos'
+      fullPath: '/admin/fondos-blancos'
+      preLoaderRoute: typeof AdminFondosBlancosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/image-proxy': {
       id: '/api/public/image-proxy'
       path: '/api/public/image-proxy'
@@ -262,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
+  AdminFondosBlancosRoute: AdminFondosBlancosRoute,
   AdminImagenesDuplicadasRoute: AdminImagenesDuplicadasRoute,
   AdminImagenesMatchRoute: AdminImagenesMatchRoute,
   AdminPreciosRoute: AdminPreciosRoute,
