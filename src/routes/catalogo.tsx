@@ -233,6 +233,9 @@ function CatalogoPage() {
         <p className="mt-6 text-foreground/60">
           Cada pieza es seleccionada una a una. Descubrí la que es para vos.
         </p>
+        <p className="mt-4 text-[0.72rem] text-foreground/45 brand-serif">
+          Los precios están expresados en dólares (USD) y se actualizan según la cotización del día.
+        </p>
       </header>
 
       {/* Atajos visuales */}
