@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Mail } from "lucide-react";
-import { WHATSAPP_NUMBER, whatsappGeneralLink } from "@/lib/whatsapp";
+import { whatsappGeneralLink } from "@/lib/whatsapp";
 
 const INSTAGRAM_USER = "parfumluxury.1";
 const CONTACT_EMAIL = "parfumluxury111@gmail.com";
