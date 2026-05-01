@@ -117,8 +117,11 @@ export interface GroupedPerfume extends Perfume {
  *   - groupedSkus[] con cada variante original
  *   - variants[] sintéticas para que el modal muestre el selector
  */
-export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
-  const activeRules = getActiveRuleSet();
+export function groupPerfumes(
+  perfumes: Perfume[],
+  opts?: { ruleKeys?: Set<string> },
+): GroupedPerfume[] {
+  const activeRules = opts?.ruleKeys ?? getActiveRuleSet();
   const buckets = new Map<string, Perfume[]>();
   const standalone: Perfume[] = [];
 
@@ -144,20 +147,16 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
 
   for (const [, skus] of buckets) {
     if (skus.length < 2) {
-      // Si por algún motivo solo cayó 1 SKU en una regla, lo dejamos individual.
       grouped.push(...skus);
       continue;
     }
-    // Ordenar por tamaño ascendente
     const sorted = [...skus].sort((a, b) => {
       const sa = extractSizeMl(a.name) ?? a.size_ml ?? 0;
       const sb = extractSizeMl(b.name) ?? b.size_ml ?? 0;
       return sa - sb;
     });
 
-    // El "principal" es el de menor precio (para mostrar "desde USD X")
     const cheapest = [...sorted].sort((a, b) => a.price - b.price)[0];
-    // Mejor imagen disponible: primera variante que tenga clean_image_url, sino image_url
     const bestImg =
       sorted.find((s) => s.clean_image_url)?.clean_image_url ??
       sorted.find((s) => s.image_url)?.image_url ??
@@ -166,8 +165,6 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
     const bestCleanImg =
       sorted.find((s) => s.clean_image_url)?.clean_image_url ?? null;
 
-    // Construir variantes sintéticas para el modal. El id es el id del SKU
-    // original — esto permite que WhatsApp/URL apunten al SKU correcto.
     const syntheticVariants: PerfumeVariant[] = sorted.map((s) => ({
       id: s.id,
       perfume_id: cheapest.id,
@@ -177,14 +174,12 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
       in_stock: s.in_stock,
     }));
 
-    // base_name visible en la card: nombre original sin el ML.
-    // Usamos el nombre del SKU más barato como base, le quitamos el sufijo.
     const baseName = stripSizeSuffix(cheapest.name);
 
     grouped.push({
       ...cheapest,
       base_name: baseName,
-      price: cheapest.price, // menor precio del grupo
+      price: cheapest.price,
       image_url: bestImg,
       clean_image_url: bestCleanImg,
       variants: syntheticVariants,
@@ -193,6 +188,17 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
   }
 
   return [...grouped, ...standalone];
+}
+
+/**
+ * Para la vista admin: devuelve TODOS los grupos candidatos
+ * (ignora decisiones), solo los que tienen ≥2 SKUs reales.
+ */
+export function buildAllCandidateGroups(perfumes: Perfume[]): GroupedPerfume[] {
+  const allKeys = new Set(GROUP_RULES.map(ruleKey));
+  return groupPerfumes(perfumes, { ruleKeys: allKeys }).filter(
+    (g) => (g.groupedSkus?.length ?? 0) >= 2,
+  );
 }
 
 /**
