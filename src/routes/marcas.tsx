@@ -24,14 +24,29 @@ function brandInitials(name: string): string {
 
 function MarcasPage() {
   const [brands, setBrands] = useState<Brand[] | null>(null);
+  const [counts, setCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    supabase.from("brands").select("*").order("name").then(({ data }) => {
+    (async () => {
+      const { data } = await supabase.from("brands").select("*").order("name");
       const visible = ((data as Brand[]) ?? []).filter(
         (b) => !HIDDEN_BRAND_SLUG_SET.has(b.slug),
       );
       setBrands(visible);
-    });
+
+      // Conteo de perfumes en stock por marca
+      const entries = await Promise.all(
+        visible.map(async (b) => {
+          const { count } = await supabase
+            .from("perfumes")
+            .select("id", { count: "exact", head: true })
+            .eq("in_stock", true)
+            .eq("brand_id", b.id);
+          return [b.id, count ?? 0] as const;
+        }),
+      );
+      setCounts(Object.fromEntries(entries));
+    })();
   }, []);
 
   return (
@@ -95,6 +110,11 @@ function MarcasPage() {
               <div className="font-serif text-3xl mt-5 group-hover:text-accent transition-colors">
                 {b.name}
               </div>
+              {counts[b.id] !== undefined && (
+                <p className="mt-2 eyebrow text-[0.6rem] text-accent/80">
+                  {counts[b.id]} fragancia{counts[b.id] === 1 ? "" : "s"}
+                </p>
+              )}
               {b.description && (
                 <p className="mt-4 text-sm text-foreground/60 leading-relaxed max-w-xs mx-auto">
                   {b.description}

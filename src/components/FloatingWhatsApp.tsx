@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
 import { whatsappGeneralLink } from "@/lib/whatsapp";
 
 /**
  * Botón flotante de WhatsApp visible en todo el sitio.
- * Diseño elegante (oro/noir) que respeta la estética premium.
+ * Verde oficial WhatsApp (#25D366) con tooltip en hover.
  */
 export function FloatingWhatsApp() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Aparece tras un breve scroll para no competir con el hero inicial
-    const onScroll = () => setVisible(window.scrollY > 240);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <a
@@ -22,17 +12,16 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Hablar por WhatsApp"
-      className={`fixed z-40 bottom-5 right-5 md:bottom-7 md:right-7 group flex items-center gap-3 transition-all duration-500 ${
-        visible
-          ? "opacity-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 translate-y-4 pointer-events-none"
-      }`}
+      className="fixed z-40 bottom-5 right-5 md:bottom-7 md:right-7 group flex items-center gap-3"
     >
-      <span className="hidden md:inline-flex items-center px-4 py-2 bg-noir/85 backdrop-blur-sm border border-accent/30 eyebrow text-[0.55rem] text-accent shadow-[var(--shadow-elegant)]">
-        Asesoramiento por WhatsApp
+      <span className="hidden md:inline-flex items-center px-4 py-2 bg-noir/85 backdrop-blur-sm border border-accent/30 eyebrow text-[0.55rem] text-accent shadow-[var(--shadow-elegant)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        ¿Necesitás ayuda? Escribinos
       </span>
-      <span className="relative flex items-center justify-center w-16 h-16 md:w-15 md:h-15 rounded-full bg-accent text-accent-foreground shadow-[0_14px_36px_-8px_rgba(0,0,0,0.7)] hover:scale-105 transition-transform duration-500 ring-2 ring-accent/30">
-        <span className="absolute inset-0 rounded-full bg-accent animate-ping opacity-25" />
+      <span
+        className="relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full text-white shadow-[0_14px_36px_-8px_rgba(0,0,0,0.7)] hover:scale-105 transition-transform duration-500 ring-2 ring-white/20"
+        style={{ backgroundColor: "#25D366" }}
+      >
+        <span className="absolute inset-0 rounded-full opacity-25 animate-ping" style={{ backgroundColor: "#25D366" }} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

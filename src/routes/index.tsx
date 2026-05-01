@@ -333,9 +333,9 @@ function HomePage() {
               text: "100% auténticos. Trabajamos solo con casas de perfumería y distribuidores oficiales.",
             },
             {
-              icon: "🎯",
-              title: "Selección curada",
-              text: "Cada pieza es elegida una a una. No vendemos catálogo masivo: vendemos lo que recomendaríamos.",
+              icon: "✈️",
+              title: "Importadas a pedido",
+              text: "Cada fragancia es traída especialmente para vos. Tu pedido no es una transacción: es una elección.",
             },
             {
               icon: "💬",
