@@ -111,12 +111,24 @@ function HomePage() {
             </Link>
           </div>
 
-          <p
-            className="mt-6 text-[0.7rem] sm:text-xs text-foreground/45 brand-serif fade-in"
+          <div
+            className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 fade-in"
             style={{ animationDelay: "1.25s" }}
           >
-            Respuesta rápida · Envíos a todo el país · Originales garantizados
-          </p>
+            {[
+              { icon: "⚡", label: "Respuesta rápida" },
+              { icon: "✈", label: "Envíos a todo el país" },
+              { icon: "✓", label: "Originales garantizados" },
+            ].map((b) => (
+              <span
+                key={b.label}
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 border border-accent/30 bg-background/30 backdrop-blur-md text-[0.68rem] sm:text-[0.75rem] brand-serif text-foreground/85"
+              >
+                <span className="text-accent text-sm leading-none">{b.icon}</span>
+                <span>{b.label}</span>
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
