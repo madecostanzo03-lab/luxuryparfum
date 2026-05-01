@@ -20,6 +20,7 @@ import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
 import { Route as AdminImagenesMatchRouteImport } from './routes/admin.imagenes-match'
 import { Route as AdminImagenesDuplicadasRouteImport } from './routes/admin.imagenes-duplicadas'
 import { Route as AdminFondosBlancosRouteImport } from './routes/admin.fondos-blancos'
+import { Route as AdminAgrupacionVariantesRouteImport } from './routes/admin.agrupacion-variantes'
 import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
@@ -77,6 +78,12 @@ const AdminFondosBlancosRoute = AdminFondosBlancosRouteImport.update({
   path: '/admin/fondos-blancos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAgrupacionVariantesRoute =
+  AdminAgrupacionVariantesRouteImport.update({
+    id: '/admin/agrupacion-variantes',
+    path: '/admin/agrupacion-variantes',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
   id: '/api/public/image-proxy',
   path: '/api/public/image-proxy',
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
   '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
@@ -104,6 +112,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
   '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
@@ -119,6 +128,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
+  '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
   '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/agrupacion-variantes'
     | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/agrupacion-variantes'
     | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
@@ -163,6 +175,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
+    | '/admin/agrupacion-variantes'
     | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
@@ -178,6 +191,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
+  AdminAgrupacionVariantesRoute: typeof AdminAgrupacionVariantesRoute
   AdminFondosBlancosRoute: typeof AdminFondosBlancosRoute
   AdminImagenesDuplicadasRoute: typeof AdminImagenesDuplicadasRoute
   AdminImagenesMatchRoute: typeof AdminImagenesMatchRoute
@@ -265,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFondosBlancosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/agrupacion-variantes': {
+      id: '/admin/agrupacion-variantes'
+      path: '/admin/agrupacion-variantes'
+      fullPath: '/admin/agrupacion-variantes'
+      preLoaderRoute: typeof AdminAgrupacionVariantesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/image-proxy': {
       id: '/api/public/image-proxy'
       path: '/api/public/image-proxy'
@@ -282,6 +303,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
+  AdminAgrupacionVariantesRoute: AdminAgrupacionVariantesRoute,
   AdminFondosBlancosRoute: AdminFondosBlancosRoute,
   AdminImagenesDuplicadasRoute: AdminImagenesDuplicadasRoute,
   AdminImagenesMatchRoute: AdminImagenesMatchRoute,

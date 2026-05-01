@@ -22,8 +22,8 @@ interface GroupRule {
   normalizedName: string;
 }
 
-// Las 7 agrupaciones aprobadas en la auditoría.
-const GROUP_RULES: GroupRule[] = [
+// Las 7 agrupaciones detectadas en la auditoría — candidatas a aplicar.
+export const GROUP_RULES: GroupRule[] = [
   { brandSlug: "hugo-boss", normalizedName: "HUGO BOSS JEANS EDT" },
   { brandSlug: "david-beckham", normalizedName: "DAVID BECKHAM CLASSIC EDT" },
   { brandSlug: "paco-rabanne", normalizedName: "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE" },
@@ -33,9 +33,45 @@ const GROUP_RULES: GroupRule[] = [
   { brandSlug: "calvin-klein", normalizedName: "CALVIN KLEIN ETERNITY AROMAT ESSENC PARFUM" },
 ];
 
-const RULE_SET = new Set(
-  GROUP_RULES.map((r) => `${r.brandSlug}::${r.normalizedName}`),
-);
+export function ruleKey(r: { brandSlug: string; normalizedName: string }): string {
+  return `${r.brandSlug}::${r.normalizedName}`;
+}
+
+// Decisiones del admin: aprobadas por defecto = TODAS las reglas.
+// Si querés revisar manualmente, la página /admin/agrupacion-variantes permite
+// rechazar o marcar para revisar después y persiste en localStorage.
+const STORAGE_KEY = "lp.grouping.decisions.v1";
+
+export type GroupDecision = "approved" | "rejected" | "review";
+
+export function loadDecisions(): Record<string, GroupDecision> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as Record<string, GroupDecision>;
+  } catch {
+    return {};
+  }
+}
+
+export function saveDecisions(decisions: Record<string, GroupDecision>) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
+}
+
+/** Devuelve el set de keys de reglas que el admin aprobó (default: todas). */
+function getActiveRuleSet(): Set<string> {
+  const decisions = loadDecisions();
+  const active = new Set<string>();
+  for (const r of GROUP_RULES) {
+    const k = ruleKey(r);
+    // Por defecto: aprobado. Solo se desactiva si fue marcado "rejected" o "review".
+    const d = decisions[k] ?? "approved";
+    if (d === "approved") active.add(k);
+  }
+  return active;
+}
 
 // Detecta kits/sets — NUNCA se agrupan.
 const KIT_PAT = /\bKIT\b|\+|\bBODY\b|\bDEO\b|\bLOTION\b|BODY\s*LOTION/i;
@@ -81,7 +117,11 @@ export interface GroupedPerfume extends Perfume {
  *   - groupedSkus[] con cada variante original
  *   - variants[] sintéticas para que el modal muestre el selector
  */
-export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
+export function groupPerfumes(
+  perfumes: Perfume[],
+  opts?: { ruleKeys?: Set<string> },
+): GroupedPerfume[] {
+  const activeRules = opts?.ruleKeys ?? getActiveRuleSet();
   const buckets = new Map<string, Perfume[]>();
   const standalone: Perfume[] = [];
 
@@ -94,7 +134,7 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
     const norm = stripSizeSuffix(p.name);
     const key = `${brandSlug}::${norm}`;
 
-    if (RULE_SET.has(key)) {
+    if (activeRules.has(key)) {
       const bucket = buckets.get(key) ?? [];
       bucket.push(p);
       buckets.set(key, bucket);
@@ -107,20 +147,16 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
 
   for (const [, skus] of buckets) {
     if (skus.length < 2) {
-      // Si por algún motivo solo cayó 1 SKU en una regla, lo dejamos individual.
       grouped.push(...skus);
       continue;
     }
-    // Ordenar por tamaño ascendente
     const sorted = [...skus].sort((a, b) => {
       const sa = extractSizeMl(a.name) ?? a.size_ml ?? 0;
       const sb = extractSizeMl(b.name) ?? b.size_ml ?? 0;
       return sa - sb;
     });
 
-    // El "principal" es el de menor precio (para mostrar "desde USD X")
     const cheapest = [...sorted].sort((a, b) => a.price - b.price)[0];
-    // Mejor imagen disponible: primera variante que tenga clean_image_url, sino image_url
     const bestImg =
       sorted.find((s) => s.clean_image_url)?.clean_image_url ??
       sorted.find((s) => s.image_url)?.image_url ??
@@ -129,8 +165,6 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
     const bestCleanImg =
       sorted.find((s) => s.clean_image_url)?.clean_image_url ?? null;
 
-    // Construir variantes sintéticas para el modal. El id es el id del SKU
-    // original — esto permite que WhatsApp/URL apunten al SKU correcto.
     const syntheticVariants: PerfumeVariant[] = sorted.map((s) => ({
       id: s.id,
       perfume_id: cheapest.id,
@@ -140,14 +174,12 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
       in_stock: s.in_stock,
     }));
 
-    // base_name visible en la card: nombre original sin el ML.
-    // Usamos el nombre del SKU más barato como base, le quitamos el sufijo.
     const baseName = stripSizeSuffix(cheapest.name);
 
     grouped.push({
       ...cheapest,
       base_name: baseName,
-      price: cheapest.price, // menor precio del grupo
+      price: cheapest.price,
       image_url: bestImg,
       clean_image_url: bestCleanImg,
       variants: syntheticVariants,
@@ -156,6 +188,17 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
   }
 
   return [...grouped, ...standalone];
+}
+
+/**
+ * Para la vista admin: devuelve TODOS los grupos candidatos
+ * (ignora decisiones), solo los que tienen ≥2 SKUs reales.
+ */
+export function buildAllCandidateGroups(perfumes: Perfume[]): GroupedPerfume[] {
+  const allKeys = new Set(GROUP_RULES.map(ruleKey));
+  return groupPerfumes(perfumes, { ruleKeys: allKeys }).filter(
+    (g) => (g.groupedSkus?.length ?? 0) >= 2,
+  );
 }
 
 /**
