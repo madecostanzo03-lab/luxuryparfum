@@ -387,26 +387,57 @@ function CatalogoPage() {
                 )}
               </div>
             ) : (
-              <div
-                className={`grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-14 transition-opacity duration-300 ${
-                  filtering ? "opacity-50" : "opacity-100"
-                }`}
-              >
-                {perfumes.map((p) => (
-                  <PerfumeCard
-                    key={p.id}
-                    perfume={p}
-                    openInitial={search.p === p.id}
-                    initialVariantId={search.p === p.id ? search.v || null : null}
-                    onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
-                    onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
-                  />
-                ))}
-              </div>
+              <>
+                <div
+                  className={`grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-10 sm:gap-y-14 transition-opacity duration-300 ${
+                    filtering ? "opacity-50" : "opacity-100"
+                  }`}
+                >
+                  {perfumes.slice(0, visibleCount).map((p) => (
+                    <PerfumeCard
+                      key={p.id}
+                      perfume={p}
+                      openInitial={search.p === p.id}
+                      initialVariantId={search.p === p.id ? search.v || null : null}
+                      onOpenChange={(o) => update({ p: o ? p.id : "", v: o ? search.v : "" })}
+                      onVariantChange={(vid) => update({ p: p.id, v: vid ?? "" })}
+                    />
+                  ))}
+                </div>
+                {visibleCount < perfumes.length && (
+                  <div className="mt-12 text-center">
+                    <p className="eyebrow text-foreground/45 mb-4">
+                      Mostrando {visibleCount} de {perfumes.length} fragancias
+                    </p>
+                    <button
+                      onClick={() => setVisibleCount((c) => c + 24)}
+                      className="btn-luxury inline-flex items-center justify-center px-10 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-500 eyebrow text-[0.65rem]"
+                    >
+                      Ver más fragancias
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
       </div>
+
+      {/* BANNER MAYORISTA */}
+      <section className="mt-24 border border-accent/40 bg-gradient-to-br from-noir/60 via-deep-blue/30 to-noir/60 p-8 sm:p-14 text-center">
+        <p className="eyebrow text-accent">Para revendedores</p>
+        <h2 className="mt-5 text-2xl sm:text-4xl font-serif leading-tight text-balance max-w-2xl mx-auto">
+          ¿Sos revendedor? Tenemos un <em className="text-accent">catálogo mayorista</em> exclusivo para vos.
+        </h2>
+        <a
+          href={`https://wa.me/5492215716077?text=${encodeURIComponent("Hola Luxury Parfum, me interesa acceder al catálogo mayorista.")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-luxury mt-8 inline-flex items-center justify-center px-10 py-4 bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-500"
+        >
+          Solicitar catálogo mayorista
+        </a>
+      </section>
     </div>
   );
 }
