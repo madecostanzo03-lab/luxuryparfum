@@ -62,6 +62,7 @@ function CatalogoPage() {
   const navigate = Route.useNavigate();
 
   const [perfumes, setPerfumes] = useState<Perfume[]>([]);
+  const [skuCount, setSkuCount] = useState<number>(0);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
   const [filtering, setFiltering] = useState(false);
