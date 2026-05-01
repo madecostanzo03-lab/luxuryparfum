@@ -22,8 +22,8 @@ interface GroupRule {
   normalizedName: string;
 }
 
-// Las 7 agrupaciones aprobadas en la auditoría.
-const GROUP_RULES: GroupRule[] = [
+// Las 7 agrupaciones detectadas en la auditoría — candidatas a aplicar.
+export const GROUP_RULES: GroupRule[] = [
   { brandSlug: "hugo-boss", normalizedName: "HUGO BOSS JEANS EDT" },
   { brandSlug: "david-beckham", normalizedName: "DAVID BECKHAM CLASSIC EDT" },
   { brandSlug: "paco-rabanne", normalizedName: "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE" },
@@ -33,9 +33,45 @@ const GROUP_RULES: GroupRule[] = [
   { brandSlug: "calvin-klein", normalizedName: "CALVIN KLEIN ETERNITY AROMAT ESSENC PARFUM" },
 ];
 
-const RULE_SET = new Set(
-  GROUP_RULES.map((r) => `${r.brandSlug}::${r.normalizedName}`),
-);
+export function ruleKey(r: { brandSlug: string; normalizedName: string }): string {
+  return `${r.brandSlug}::${r.normalizedName}`;
+}
+
+// Decisiones del admin: aprobadas por defecto = TODAS las reglas.
+// Si querés revisar manualmente, la página /admin/agrupacion-variantes permite
+// rechazar o marcar para revisar después y persiste en localStorage.
+const STORAGE_KEY = "lp.grouping.decisions.v1";
+
+export type GroupDecision = "approved" | "rejected" | "review";
+
+export function loadDecisions(): Record<string, GroupDecision> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as Record<string, GroupDecision>;
+  } catch {
+    return {};
+  }
+}
+
+export function saveDecisions(decisions: Record<string, GroupDecision>) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
+}
+
+/** Devuelve el set de keys de reglas que el admin aprobó (default: todas). */
+function getActiveRuleSet(): Set<string> {
+  const decisions = loadDecisions();
+  const active = new Set<string>();
+  for (const r of GROUP_RULES) {
+    const k = ruleKey(r);
+    // Por defecto: aprobado. Solo se desactiva si fue marcado "rejected" o "review".
+    const d = decisions[k] ?? "approved";
+    if (d === "approved") active.add(k);
+  }
+  return active;
+}
 
 // Detecta kits/sets — NUNCA se agrupan.
 const KIT_PAT = /\bKIT\b|\+|\bBODY\b|\bDEO\b|\bLOTION\b|BODY\s*LOTION/i;
