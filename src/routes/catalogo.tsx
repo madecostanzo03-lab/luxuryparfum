@@ -9,6 +9,7 @@ import { Search, Loader2, SlidersHorizontal, X } from "lucide-react";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { HIDDEN_BRAND_SLUGS, HIDDEN_BRAND_SLUG_SET } from "@/lib/hidden-brands";
+import { groupPerfumes, groupMatchesQuery } from "@/lib/perfume-grouping";
 
 const searchSchema = z.object({
   marca: fallback(z.string(), "").default(""),
