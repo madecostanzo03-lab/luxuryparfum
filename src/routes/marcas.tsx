@@ -110,6 +110,11 @@ function MarcasPage() {
               <div className="font-serif text-3xl mt-5 group-hover:text-accent transition-colors">
                 {b.name}
               </div>
+              {counts[b.id] !== undefined && (
+                <p className="mt-2 eyebrow text-[0.6rem] text-accent/80">
+                  {counts[b.id]} fragancia{counts[b.id] === 1 ? "" : "s"}
+                </p>
+              )}
               {b.description && (
                 <p className="mt-4 text-sm text-foreground/60 leading-relaxed max-w-xs mx-auto">
                   {b.description}
