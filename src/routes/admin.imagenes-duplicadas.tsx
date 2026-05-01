@@ -57,6 +57,17 @@ type PendingAction =
   | { kind: "upload"; product: ReportProduct; current: string | null; file: File; previewUrl: string }
   | { kind: "mark_later"; product: ReportProduct; current: string | null };
 
+// 4 productos críticos sin imagen visible (ni clean_image_url ni image_url cargan)
+// Detectados en auditoría restringida a los 323 visibles. Los image_url externos
+// devuelven HTTP 403 (hotlink bloqueado) y no hay clean_image_url asignada.
+const CRITICAL_PRODUCTS: ReportProduct[] = [
+  { product_id: "ec6df0be-8b21-4463-b7d0-a5d16534f993", brand: "Christian Dior", name: "CHRISTIAN DIOR FAHRENHEIT EDT 200ML", size_ml: 200, price_usd: 165.9, has_clean: false },
+  { product_id: "cff31433-8509-4091-977a-4546f24c0384", brand: "Christian Dior", name: "CHRISTIAN DIOR SAUVAGE EDP 100ML", size_ml: 100, price_usd: 137.9, has_clean: false },
+  { product_id: "fab4b006-eef5-4d86-a342-305c0ec66738", brand: "Givenchy", name: "GIVENCHY GENTLEMAN ONLY EDT 100ML", size_ml: 100, price_usd: 84.7, has_clean: false },
+  { product_id: "b825a604-673e-4c59-aab8-9a83d366df61", brand: "Stella Dustin", name: "STELLA DUSTIN LOS ANGELES EDP 30ML", size_ml: 30, price_usd: 17.5, has_clean: false },
+];
+const CRITICAL_REASON = "image_url externo devuelve HTTP 403 (hotlink bloqueado) y clean_image_url está vacío → producto sin imagen visible.";
+
 const CLASS_META = {
   error_probable: { label: "Error probable", bg: "bg-red-500/10 border-red-500/30 text-red-400", rank: 0 },
   revision_recomendada: { label: "Revisión recomendada", bg: "bg-amber-500/10 border-amber-500/30 text-amber-400", rank: 1 },
