@@ -24,14 +24,29 @@ function brandInitials(name: string): string {
 
 function MarcasPage() {
   const [brands, setBrands] = useState<Brand[] | null>(null);
+  const [counts, setCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    supabase.from("brands").select("*").order("name").then(({ data }) => {
+    (async () => {
+      const { data } = await supabase.from("brands").select("*").order("name");
       const visible = ((data as Brand[]) ?? []).filter(
         (b) => !HIDDEN_BRAND_SLUG_SET.has(b.slug),
       );
       setBrands(visible);
-    });
+
+      // Conteo de perfumes en stock por marca
+      const entries = await Promise.all(
+        visible.map(async (b) => {
+          const { count } = await supabase
+            .from("perfumes")
+            .select("id", { count: "exact", head: true })
+            .eq("in_stock", true)
+            .eq("brand_id", b.id);
+          return [b.id, count ?? 0] as const;
+        }),
+      );
+      setCounts(Object.fromEntries(entries));
+    })();
   }, []);
 
   return (
