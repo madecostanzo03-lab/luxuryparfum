@@ -42,10 +42,9 @@ export function Navbar() {
           <Link
             to="/"
             onClick={() => setOpen(false)}
-            className="group flex items-center gap-2.5 leading-none"
+            className="group flex items-center leading-none"
             aria-label="Luxury Parfum — Inicio"
           >
-            <BrandMark className="w-6 h-6 sm:w-7 sm:h-7 text-accent shrink-0 transition-transform duration-500 group-hover:rotate-[8deg]" />
             <span className="flex flex-col">
               <span className="brand-serif text-2xl sm:text-[1.7rem] tracking-tight font-semibold">
                 Luxury
