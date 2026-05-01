@@ -182,6 +182,12 @@ function CatalogoPage() {
   }, [searchInput]);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState<number>(24);
+
+  // Reset paginación cuando cambian filtros o búsqueda
+  useEffect(() => {
+    setVisibleCount(24);
+  }, [search.marca, search.genero, search.tipo, search.q, search.max, search.destacado]);
 
   const activeFilterCount =
     (search.marca ? 1 : 0) +
