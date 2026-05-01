@@ -103,6 +103,11 @@ export function PerfumeCard({
               Más elegido
             </span>
           )}
+          {isSet && (
+            <span className="absolute bottom-5 left-5 eyebrow text-[0.5rem] tracking-widest uppercase px-2.5 py-1 bg-accent text-accent-foreground shadow-md">
+              Set
+            </span>
+          )}
           {flagWhiteBg && (
             <span
               className="absolute top-5 right-5 eyebrow text-[0.5rem] tracking-widest uppercase px-2.5 py-1 bg-orange-500 text-white shadow-lg pointer-events-none"
