@@ -132,6 +132,11 @@ export function PerfumeCard({
               <span className="text-foreground/60 italic">Consultar precio</span>
             )}
           </span>
+          {hasPrice && (
+            <p className="mt-1 text-[0.65rem] sm:text-[0.7rem] text-foreground/40 brand-serif">
+              Precio en USD · cotización del día
+            </p>
+          )}
           <a
             href={whatsappLink({
               name: displayName,
