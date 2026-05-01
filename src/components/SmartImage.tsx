@@ -68,20 +68,13 @@ export function SmartImage({
   const showFallback = !src || errored;
   const finalSrc = processedSrc ?? src ?? "";
 
-  // Fondo azul profundo #0A0F2C (midnight navy) con iluminaci\u00f3n suave de tienda de lujo.
-  const studioBg =
-    "radial-gradient(ellipse at 50% 28%, #182148 0%, #0F1638 45%, #0A0F2C 100%)";
-
+  // Sin fondo propio: el contenedor es transparente para fundirse con el fondo
+  // global del sitio (noir). Antes pintábamos un radial navy más claro que
+  // generaba un rectángulo visible detrás del perfume; ya no.
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
-      <div
-        className="absolute inset-0"
-        style={{ background: studioBg }}
-        aria-hidden
-      />
-
       {!loaded && !showFallback && (
-        <div className="absolute inset-0 bg-gradient-to-br from-card/40 via-secondary/20 to-card/40 animate-pulse" />
+        <div className="absolute inset-0 bg-noir/40 animate-pulse" aria-hidden />
       )}
 
       {showFallback ? (
@@ -105,6 +98,16 @@ export function SmartImage({
           decoding="async"
           onLoad={() => setLoaded(true)}
           onError={() => setErrored(true)}
+          style={{
+            // Funde los bordes del bitmap con el fondo del sitio (noir).
+            // El frasco vive en el centro y queda intacto; solo se disuelve el
+            // "rectángulo" navy de las imágenes editoriales con fondo de
+            // estudio incrustado.
+            WebkitMaskImage:
+              "radial-gradient(ellipse 78% 82% at 50% 50%, rgba(0,0,0,1) 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0) 100%)",
+            maskImage:
+              "radial-gradient(ellipse 78% 82% at 50% 50%, rgba(0,0,0,1) 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0) 100%)",
+          }}
           className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
             loaded ? "opacity-100" : "opacity-0"
           } ${imgClassName}`}
@@ -124,35 +127,18 @@ export function SmartImage({
         </div>
       )}
 
-      {/* Reflejo superior sutil — luz de estudio */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-1/3"
-        style={{
-          background:
-            "linear-gradient(to bottom, oklch(0.85 0.05 80 / 0.08), transparent)",
-        }}
-        aria-hidden
-      />
-
-      {/* Sombra inferior bajo el frasco */}
-      <div
-        className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[8%] w-[55%] h-3 rounded-[50%] blur-md"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, oklch(0.02 0.02 250 / 0.6) 0%, transparent 70%)",
-        }}
-        aria-hidden
-      />
-
-      {/* Viñeta inferior premium */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 100%, oklch(0.04 0.02 250 / 0.65) 0%, transparent 60%)",
-        }}
-        aria-hidden
-      />
+      {/* Sombra muy sutil bajo el frasco — integra el producto sin pintar
+          un fondo propio. */}
+      {!showFallback && (
+        <div
+          className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[6%] w-[50%] h-2 rounded-[50%] blur-md opacity-70"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, oklch(0 0 0 / 0.55) 0%, transparent 70%)",
+          }}
+          aria-hidden
+        />
+      )}
     </div>
   );
 }
