@@ -4,6 +4,8 @@ import { whatsappLink, perfumePublicUrl } from "@/lib/whatsapp";
 import { perfumeShortHint } from "@/lib/perfume-helpers";
 import { resolvePerfumeImage } from "@/lib/premium-images";
 import { SmartImage } from "./SmartImage";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+import { looksLikeWhiteBackground } from "@/lib/white-bg-detection";
 
 // Lazy load del modal: no se descarga hasta que el usuario abre un producto.
 // Esto reduce el JS inicial del catálogo y evita bloqueos al renderizar la grilla.
@@ -50,6 +52,14 @@ export function PerfumeCard({
     perfume.clean_image_url ?? perfume.image_url,
   );
   const forceProcess = shouldForceBackgroundCleanup(perfume, displayName);
+  const isAdmin = useIsAdmin();
+  const flagWhiteBg =
+    isAdmin &&
+    looksLikeWhiteBackground({
+      cleanImageUrl: perfume.clean_image_url,
+      imageUrl: perfume.image_url,
+    });
+  const hasPrice = typeof perfume.price === "number" && perfume.price > 0;
 
   useEffect(() => {
     setOpen(openInitial);
@@ -87,6 +97,14 @@ export function PerfumeCard({
               Más elegido
             </span>
           )}
+          {flagWhiteBg && (
+            <span
+              className="absolute top-5 right-5 eyebrow text-[0.5rem] tracking-widest uppercase px-2.5 py-1 bg-orange-500 text-white shadow-lg pointer-events-none"
+              title="Admin: imagen probablemente con fondo blanco. Reemplazar manualmente."
+            >
+              Fondo blanco
+            </span>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-noir/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         </button>
 
@@ -105,8 +123,14 @@ export function PerfumeCard({
             </p>
           )}
           <span className="mt-2 sm:mt-3 text-[0.85rem] sm:text-sm text-foreground/75 brand-serif">
-            {variantsCount > 1 ? "Desde " : ""}
-            <span className="text-foreground">USD {perfume.price.toFixed(0)}</span>
+            {hasPrice ? (
+              <>
+                {variantsCount > 1 ? "Desde " : ""}
+                <span className="text-foreground">USD {perfume.price.toFixed(0)}</span>
+              </>
+            ) : (
+              <span className="text-foreground/60 italic">Consultar precio</span>
+            )}
           </span>
           <a
             href={whatsappLink({
