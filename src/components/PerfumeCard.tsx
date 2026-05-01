@@ -143,6 +143,11 @@ export function PerfumeCard({
               <span className="text-foreground/60 italic">Consultar precio</span>
             )}
           </span>
+          {variantsCount > 1 && (
+            <p className="mt-1 text-[0.62rem] sm:text-[0.7rem] text-accent eyebrow">
+              {variantsCount} presentaciones
+            </p>
+          )}
           {hasPrice && (
             <p className="mt-1 text-[0.65rem] sm:text-[0.7rem] text-foreground/40 brand-serif">
               Precio en USD · cotización del día
