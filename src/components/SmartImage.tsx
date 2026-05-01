@@ -98,6 +98,16 @@ export function SmartImage({
           decoding="async"
           onLoad={() => setLoaded(true)}
           onError={() => setErrored(true)}
+          style={{
+            // Funde los bordes del bitmap con el fondo del sitio (noir).
+            // El frasco vive en el centro y queda intacto; solo se disuelve el
+            // "rectángulo" navy de las imágenes editoriales con fondo de
+            // estudio incrustado.
+            WebkitMaskImage:
+              "radial-gradient(ellipse 78% 82% at 50% 50%, rgba(0,0,0,1) 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0) 100%)",
+            maskImage:
+              "radial-gradient(ellipse 78% 82% at 50% 50%, rgba(0,0,0,1) 55%, rgba(0,0,0,0.85) 72%, rgba(0,0,0,0) 100%)",
+          }}
           className={`absolute inset-0 w-full h-full object-contain p-3 sm:p-5 transition-opacity duration-700 ${
             loaded ? "opacity-100" : "opacity-0"
           } ${imgClassName}`}
