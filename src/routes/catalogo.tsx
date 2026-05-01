@@ -379,7 +379,11 @@ function CatalogoPage() {
         <div>
           <div className="flex items-center gap-3 mb-8">
             <p className="eyebrow text-foreground/50">
-              {loading ? "Cargando..." : `${perfumes.length} pieza${perfumes.length === 1 ? "" : "s"}`}
+              {loading
+                ? "Cargando..."
+                : skuCount > perfumes.length
+                  ? `${perfumes.length} perfumes · ${skuCount} presentaciones`
+                  : `${perfumes.length} pieza${perfumes.length === 1 ? "" : "s"}`}
             </p>
             {filtering && !loading && (
               <Loader2 size={12} className="text-accent animate-spin" />
