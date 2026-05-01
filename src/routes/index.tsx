@@ -254,15 +254,28 @@ function HomePage() {
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/40 to-noir/10 group-hover:from-noir/95 transition-all duration-700" />
+              {/* Overlay reforzado: top transparente -> bottom noir 90%.
+                  Garantiza legibilidad del texto blanco en todo dispositivo. */}
+              <div
+                className="absolute inset-0 transition-all duration-700 group-hover:opacity-100"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.78) 100%)",
+                }}
+              />
               <div className="absolute inset-0 flex flex-col items-center justify-end text-center p-5 sm:p-7 pb-8 sm:pb-10">
                 <p className="eyebrow text-[0.65rem] text-accent/85 hidden sm:block opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-700">
                   {s.subtitle}
                 </p>
-                <h3 className="mt-2 text-xl sm:text-3xl lg:text-4xl font-serif tracking-tight">
+                <h3 className="mt-2 text-xl sm:text-3xl lg:text-4xl font-serif tracking-tight text-white drop-shadow-md">
                   {s.label}
                 </h3>
-                <span className="mt-3 sm:mt-4 brand-serif text-[0.75rem] sm:text-sm text-foreground/60 group-hover:text-accent transition-colors duration-500">
+                {counts[s.tipo] > 0 && (
+                  <p className="mt-1 brand-serif text-[0.7rem] sm:text-xs text-white/70">
+                    {counts[s.tipo]} fragancia{counts[s.tipo] === 1 ? "" : "s"}
+                  </p>
+                )}
+                <span className="mt-3 sm:mt-4 brand-serif text-[0.75rem] sm:text-sm text-white/80 group-hover:text-accent transition-colors duration-500">
                   Descubrir →
                 </span>
               </div>
