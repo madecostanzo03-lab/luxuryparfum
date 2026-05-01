@@ -118,6 +118,7 @@ export interface GroupedPerfume extends Perfume {
  *   - variants[] sintéticas para que el modal muestre el selector
  */
 export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
+  const activeRules = getActiveRuleSet();
   const buckets = new Map<string, Perfume[]>();
   const standalone: Perfume[] = [];
 
