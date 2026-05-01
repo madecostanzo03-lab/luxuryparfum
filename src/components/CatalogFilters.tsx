@@ -83,7 +83,7 @@ export function CatalogFilters({
         </div>
       </FilterGroup>
 
-      <FilterGroup label={`Precio máx · USD ${value.max}`}>
+      <FilterGroup label={`Precio máx. (USD) · ${value.max}`}>
         <input
           type="range"
           min={50}
@@ -93,6 +93,10 @@ export function CatalogFilters({
           onChange={(e) => onChange({ max: Number(e.target.value) })}
           className="w-full accent-accent"
         />
+        <div className="flex justify-between mt-1 text-[0.65rem] text-foreground/45 brand-serif">
+          <span>USD 50</span>
+          <span>USD 500</span>
+        </div>
       </FilterGroup>
 
       {hasActiveFilters && (

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreNosotrosRouteImport } from './routes/sobre-nosotros'
 import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EnviosDevolucionesRouteImport } from './routes/envios-devoluciones'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
@@ -33,6 +34,11 @@ const MarcasRoute = MarcasRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnviosDevolucionesRoute = EnviosDevolucionesRouteImport.update({
+  id: '/envios-devoluciones',
+  path: '/envios-devoluciones',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogoRoute = CatalogoRouteImport.update({
@@ -74,6 +80,7 @@ const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalogo': typeof CatalogoRoute
+  '/envios-devoluciones': typeof EnviosDevolucionesRoute
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalogo': typeof CatalogoRoute
+  '/envios-devoluciones': typeof EnviosDevolucionesRoute
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/catalogo': typeof CatalogoRoute
+  '/envios-devoluciones': typeof EnviosDevolucionesRoute
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/catalogo'
+    | '/envios-devoluciones'
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/catalogo'
+    | '/envios-devoluciones'
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/catalogo'
+    | '/envios-devoluciones'
     | '/login'
     | '/marcas'
     | '/sobre-nosotros'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CatalogoRoute: typeof CatalogoRoute
+  EnviosDevolucionesRoute: typeof EnviosDevolucionesRoute
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/envios-devoluciones': {
+      id: '/envios-devoluciones'
+      path: '/envios-devoluciones'
+      fullPath: '/envios-devoluciones'
+      preLoaderRoute: typeof EnviosDevolucionesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogo': {
@@ -238,6 +258,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CatalogoRoute: CatalogoRoute,
+  EnviosDevolucionesRoute: EnviosDevolucionesRoute,
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,

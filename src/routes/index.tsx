@@ -33,6 +33,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [recommended, setRecommended] = useState<Perfume[]>([]);
   const [bestsellers, setBestsellers] = useState<Perfume[]>([]);
+  const [counts, setCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
     (async () => {
@@ -49,6 +50,31 @@ function HomePage() {
         setRecommended(all.filter((p) => p.is_recommended).sort(byPriceAsc).slice(0, 8));
         setBestsellers(all.filter((p) => p.is_bestseller).sort(byPriceAsc).slice(0, 8));
       }
+
+      // Conteos por tipo de fragancia (universo visible: in_stock + sin marcas ocultas)
+      const { data: hiddenBrands } = await supabase
+        .from("brands")
+        .select("id")
+        .in("slug", HIDDEN_BRAND_SLUG_SET ? Array.from(HIDDEN_BRAND_SLUG_SET) : []);
+      const hiddenIds = (hiddenBrands ?? []).map((b) => b.id);
+
+      const types = ["fresco", "dulce", "amaderado", "intenso"] as const;
+      const next: Record<string, number> = {};
+      await Promise.all(
+        types.map(async (t) => {
+          let q = supabase
+            .from("perfumes")
+            .select("id", { count: "exact", head: true })
+            .eq("in_stock", true)
+            .eq("fragrance_type", t);
+          if (hiddenIds.length > 0) {
+            q = q.not("brand_id", "in", `(${hiddenIds.join(",")})`);
+          }
+          const { count } = await q;
+          next[t] = count ?? 0;
+        }),
+      );
+      setCounts(next);
     })();
   }, []);
 
@@ -111,12 +137,24 @@ function HomePage() {
             </Link>
           </div>
 
-          <p
-            className="mt-6 text-[0.7rem] sm:text-xs text-foreground/45 brand-serif fade-in"
+          <div
+            className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 fade-in"
             style={{ animationDelay: "1.25s" }}
           >
-            Respuesta rápida · Envíos a todo el país · Originales garantizados
-          </p>
+            {[
+              { icon: "⚡", label: "Respuesta rápida" },
+              { icon: "✈", label: "Envíos a todo el país" },
+              { icon: "✓", label: "Originales garantizados" },
+            ].map((b) => (
+              <span
+                key={b.label}
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 border border-accent/30 bg-background/30 backdrop-blur-md text-[0.68rem] sm:text-[0.75rem] brand-serif text-foreground/85"
+              >
+                <span className="text-accent text-sm leading-none">{b.icon}</span>
+                <span>{b.label}</span>
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -216,15 +254,28 @@ function HomePage() {
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/40 to-noir/10 group-hover:from-noir/95 transition-all duration-700" />
+              {/* Overlay reforzado: top transparente -> bottom noir 90%.
+                  Garantiza legibilidad del texto blanco en todo dispositivo. */}
+              <div
+                className="absolute inset-0 transition-all duration-700 group-hover:opacity-100"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.78) 100%)",
+                }}
+              />
               <div className="absolute inset-0 flex flex-col items-center justify-end text-center p-5 sm:p-7 pb-8 sm:pb-10">
                 <p className="eyebrow text-[0.65rem] text-accent/85 hidden sm:block opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-700">
                   {s.subtitle}
                 </p>
-                <h3 className="mt-2 text-xl sm:text-3xl lg:text-4xl font-serif tracking-tight">
+                <h3 className="mt-2 text-xl sm:text-3xl lg:text-4xl font-serif tracking-tight text-white drop-shadow-md">
                   {s.label}
                 </h3>
-                <span className="mt-3 sm:mt-4 brand-serif text-[0.75rem] sm:text-sm text-foreground/60 group-hover:text-accent transition-colors duration-500">
+                {counts[s.tipo] > 0 && (
+                  <p className="mt-1 brand-serif text-[0.7rem] sm:text-xs text-white/70">
+                    {counts[s.tipo]} fragancia{counts[s.tipo] === 1 ? "" : "s"}
+                  </p>
+                )}
+                <span className="mt-3 sm:mt-4 brand-serif text-[0.75rem] sm:text-sm text-white/80 group-hover:text-accent transition-colors duration-500">
                   Descubrir →
                 </span>
               </div>
