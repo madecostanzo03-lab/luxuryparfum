@@ -131,7 +131,7 @@ export function groupPerfumes(perfumes: Perfume[]): GroupedPerfume[] {
     const norm = stripSizeSuffix(p.name);
     const key = `${brandSlug}::${norm}`;
 
-    if (RULE_SET.has(key)) {
+    if (activeRules.has(key)) {
       const bucket = buckets.get(key) ?? [];
       bucket.push(p);
       buckets.set(key, bucket);
