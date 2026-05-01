@@ -8,8 +8,34 @@ const links = [
   { to: "/catalogo" as const, label: "Catálogo" },
   { to: "/marcas" as const, label: "Marcas" },
   { to: "/sobre-nosotros" as const, label: "Filosofía" },
-  { to: "/login" as const, label: "Acceso" },
 ];
+
+// Isotipo: gota minimalista en dorado. Inline SVG para evitar requests.
+function BrandMark({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        d="M12 2.5c0 0 6 6.4 6 11.2A6 6 0 0 1 6 13.7C6 8.9 12 2.5 12 2.5Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 12.8c0 1.6 1 2.8 2.5 2.8"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+    </svg>
+  );
+}
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -43,14 +69,17 @@ export function Navbar() {
           <Link
             to="/"
             onClick={() => setOpen(false)}
-            className="group flex flex-col leading-none"
+            className="group flex items-center gap-2.5 leading-none"
             aria-label="Luxury Parfum — Inicio"
           >
-            <span className="brand-serif text-2xl sm:text-[1.7rem] tracking-tight font-semibold">
-              Luxury
-            </span>
-            <span className="brand-serif text-[0.62rem] sm:text-[0.7rem] tracking-[0.32em] uppercase -mt-0.5 text-accent/90 font-semibold">
-              Parfum
+            <BrandMark className="w-6 h-6 sm:w-7 sm:h-7 text-accent shrink-0 transition-transform duration-500 group-hover:rotate-[8deg]" />
+            <span className="flex flex-col">
+              <span className="brand-serif text-2xl sm:text-[1.7rem] tracking-tight font-semibold">
+                Luxury
+              </span>
+              <span className="brand-serif text-[0.62rem] sm:text-[0.7rem] tracking-[0.32em] uppercase -mt-0.5 text-accent/90 font-semibold">
+                Parfum
+              </span>
             </span>
           </Link>
 
