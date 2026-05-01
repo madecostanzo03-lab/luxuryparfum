@@ -20,6 +20,7 @@ import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
 import { Route as AdminImagenesMatchRouteImport } from './routes/admin.imagenes-match'
 import { Route as AdminImagenesDuplicadasRouteImport } from './routes/admin.imagenes-duplicadas'
 import { Route as AdminFondosBlancosRouteImport } from './routes/admin.fondos-blancos'
+import { Route as AdminAuditoriaVariantesNoAgrupadasRouteImport } from './routes/admin.auditoria-variantes-no-agrupadas'
 import { Route as AdminAgrupacionVariantesRouteImport } from './routes/admin.agrupacion-variantes'
 import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
@@ -78,6 +79,12 @@ const AdminFondosBlancosRoute = AdminFondosBlancosRouteImport.update({
   path: '/admin/fondos-blancos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAuditoriaVariantesNoAgrupadasRoute =
+  AdminAuditoriaVariantesNoAgrupadasRouteImport.update({
+    id: '/admin/auditoria-variantes-no-agrupadas',
+    path: '/admin/auditoria-variantes-no-agrupadas',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AdminAgrupacionVariantesRoute =
   AdminAgrupacionVariantesRouteImport.update({
     id: '/admin/agrupacion-variantes',
@@ -98,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
+  '/admin/auditoria-variantes-no-agrupadas': typeof AdminAuditoriaVariantesNoAgrupadasRoute
   '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
@@ -113,6 +121,7 @@ export interface FileRoutesByTo {
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
+  '/admin/auditoria-variantes-no-agrupadas': typeof AdminAuditoriaVariantesNoAgrupadasRoute
   '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
@@ -129,6 +138,7 @@ export interface FileRoutesById {
   '/marcas': typeof MarcasRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
   '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
+  '/admin/auditoria-variantes-no-agrupadas': typeof AdminAuditoriaVariantesNoAgrupadasRoute
   '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
   '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
   '/admin/imagenes-match': typeof AdminImagenesMatchRoute
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/marcas'
     | '/sobre-nosotros'
     | '/admin/agrupacion-variantes'
+    | '/admin/auditoria-variantes-no-agrupadas'
     | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/marcas'
     | '/sobre-nosotros'
     | '/admin/agrupacion-variantes'
+    | '/admin/auditoria-variantes-no-agrupadas'
     | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
@@ -176,6 +188,7 @@ export interface FileRouteTypes {
     | '/marcas'
     | '/sobre-nosotros'
     | '/admin/agrupacion-variantes'
+    | '/admin/auditoria-variantes-no-agrupadas'
     | '/admin/fondos-blancos'
     | '/admin/imagenes-duplicadas'
     | '/admin/imagenes-match'
@@ -192,6 +205,7 @@ export interface RootRouteChildren {
   MarcasRoute: typeof MarcasRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
   AdminAgrupacionVariantesRoute: typeof AdminAgrupacionVariantesRoute
+  AdminAuditoriaVariantesNoAgrupadasRoute: typeof AdminAuditoriaVariantesNoAgrupadasRoute
   AdminFondosBlancosRoute: typeof AdminFondosBlancosRoute
   AdminImagenesDuplicadasRoute: typeof AdminImagenesDuplicadasRoute
   AdminImagenesMatchRoute: typeof AdminImagenesMatchRoute
@@ -279,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFondosBlancosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/auditoria-variantes-no-agrupadas': {
+      id: '/admin/auditoria-variantes-no-agrupadas'
+      path: '/admin/auditoria-variantes-no-agrupadas'
+      fullPath: '/admin/auditoria-variantes-no-agrupadas'
+      preLoaderRoute: typeof AdminAuditoriaVariantesNoAgrupadasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/agrupacion-variantes': {
       id: '/admin/agrupacion-variantes'
       path: '/admin/agrupacion-variantes'
@@ -304,6 +325,8 @@ const rootRouteChildren: RootRouteChildren = {
   MarcasRoute: MarcasRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
   AdminAgrupacionVariantesRoute: AdminAgrupacionVariantesRoute,
+  AdminAuditoriaVariantesNoAgrupadasRoute:
+    AdminAuditoriaVariantesNoAgrupadasRoute,
   AdminFondosBlancosRoute: AdminFondosBlancosRoute,
   AdminImagenesDuplicadasRoute: AdminImagenesDuplicadasRoute,
   AdminImagenesMatchRoute: AdminImagenesMatchRoute,
