@@ -33,6 +33,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [recommended, setRecommended] = useState<Perfume[]>([]);
   const [bestsellers, setBestsellers] = useState<Perfume[]>([]);
+  const [counts, setCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
     (async () => {
@@ -49,6 +50,31 @@ function HomePage() {
         setRecommended(all.filter((p) => p.is_recommended).sort(byPriceAsc).slice(0, 8));
         setBestsellers(all.filter((p) => p.is_bestseller).sort(byPriceAsc).slice(0, 8));
       }
+
+      // Conteos por tipo de fragancia (universo visible: in_stock + sin marcas ocultas)
+      const { data: hiddenBrands } = await supabase
+        .from("brands")
+        .select("id")
+        .in("slug", HIDDEN_BRAND_SLUG_SET ? Array.from(HIDDEN_BRAND_SLUG_SET) : []);
+      const hiddenIds = (hiddenBrands ?? []).map((b) => b.id);
+
+      const types = ["fresco", "dulce", "amaderado", "intenso"] as const;
+      const next: Record<string, number> = {};
+      await Promise.all(
+        types.map(async (t) => {
+          let q = supabase
+            .from("perfumes")
+            .select("id", { count: "exact", head: true })
+            .eq("in_stock", true)
+            .eq("fragrance_type", t);
+          if (hiddenIds.length > 0) {
+            q = q.not("brand_id", "in", `(${hiddenIds.join(",")})`);
+          }
+          const { count } = await q;
+          next[t] = count ?? 0;
+        }),
+      );
+      setCounts(next);
     })();
   }, []);
 
