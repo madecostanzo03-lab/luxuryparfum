@@ -145,7 +145,26 @@ function CatalogoPage() {
           if (ia !== ib) return ia - ib;
           return a.price - b.price;
         });
-        setPerfumes(list);
+        // Agrupación visual: une SKUs del mismo perfume que solo difieren en tamaño.
+        // No modifica la BD; cada SKU sigue accesible vía variants[] del grupo.
+        let visibleList = groupPerfumes(list);
+        // Si hay búsqueda, asegurar que también matchee variantes ocultas dentro del grupo
+        if (search.q) {
+          visibleList = visibleList.filter((g) => groupMatchesQuery(g, search.q));
+        }
+        // Re-orden: bestseller/recomendado primero, luego con imagen, precio asc
+        visibleList.sort((a, b) => {
+          const rank = (p: Perfume) => (p.is_bestseller ? 0 : p.is_recommended ? 1 : 2);
+          const ra = rank(a);
+          const rb = rank(b);
+          if (ra !== rb) return ra - rb;
+          const ia = a.image_url || a.clean_image_url ? 0 : 1;
+          const ib = b.image_url || b.clean_image_url ? 0 : 1;
+          if (ia !== ib) return ia - ib;
+          return a.price - b.price;
+        });
+        setPerfumes(visibleList);
+        setSkuCount(list.length);
       }
       setLoading(false);
       setFiltering(false);
