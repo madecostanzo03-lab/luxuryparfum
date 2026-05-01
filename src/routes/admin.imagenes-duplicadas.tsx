@@ -57,6 +57,17 @@ type PendingAction =
   | { kind: "upload"; product: ReportProduct; current: string | null; file: File; previewUrl: string }
   | { kind: "mark_later"; product: ReportProduct; current: string | null };
 
+// 4 productos críticos sin imagen visible (ni clean_image_url ni image_url cargan)
+// Detectados en auditoría restringida a los 323 visibles. Los image_url externos
+// devuelven HTTP 403 (hotlink bloqueado) y no hay clean_image_url asignada.
+const CRITICAL_PRODUCTS: ReportProduct[] = [
+  { product_id: "ec6df0be-8b21-4463-b7d0-a5d16534f993", brand: "Christian Dior", name: "CHRISTIAN DIOR FAHRENHEIT EDT 200ML", size_ml: 200, price_usd: 165.9, has_clean: false },
+  { product_id: "cff31433-8509-4091-977a-4546f24c0384", brand: "Christian Dior", name: "CHRISTIAN DIOR SAUVAGE EDP 100ML", size_ml: 100, price_usd: 137.9, has_clean: false },
+  { product_id: "fab4b006-eef5-4d86-a342-305c0ec66738", brand: "Givenchy", name: "GIVENCHY GENTLEMAN ONLY EDT 100ML", size_ml: 100, price_usd: 84.7, has_clean: false },
+  { product_id: "b825a604-673e-4c59-aab8-9a83d366df61", brand: "Stella Dustin", name: "STELLA DUSTIN LOS ANGELES EDP 30ML", size_ml: 30, price_usd: 17.5, has_clean: false },
+];
+const CRITICAL_REASON = "image_url externo devuelve HTTP 403 (hotlink bloqueado) y clean_image_url está vacío → producto sin imagen visible.";
+
 const CLASS_META = {
   error_probable: { label: "Error probable", bg: "bg-red-500/10 border-red-500/30 text-red-400", rank: 0 },
   revision_recomendada: { label: "Revisión recomendada", bg: "bg-amber-500/10 border-amber-500/30 text-amber-400", rank: 1 },
@@ -113,7 +124,10 @@ function AuditPage() {
         const data: Report = await r.json();
         setReport(data);
 
-        const ids = Array.from(new Set(data.groups.flatMap((g) => g.products.map((p) => p.product_id))));
+        const ids = Array.from(new Set([
+          ...data.groups.flatMap((g) => g.products.map((p) => p.product_id)),
+          ...CRITICAL_PRODUCTS.map((p) => p.product_id),
+        ]));
         if (ids.length) {
           const { data: rows, error: e } = await supabase
             .from("perfumes")
@@ -284,6 +298,130 @@ function AuditPage() {
         <div className="py-20 text-center"><Loader2 className="animate-spin mx-auto text-accent" /></div>
       ) : (
         <>
+          {/* 4 críticos sin imagen visible */}
+          <section className="mb-10 border-2 border-red-500/50 bg-red-500/5">
+            <div className="p-5 border-b border-red-500/30 flex items-center gap-3 flex-wrap">
+              <AlertTriangle className="text-red-400" size={20} />
+              <h2 className="font-serif text-xl text-red-400">4 críticos sin imagen visible</h2>
+              <span className="eyebrow text-[0.55rem] text-foreground/60 ml-auto">{CRITICAL_REASON}</span>
+            </div>
+            <ul className="divide-y divide-red-500/20">
+              {CRITICAL_PRODUCTS.map((p) => {
+                const live = liveMap[p.product_id];
+                const status = progress[p.product_id];
+                const cleanUrl = live?.clean_image_url ?? null;
+                const fallbackUrl = live?.image_url ?? null;
+                const resolved = !!cleanUrl;
+                return (
+                  <li key={p.product_id} className="p-5 grid md:grid-cols-[140px_1fr] gap-5">
+                    <div className="space-y-2">
+                      <div className="aspect-square bg-secondary/30 border border-border/40 overflow-hidden flex items-center justify-center relative">
+                        {cleanUrl ? (
+                          <img src={cleanUrl} alt={p.name} className="max-w-full max-h-full object-contain" loading="lazy" />
+                        ) : fallbackUrl ? (
+                          <img src={fallbackUrl} alt={p.name} className="max-w-full max-h-full object-contain" loading="lazy"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                        ) : null}
+                        {!cleanUrl && (
+                          <span className="absolute inset-0 flex items-center justify-center text-[0.55rem] text-red-400/70 eyebrow text-center px-2">
+                            sin imagen<br />visible
+                          </span>
+                        )}
+                      </div>
+                      {resolved && <p className="text-[0.55rem] text-emerald-400 eyebrow text-center">✓ Resuelto</p>}
+                    </div>
+                    <div>
+                      <div className="flex items-start gap-3 flex-wrap mb-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[0.65rem] eyebrow text-foreground/50">{p.brand}</p>
+                          <p className="text-sm font-medium">{p.name}</p>
+                          <p className="text-[0.65rem] text-foreground/50 mt-1">{p.size_ml}ml · USD {p.price_usd}</p>
+                          <p className="text-[0.55rem] text-foreground/30 mt-0.5 font-mono break-all">{p.product_id}</p>
+                        </div>
+                        <button onClick={() => copyToClipboard(p.product_id, `crit-${p.product_id}`)} title="Copiar product_id" className="p-1.5 border border-border/60 hover:border-accent hover:text-accent transition-colors">
+                          {copied === `crit-${p.product_id}` ? <Check size={12} /> : <Copy size={12} />}
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3 text-[0.6rem]">
+                        <div className="border border-border/40 p-2 bg-background/40">
+                          <p className="eyebrow text-foreground/50 mb-1">image_url actual</p>
+                          <p className="font-mono break-all text-foreground/70">{fallbackUrl ?? "—"}</p>
+                          {fallbackUrl && (
+                            <a href={fallbackUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-1 text-accent hover:underline">
+                              <ExternalLink size={10} /> Abrir image_url
+                            </a>
+                          )}
+                        </div>
+                        <div className="border border-border/40 p-2 bg-background/40">
+                          <p className="eyebrow text-foreground/50 mb-1">clean_image_url actual</p>
+                          <p className="font-mono break-all text-foreground/70">{cleanUrl ?? "—"}</p>
+                        </div>
+                      </div>
+
+                      <p className="text-[0.65rem] text-red-400/80 mb-3 italic">
+                        Error detectado: {fallbackUrl ? "image_url devuelve HTTP 403 (hotlink bloqueado por el dominio externo)" : "image_url vacío"} · clean_image_url no asignado.
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => { setSearchOpen(p); setSearchQ(""); }}
+                          className="eyebrow text-[0.55rem] px-3 py-1.5 border border-purple-500/40 text-purple-400 hover:bg-purple-500/10 transition-colors inline-flex items-center gap-1"
+                          title="Buscar imagen limpia existente en otro producto"
+                        >
+                          <Search size={11} /> Buscar imagen limpia existente
+                        </button>
+                        <label
+                          className="eyebrow text-[0.55rem] px-3 py-1.5 border border-accent/60 text-accent hover:bg-accent/10 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                          title="Subir imagen manual a clean-images/{product_id}.png"
+                        >
+                          <Upload size={11} /> Subir imagen manual
+                          <input
+                            type="file"
+                            accept="image/png,image/jpeg,image/webp"
+                            className="hidden"
+                            onChange={(e) => {
+                              const f = e.target.files?.[0];
+                              if (!f) return;
+                              const previewUrl = URL.createObjectURL(f);
+                              setPending({ kind: "upload", product: p, current: cleanUrl, file: f, previewUrl });
+                              e.target.value = "";
+                            }}
+                          />
+                        </label>
+                        <button
+                          onClick={() => setPending({ kind: "clear", product: p, current: cleanUrl, fallback: fallbackUrl })}
+                          disabled={!cleanUrl}
+                          className="eyebrow text-[0.55rem] px-3 py-1.5 border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors inline-flex items-center gap-1"
+                          title="Usar fallback (limpia clean_image_url solo si fallback funciona)"
+                        >
+                          <Trash2 size={11} /> Usar fallback si funciona
+                        </button>
+                        <button
+                          onClick={() => copyToClipboard(p.product_id, `crit2-${p.product_id}`)}
+                          className="eyebrow text-[0.55rem] px-3 py-1.5 border border-border/60 text-foreground/60 hover:border-foreground/40 transition-colors inline-flex items-center gap-1"
+                        >
+                          {copied === `crit2-${p.product_id}` ? <Check size={11} /> : <Copy size={11} />} Copiar product_id
+                        </button>
+                        {fallbackUrl && (
+                          <a href={fallbackUrl} target="_blank" rel="noopener noreferrer"
+                            className="eyebrow text-[0.55rem] px-3 py-1.5 border border-border/60 text-foreground/60 hover:border-accent hover:text-accent transition-colors inline-flex items-center gap-1">
+                            <ExternalLink size={11} /> Abrir image_url
+                          </a>
+                        )}
+                        {status && (
+                          <span className="eyebrow text-[0.55rem] text-foreground/50 ml-auto self-center">
+                            estado: <span className="text-foreground/80">{status}</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
           {/* Resumen auditoría */}
           <section className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
             {[
