@@ -1,0 +1,1593 @@
+[
+  {
+    "id": "G0001",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "b6eb54d3-5a8a-499f-83b8-4293ff9f0351",
+        "brand": "Christian Dior",
+        "name": "CHRISTIAN DIOR SAUVAGE EAU FORTE PARFUM 100ML",
+        "size_ml": 100,
+        "concentration": "parfum",
+        "price": 174.3,
+        "description": "Cítricos, especias finas y fondo amaderado.",
+        "notes": "Cítricos, especias finas y fondo amaderado.",
+        "image_url": "https://dimg.dillards.com/is/image/DillardsZoom/mainProduct/dior-sauvage-eau-forte-parfum/00000000_zi_20514518.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/b6eb54d3-5a8a-499f-83b8-4293ff9f0351.png?v=1777451145669",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "cff31433-8509-4091-977a-4546f24c0384",
+        "brand": "Christian Dior",
+        "name": "CHRISTIAN DIOR SAUVAGE EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 137.9,
+        "description": "Bergamota, especias y vainilla con ambroxan.",
+        "notes": "Bergamota, especias y vainilla con ambroxan.",
+        "image_url": "https://www.dior.com/dw/image/v2/BGXS_PRD/on/demandware.static/-/Library-Sites-DiorSharedLibrary/default/dwa0b69d9b/images/beauty/01-FRAGRANCES/2025/PDP-REVAMP/SAUVAGE/Y0785220/POSTER_DIOR_SAUVAGE_CAPSULE_EDP_VA_169.jpg?sw=800",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/cff31433-8509-4091-977a-4546f24c0384.png?v=1777597360672",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0002",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ELIXIR — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "cff31433-8509-4091-977a-4546f24c0384",
+        "brand": "Christian Dior",
+        "name": "CHRISTIAN DIOR SAUVAGE EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 137.9,
+        "description": "Bergamota, especias y vainilla con ambroxan.",
+        "notes": "Bergamota, especias y vainilla con ambroxan.",
+        "image_url": "https://www.dior.com/dw/image/v2/BGXS_PRD/on/demandware.static/-/Library-Sites-DiorSharedLibrary/default/dwa0b69d9b/images/beauty/01-FRAGRANCES/2025/PDP-REVAMP/SAUVAGE/Y0785220/POSTER_DIOR_SAUVAGE_CAPSULE_EDP_VA_169.jpg?sw=800",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/cff31433-8509-4091-977a-4546f24c0384.png?v=1777597360672",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "2f56ac72-f7fe-4c28-8013-7bcb43211f0b",
+        "brand": "Christian Dior",
+        "name": "CHRISTIAN DIOR SAUVAGE ELIXIR 100ML",
+        "size_ml": 100,
+        "concentration": null,
+        "price": 231.7,
+        "description": "Canela, vainilla y ámbar con maderas dulces.",
+        "notes": "Canela, vainilla y ámbar con maderas dulces.",
+        "image_url": "https://www.sephora.com/productimages/sku/s2467454-main-zoom.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0003",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: INTENSE — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "aafcf3cf-1568-4a32-9ba8-06c1c099ba65",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE FAME INTENSE EDP 80ML",
+        "size_ml": 80,
+        "concentration": "edp",
+        "price": 147.0,
+        "description": "Notas intensamente famosas de ylang-ylang y bergamota, corazón de jazmín intenso y rosa, base de oud, almizcle y ámbar.",
+        "notes": "intensamente famosas de ylang-ylang y bergamota, corazón de jazmín intenso y rosa, base de oud, almizcle y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.74962.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/aafcf3cf-1568-4a32-9ba8-06c1c099ba65.png?v=1777510668674",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "88f22865-0a94-4cb6-b4f9-aef6d8b2616f",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE FAME PARFUM 80ML",
+        "size_ml": 80,
+        "concentration": "parfum",
+        "price": 121.1,
+        "description": "Apertura parfum famosa de bergamota y ylang-ylang, corazón de jazmín y gardenia, base de oud, almizcle y sándalo.",
+        "notes": "Apertura parfum famosa de bergamota y ylang-ylang, corazón de jazmín y gardenia, base de oud, almizcle y sándalo.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.74962.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/88f22865-0a94-4cb6-b4f9-aef6d8b2616f.png?v=1777450910509",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0004",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: INTENSE — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "1e7759ee-8fab-44a1-adda-410f3233ef55",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE PHANTOM PARFUM 50ML",
+        "size_ml": 50,
+        "concentration": "parfum",
+        "price": 94.5,
+        "description": "Ruibarbo, lavanda y vainilla ambarada.",
+        "notes": "Ruibarbo, lavanda y vainilla ambarada.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.68226.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/1e7759ee-8fab-44a1-adda-410f3233ef55.png?v=1777447715863",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "98b3be5e-bfb3-406d-8b33-200bc90e3d0f",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE PHANTOM INTENSE EDP 50ML",
+        "size_ml": 50,
+        "concentration": "edp",
+        "price": 93.1,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.89717.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/98b3be5e-bfb3-406d-8b33-200bc90e3d0f.png?v=1777452330395",
+        "grouped_currently": true,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0005",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "deeafe4e-9887-44e6-a536-446a917402cd",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 50ML",
+        "size_ml": 50,
+        "concentration": "parfum",
+        "price": 93.8,
+        "description": "Apertura absoluta e intensa de pimienta rosa y neroli, corazón de jazmín y gardenia, base de vainilla, ámbar y almizcle.",
+        "notes": "Apertura absoluta e intensa de pimienta rosa y neroli, corazón de jazmín y gardenia, base de vainilla, ámbar y almizcle.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/11811197-58ec-4f7b-9645-c38d077475ac.png?v=1777484851736",
+        "grouped_currently": true,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "11811197-58ec-4f7b-9645-c38d077475ac",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE OLYMPEA EDP 80ML",
+        "size_ml": 80,
+        "concentration": "edp",
+        "price": 101.5,
+        "description": "Notas olímpicas de mandarina y neroli, corazón de flor de tiaré y gardenia, base de vainilla salada, almizcle y cedro.",
+        "notes": "olímpicas de mandarina y neroli, corazón de flor de tiaré y gardenia, base de vainilla salada, almizcle y cedro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/11811197-58ec-4f7b-9645-c38d077475ac.png?v=1777484851736",
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0006",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen y nombres similares (sim=1.00) | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "deeafe4e-9887-44e6-a536-446a917402cd",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 50ML",
+        "size_ml": 50,
+        "concentration": "parfum",
+        "price": 93.8,
+        "description": "Apertura absoluta e intensa de pimienta rosa y neroli, corazón de jazmín y gardenia, base de vainilla, ámbar y almizcle.",
+        "notes": "Apertura absoluta e intensa de pimienta rosa y neroli, corazón de jazmín y gardenia, base de vainilla, ámbar y almizcle.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/11811197-58ec-4f7b-9645-c38d077475ac.png?v=1777484851736",
+        "grouped_currently": true,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "019c1662-8e02-4b94-bb60-d07f4a2a6d6f",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 80ML",
+        "size_ml": 80,
+        "concentration": "parfum",
+        "price": 103.6,
+        "description": "Apertura de jengibre y pimienta rosa, corazón de jazmín y sal marina, base de vainilla, ámbar y cachemira.",
+        "notes": null,
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/11811197-58ec-4f7b-9645-c38d077475ac.png?v=1777484851736",
+        "grouped_currently": true,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0007",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "11811197-58ec-4f7b-9645-c38d077475ac",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE OLYMPEA EDP 80ML",
+        "size_ml": 80,
+        "concentration": "edp",
+        "price": 101.5,
+        "description": "Notas olímpicas de mandarina y neroli, corazón de flor de tiaré y gardenia, base de vainilla salada, almizcle y cedro.",
+        "notes": "olímpicas de mandarina y neroli, corazón de flor de tiaré y gardenia, base de vainilla salada, almizcle y cedro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/11811197-58ec-4f7b-9645-c38d077475ac.png?v=1777484851736",
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "019c1662-8e02-4b94-bb60-d07f4a2a6d6f",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE OLYMPEA ABSOLU PARFUM INTENSE 80ML",
+        "size_ml": 80,
+        "concentration": "parfum",
+        "price": 103.6,
+        "description": "Apertura de jengibre y pimienta rosa, corazón de jazmín y sal marina, base de vainilla, ámbar y cachemira.",
+        "notes": null,
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31666.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/11811197-58ec-4f7b-9645-c38d077475ac.png?v=1777484851736",
+        "grouped_currently": true,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0008",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.80), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "ec88cae0-98e3-4c0c-bfba-6d0367c3c549",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE 1 MILLION EDT RA 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 79.0,
+        "description": "Mandarina, canela y cuero con ámbar.",
+        "notes": "Mandarina, canela y cuero con ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.3747.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/ec88cae0-98e3-4c0c-bfba-6d0367c3c549.png?v=1777452469909",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "a0a7df02-d29e-4ff3-8830-66f7414d5cb5",
+        "brand": "Paco Rabanne",
+        "name": "PACO RABANNE 1 MILLION PARFUM 100ML",
+        "size_ml": 100,
+        "concentration": "parfum",
+        "price": 96.6,
+        "description": "Tuberosa solar, cuero y resinas cálidas.",
+        "notes": "Tuberosa solar, cuero y resinas cálidas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.3747.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/a0a7df02-d29e-4ff3-8830-66f7414d5cb5.png?v=1777511219940",
+        "grouped_currently": true,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0009",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "63b05f0d-136f-4865-b8dd-cf1a5c422c3d",
+        "brand": "Antonio Banderas",
+        "name": "ANTONIO BANDERAS BLACK SEDUCTION BAND EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 30.0,
+        "description": "Bergamota, menta y acordes marinos con ámbar.",
+        "notes": "Bergamota, menta y acordes marinos con ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.6746.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/c08a1c60-8022-4793-988c-685f27932fdc.png?v=1777485172683",
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "c08a1c60-8022-4793-988c-685f27932fdc",
+        "brand": "Antonio Banderas",
+        "name": "ANTONIO BANDERAS BLACK SEDUCT EDT 200ML",
+        "size_ml": 200,
+        "concentration": "edt",
+        "price": 31.5,
+        "description": "Cítricos especiados y nuez moscada sobre ámbar.",
+        "notes": "Cítricos especiados y nuez moscada sobre ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.6746.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/c08a1c60-8022-4793-988c-685f27932fdc.png?v=1777485172683",
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0010",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "b81a5449-49fd-4e48-a532-e1d323b02e55",
+        "brand": "Versace",
+        "name": "VERSACE YELLOW DIAMOND EDT 90ML",
+        "size_ml": 90,
+        "concentration": "edt",
+        "price": 74.9,
+        "description": "Notas diamante amarillo de pomelo y bergamota, corazón de neroli y jazmín, base de madera de guayaco, almizcle y ámbar.",
+        "notes": "diamante amarillo de pomelo y bergamota, corazón de neroli y jazmín, base de madera de guayaco, almizcle y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.13064.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/b81a5449-49fd-4e48-a532-e1d323b02e55.png?v=1777484612181",
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "06f61bde-f4a9-40bc-a321-8587a737e503",
+        "brand": "Versace",
+        "name": "VERSACE YELLOW DIAMOND INTENSE EDP 90ML",
+        "size_ml": 90,
+        "concentration": "edp",
+        "price": 84.7,
+        "description": "Apertura intensa de limón de Amalfi y pomelo rosado, corazón de gardenia y jazmín, base de almizcle, madera de guayaco y ámbar.",
+        "notes": "Apertura intensa de limón de Amalfi y pomelo rosado, corazón de gardenia y jazmín, base de almizcle, madera de guayaco y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.13064.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/b81a5449-49fd-4e48-a532-e1d323b02e55.png?v=1777484612181",
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0011",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ELIXIR — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "49793015-8e55-4b66-99d5-f1d3077b8204",
+        "brand": "Jean Paul Gaultier",
+        "name": "JEAN PAUL GAULTIER LE MALE EDT 75ML",
+        "size_ml": 75,
+        "concentration": "edt",
+        "price": 70.7,
+        "description": "Lavanda, vainilla y menta en fondo cálido.",
+        "notes": "Lavanda, vainilla y menta en fondo cálido.",
+        "image_url": "https://dimg.dillards.com/is/image/DillardsZoom/mainProduct/jean-paul-gaultier-le-male-le-parfum-4.2-oz./20184155_zi.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/49793015-8e55-4b66-99d5-f1d3077b8204.png?v=1777452432354",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "9e67db1a-4e64-4c2c-a9bb-8673c2faf62f",
+        "brand": "Jean Paul Gaultier",
+        "name": "JEAN PAUL GAULTIER LE MALE ELIXIR PARFUM 75ML",
+        "size_ml": 75,
+        "concentration": "parfum",
+        "price": 93.8,
+        "description": "Lavanda, vainilla y miel con tabaco.",
+        "notes": "Lavanda, vainilla y miel con tabaco.",
+        "image_url": "https://fragrancelord.com/cdn/shop/files/WEBSITE_PHOTOS_18_1438015f-2f91-4624-9281-d57eff9f9ac6.png?v=1728557163",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/9e67db1a-4e64-4c2c-a9bb-8673c2faf62f.png?v=1777448662768",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0012",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ABSOLU — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "75976e07-9cbd-4da0-8cab-46b6c72dc061",
+        "brand": "Jean Paul Gaultier",
+        "name": "JEAN PAUL GAULTIER SCANDAL ABSOLU PARFUM 100ML",
+        "size_ml": 100,
+        "concentration": "parfum",
+        "price": 109.2,
+        "description": "Mandarina, caramelo y vetiver amaderado.",
+        "notes": "Mandarina, caramelo y vetiver amaderado.",
+        "image_url": "https://m.media-amazon.com/images/I/818YYxFkCdL._AC_UF1000,1000_QL80_.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/75976e07-9cbd-4da0-8cab-46b6c72dc061.png?v=1777477737796",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "528e0a4f-ea2e-4f3e-bc0a-422ea8e81af4",
+        "brand": "Jean Paul Gaultier",
+        "name": "JEAN PAUL GAULTIER SCANDAL EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 98.7,
+        "description": "Caramelo, vetiver y salvia con fondo sensual.",
+        "notes": "Caramelo, vetiver y salvia con fondo sensual.",
+        "image_url": "https://m.media-amazon.com/images/I/51TdRvcpJRL._AC_UF1000,1000_QL80_.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/528e0a4f-ea2e-4f3e-bc0a-422ea8e81af4.png?v=1777484838602",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0013",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: MEN — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "06c9d7ed-0088-4b50-80aa-3a63eb022770",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 NYC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 87.5,
+        "description": "Notas urbanas de bergamota y frutos blancos, corazón de jazmín y rosa de la ciudad, base neoyorquina de almizcle, cedro y ámbar.",
+        "notes": "urbanas de bergamota y frutos blancos, corazón de jazmín y rosa de la ciudad, base neoyorquina de almizcle, cedro y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.297.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/06c9d7ed-0088-4b50-80aa-3a63eb022770.png?v=1777477822775",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "97179d3c-95fd-4805-a634-ad3fbcd8dfa9",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 MEN NYC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 87.5,
+        "description": "Apertura de pomelo y especias, corazón de jengibre y violeta, base de cuero, gaiac y almizcle.",
+        "notes": null,
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.297.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/97179d3c-95fd-4805-a634-ad3fbcd8dfa9.png?v=1777448329127",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0014",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: BLACK, MEN — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "9fa46ffc-3ae0-4d66-b734-cbdc5067469a",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP MEN NYC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 85.4,
+        "description": "Lima, vodka y ámbar con especias frescas.",
+        "notes": "Lima, vodka y ámbar con especias frescas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.12865.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/9fa46ffc-3ae0-4d66-b734-cbdc5067469a.png?v=1777448730377",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "343b7f2f-d284-4f0a-a5f5-d9872198708f",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP BLACK NYC EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 92.4,
+        "description": "Absenta, vainilla y cuero con fondo intenso.",
+        "notes": "Absenta, vainilla y cuero con fondo intenso.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.79162.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/343b7f2f-d284-4f0a-a5f5-d9872198708f.png?v=1777452023362",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0015",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.83), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "9fa46ffc-3ae0-4d66-b734-cbdc5067469a",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP MEN NYC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 85.4,
+        "description": "Lima, vodka y ámbar con especias frescas.",
+        "notes": "Lima, vodka y ámbar con especias frescas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.12865.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/9fa46ffc-3ae0-4d66-b734-cbdc5067469a.png?v=1777448730377",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "97179d3c-95fd-4805-a634-ad3fbcd8dfa9",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 MEN NYC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 87.5,
+        "description": "Apertura de pomelo y especias, corazón de jengibre y violeta, base de cuero, gaiac y almizcle.",
+        "notes": null,
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.297.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/97179d3c-95fd-4805-a634-ad3fbcd8dfa9.png?v=1777448329127",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0016",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "59bccb34-b16b-4470-8642-61a5b2ea9e5f",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP BLACK NYC NY ROD EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 100.1,
+        "description": "Lima, vodka y ámbar con especias frescas.",
+        "notes": "Lima, vodka y ámbar con especias frescas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.49808.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/59bccb34-b16b-4470-8642-61a5b2ea9e5f.png?v=1777484670248",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "343b7f2f-d284-4f0a-a5f5-d9872198708f",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP BLACK NYC EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 92.4,
+        "description": "Absenta, vainilla y cuero con fondo intenso.",
+        "notes": "Absenta, vainilla y cuero con fondo intenso.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.79162.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/343b7f2f-d284-4f0a-a5f5-d9872198708f.png?v=1777452023362",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0017",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ELIXIR — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "feab6176-b985-4dde-b3c2-9eee7b97686a",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP BLACK NYC ELIXIR EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 103.6,
+        "description": "Anís, lavanda y vainilla sobre maderas oscuras.",
+        "notes": "Anís, lavanda y vainilla sobre maderas oscuras.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.101559.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/feab6176-b985-4dde-b3c2-9eee7b97686a.png?v=1777450415563",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "343b7f2f-d284-4f0a-a5f5-d9872198708f",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA 212 VIP BLACK NYC EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 92.4,
+        "description": "Absenta, vainilla y cuero con fondo intenso.",
+        "notes": "Absenta, vainilla y cuero con fondo intenso.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.79162.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/343b7f2f-d284-4f0a-a5f5-d9872198708f.png?v=1777452023362",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0018",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ELIXIR — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "d5ea0506-4a27-40a2-87a9-403bc0624197",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA BAD BOY COBALT ELIXIR EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 114.1,
+        "description": "Trufa, pimienta y maderas con resinas oscuras.",
+        "notes": "Trufa, pimienta y maderas con resinas oscuras.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.89374.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/d5ea0506-4a27-40a2-87a9-403bc0624197.png?v=1777484778813",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "7e7e5a3d-d788-481f-bc03-4cd70f31cd86",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA BAD BOY COBALT EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 99.4,
+        "description": "Ciruela, geranio y vetiver con fondo mineral.",
+        "notes": "Ciruela, geranio y vetiver con fondo mineral.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.71888.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/7e7e5a3d-d788-481f-bc03-4cd70f31cd86.png?v=1777448493379",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0019",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: LE — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "7658d21b-6959-44fd-8433-55cc48f553d4",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA BAD BOY EDT 50ML",
+        "size_ml": 50,
+        "concentration": "edt",
+        "price": 73.5,
+        "description": "Bergamota, pimienta y tonka con cacao.",
+        "notes": "Bergamota, pimienta y tonka con cacao.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.55449.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/7658d21b-6959-44fd-8433-55cc48f553d4.png?v=1777452706649",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "c10b168b-24d4-450a-9638-558b3c3de12a",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA BAD BOY LE PARFUM EDP 50ML",
+        "size_ml": 50,
+        "concentration": "parfum",
+        "price": 79.1,
+        "description": "Cannabis, cuero y vetiver con fondo oscuro.",
+        "notes": "Cannabis, cuero y vetiver con fondo oscuro.",
+        "image_url": "https://target.scene7.com/is/image/Target/GUEST_8696703f-c487-48f0-b57a-5ce3758d8631",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/c10b168b-24d4-450a-9638-558b3c3de12a.png?v=1777450703932",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0020",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ELIXIR — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "7658d21b-6959-44fd-8433-55cc48f553d4",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA BAD BOY EDT 50ML",
+        "size_ml": 50,
+        "concentration": "edt",
+        "price": 73.5,
+        "description": "Bergamota, pimienta y tonka con cacao.",
+        "notes": "Bergamota, pimienta y tonka con cacao.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.55449.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/7658d21b-6959-44fd-8433-55cc48f553d4.png?v=1777452706649",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "d5e0b1c5-0de1-460a-b925-4c6ef50fe73f",
+        "brand": "Carolina Herrera",
+        "name": "CAROLINA HERRERA BAD BOY ELIXIR EDP 50ML",
+        "size_ml": 50,
+        "concentration": "edp",
+        "price": 90.3,
+        "description": "Salvia, cuero y cacao con vainilla ambarada.",
+        "notes": "Salvia, cuero y cacao con vainilla ambarada.",
+        "image_url": "https://media.ulta.com/i/ulta/2636411?w=800&h=800&fmt=auto",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/d5e0b1c5-0de1-460a-b925-4c6ef50fe73f.png?v=1777484822733",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0021",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: BLUE — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "72fa19a8-ac1c-4ff3-8782-fd295e039772",
+        "brand": "David Beckham",
+        "name": "DAVID BECKHAM CLASSIC BLUE EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 35.0,
+        "description": "Bergamota, acordes marinos y fondo amaderado.",
+        "notes": "Bergamota, acordes marinos y fondo amaderado.",
+        "image_url": "https://m.media-amazon.com/images/I/814kqhNvQ5L._AC_UF1000,1000_QL80_.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/72fa19a8-ac1c-4ff3-8782-fd295e039772.png?v=1777448973997",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "9b433a4d-7647-4312-90ee-a083741aa002",
+        "brand": "David Beckham",
+        "name": "DAVID BECKHAM CLASSIC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 35.0,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://m.media-amazon.com/images/I/711YdjoFNFL.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/9b433a4d-7647-4312-90ee-a083741aa002.png?v=1777449222148",
+        "grouped_currently": true,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0022",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "79df23ba-36b3-40d6-b412-c5040806d903",
+        "brand": "David Beckham",
+        "name": "DAVID BECKHAM BOLD INSTINCT EDP 75ML",
+        "size_ml": 75,
+        "concentration": "edp",
+        "price": 41.3,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://m.media-amazon.com/images/I/51TiE-2ZjJL._AC_UF1000,1000_QL80_.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/79df23ba-36b3-40d6-b412-c5040806d903.png?v=1777449368738",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "71305588-a423-4a09-b1ab-fdedcab25185",
+        "brand": "David Beckham",
+        "name": "DAVID BECKHAM INSTINCT EDP 75ML",
+        "size_ml": 75,
+        "concentration": "edp",
+        "price": 41.3,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://m.media-amazon.com/images/I/61SotrjL3JS.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/71305588-a423-4a09-b1ab-fdedcab25185.png?v=1777452442737",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0023",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: HOMME — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "5710d2ae-d860-4bd1-8a9a-cb596374ed0a",
+        "brand": "David Beckham",
+        "name": "DAVID BECKHAM CLASSIC HOMME EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 35.0,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://m.media-amazon.com/images/I/71dXSEVvGkL.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/5710d2ae-d860-4bd1-8a9a-cb596374ed0a.png?v=1777452658895",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "9b433a4d-7647-4312-90ee-a083741aa002",
+        "brand": "David Beckham",
+        "name": "DAVID BECKHAM CLASSIC EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 35.0,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://m.media-amazon.com/images/I/711YdjoFNFL.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/9b433a4d-7647-4312-90ee-a083741aa002.png?v=1777449222148",
+        "grouped_currently": true,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0024",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "3b0b7d9b-f16f-45bb-9d6f-8e4520138c78",
+        "brand": "Britney Spears",
+        "name": "BRITNEY SPEARS BLISSFUL FANTASY EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 39.5,
+        "description": "Apertura dichosa de frutos tropicales y jazmín, corazón de rosa y gardenia, base feliz de almizcle, caramelo y ámbar.",
+        "notes": "Apertura dichosa de frutos tropicales y jazmín, corazón de rosa y gardenia, base feliz de almizcle, caramelo y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.72454.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/3b0b7d9b-f16f-45bb-9d6f-8e4520138c78.png?v=1777447868870",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "106446fc-051c-4a67-97f6-6c5a184a035f",
+        "brand": "Britney Spears",
+        "name": "BRITNEY SPEARS FANTASY EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 39.9,
+        "description": "Notas fantásticas de kiwi, lichi y frutos tropicales, corazón de gardenia y jazmín, base encantada de almizcle, orquídea y sándalo.",
+        "notes": "fantásticas de kiwi, lichi y frutos tropicales, corazón de gardenia y jazmín, base encantada de almizcle, orquídea y sándalo.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.600.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/106446fc-051c-4a67-97f6-6c5a184a035f.png?v=1777477837874",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0025",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "b557767f-1cad-4c73-9174-6071b097f99c",
+        "brand": "Britney Spears",
+        "name": "BRITNEY SPEARS CANDIED FANTASY EDT 100ML",
+        "size_ml": 100,
+        "concentration": "edt",
+        "price": 48.2,
+        "description": "Notas dulces de fresas confitadas y magia, corazón de rosa y violeta, base azucarada de vainilla, almizcle y ámbar dorado.",
+        "notes": "dulces de fresas confitadas y magia, corazón de rosa y violeta, base azucarada de vainilla, almizcle y ámbar dorado.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.93613.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/b557767f-1cad-4c73-9174-6071b097f99c.png?v=1777451232632",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "106446fc-051c-4a67-97f6-6c5a184a035f",
+        "brand": "Britney Spears",
+        "name": "BRITNEY SPEARS FANTASY EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 39.9,
+        "description": "Notas fantásticas de kiwi, lichi y frutos tropicales, corazón de gardenia y jazmín, base encantada de almizcle, orquídea y sándalo.",
+        "notes": "fantásticas de kiwi, lichi y frutos tropicales, corazón de gardenia y jazmín, base encantada de almizcle, orquídea y sándalo.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.600.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/106446fc-051c-4a67-97f6-6c5a184a035f.png?v=1777477837874",
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0026",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "789dabc9-69f2-42b9-b1fe-2f142fb601c7",
+        "brand": "Smart Collection",
+        "name": "ARABE SMART COLLECTION NO401 S POUR HOMME EDP 25ML",
+        "size_ml": 25,
+        "concentration": "edp",
+        "price": 15.4,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "http://bigpettah.lk/cdn/shop/files/rn-image_picker_lib_temp_2914473f-901b-44af-9f5c-82ff148e83b2.webp?v=1744469761",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "f6b7952b-2e13-4b0c-b4bc-4bc132b05db6",
+        "brand": "Smart Collection",
+        "name": "ARABE SMART COLLECTION NO52 S POUR HOMME EDP 25ML",
+        "size_ml": 25,
+        "concentration": "edp",
+        "price": 15.4,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://cdn2.jomashop.com/media/catalog/product/cache/0ee3019724ce73007b606b54ba535a23/s/m/smart-collection-mens-no52-edp-spray-34-oz-fragrances-679523154073.jpg?width=546&height=546",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0027",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.71), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "4c3ced3b-4dbe-49c2-806b-3a211bbb072f",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA YOUR TOUCH EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 31.5,
+        "description": "Apertura táctil de bergamota y frutos dulces, corazón de rosa y violeta, base de almizcle, vainilla y cedro.",
+        "notes": "Apertura táctil de bergamota y frutos dulces, corazón de rosa y violeta, base de almizcle, vainilla y cedro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.93816.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "cd3c3c63-ef5f-424e-bd69-5dd02be06b18",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA YOUR M TOUCH SANTAL EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 35.7,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.126212.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0028",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "4c3ced3b-4dbe-49c2-806b-3a211bbb072f",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA YOUR TOUCH EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 31.5,
+        "description": "Apertura táctil de bergamota y frutos dulces, corazón de rosa y violeta, base de almizcle, vainilla y cedro.",
+        "notes": "Apertura táctil de bergamota y frutos dulces, corazón de rosa y violeta, base de almizcle, vainilla y cedro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.93816.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "4283daf5-71fd-4ddb-87b6-8085cf8c87dc",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA YOUR TOUCH LEATHER EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 25.2,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.93816.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0029",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "1f001b26-fa2c-421e-a46c-08a790e49e23",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA GLACIER GOLD EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 28.7,
+        "description": "Especias cálidas, ámbar dulce y maderas intensas.",
+        "notes": "Especias cálidas, ámbar dulce y maderas intensas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.128508.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "e6d7adb9-a7b1-4d49-ab39-4633ea0de115",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA GLACIER M GOLD EDP 30ML",
+        "size_ml": 30,
+        "concentration": "edp",
+        "price": 15.7,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.128508.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0030",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "d5bb55cf-aaf4-4401-acc3-1b14acef412f",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA JORG DI M PROF DE BLU EDP 30",
+        "size_ml": null,
+        "concentration": "edp",
+        "price": 15.5,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.92629.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "91bba600-1012-4843-9d6e-7a6680c83045",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA JORGE M DI PROFUMO EDP 30ML",
+        "size_ml": 30,
+        "concentration": "edp",
+        "price": 15.5,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.92629.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0031",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "9a44e88c-1ad0-4f15-bb04-537c2295733f",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA JORGE DI PROFUMO EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 25.9,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.92629.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "91bba600-1012-4843-9d6e-7a6680c83045",
+        "brand": "Maison Alhambra",
+        "name": "ARABE MAISON ALHAMBRA JORGE M DI PROFUMO EDP 30ML",
+        "size_ml": 30,
+        "concentration": "edp",
+        "price": 15.5,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.92629.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0032",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "dc59163b-80f0-4c9a-85d3-d18491057a2d",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA QAED AL FURSAN UNLIMITED EDP 90ML S/CAIXA",
+        "size_ml": 90,
+        "concentration": "edp",
+        "price": 22.33,
+        "description": "Apertura ilimitada de bergamota y frutas, corazón de rosa y jazmín árabe, base de almizcle, cedro y ámbar.",
+        "notes": "Apertura ilimitada de bergamota y frutas, corazón de rosa y jazmín árabe, base de almizcle, cedro y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.82590.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "518c743b-9ee8-49ac-ab47-4a06c0615e6c",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA QAED AL FURSAN UNLIMITED EDP 90ML",
+        "size_ml": 90,
+        "concentration": "edp",
+        "price": 23.8,
+        "description": "Apertura ilimitada de bergamota y frutas, corazón de rosa y jazmín árabe, base de almizcle, cedro y ámbar.",
+        "notes": "Apertura ilimitada de bergamota y frutas, corazón de rosa y jazmín árabe, base de almizcle, cedro y ámbar.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.82590.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0033",
+    "suspicion_type": "D_distintos_no_agrupar",
+    "reason": "Difieren solo por: ELIXIR — posible variante distinta",
+    "recommended_action": "Revisar manual: posible producto distinto",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "255362dc-6b03-4bd8-b348-596855d92b95",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA ASAD EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 38.5,
+        "description": "Pimienta negra, tabaco y vainilla ambarada.",
+        "notes": "Pimienta negra, tabaco y vainilla ambarada.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.72821.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "a0248219-cefb-4453-b02c-80f96636ae41",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA ASAD ELIXIR EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 41.2,
+        "description": "Especias oscuras, vainilla y resinas cálidas.",
+        "notes": "Especias oscuras, vainilla y resinas cálidas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.117616.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0034",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "255362dc-6b03-4bd8-b348-596855d92b95",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA ASAD EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 38.5,
+        "description": "Pimienta negra, tabaco y vainilla ambarada.",
+        "notes": "Pimienta negra, tabaco y vainilla ambarada.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.72821.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "47396e62-bb73-4944-9944-4e791c8769d5",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA ASAD BOURBON EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 42.7,
+        "description": "Bourbon, especias y vainilla ambarada intensa.",
+        "notes": "Bourbon, especias y vainilla ambarada intensa.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.101124.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0035",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "49cfec1c-804f-4cb2-9e4a-509b21165227",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA MAAHIR LEGACY EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 32.8,
+        "description": "Cítricos verdes, menta y vetiver elegante.",
+        "notes": "Cítricos verdes, menta y vetiver elegante.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.82727.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "59f01da3-fb0a-48b2-8d11-3ed4fc30e2f4",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA MAAHIR EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 36.0,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.64950.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0036",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "f2c248d8-db9c-422e-9f7a-e3f0d76510d9",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA ASAD ZANZIBAR BLUE EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 32.9,
+        "description": "Cítricos azules y fondo amaderado fresco.",
+        "notes": "Cítricos azules y fondo amaderado fresco.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.122722.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "547e4f79-cf06-432a-a358-05ddc5f7ecb7",
+        "brand": "Lattafa",
+        "name": "ARABE LATTAFA ASAD ZANZIBAR L BLUE LIMI ED EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 39.9,
+        "description": "Manzana, lavanda y maderas con ambroxan.",
+        "notes": "Manzana, lavanda y maderas con ambroxan.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.122722.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0037",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "c5662602-1718-4c07-a24d-abe365a1e7f7",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT INTENSE WOMAN EDP 105ML",
+        "size_ml": 105,
+        "concentration": "edp",
+        "price": 37.1,
+        "description": "intensas de frutos tropicales y flores blancas, corazón de rosa y jazmín intenso, base profunda de ámbar, almizcle y madera de cedro.",
+        "notes": "intensas de frutos tropicales y flores blancas, corazón de rosa y jazmín intenso, base profunda de ámbar, almizcle y madera de cedro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.34696.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "a550e605-44c2-4a20-9ddf-b6c6888777b7",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT NTENSE EDT 105ML",
+        "size_ml": 105,
+        "concentration": "edt",
+        "price": 46.9,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.34696.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0038",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "c5662602-1718-4c07-a24d-abe365a1e7f7",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT INTENSE WOMAN EDP 105ML",
+        "size_ml": 105,
+        "concentration": "edp",
+        "price": 37.1,
+        "description": "intensas de frutos tropicales y flores blancas, corazón de rosa y jazmín intenso, base profunda de ámbar, almizcle y madera de cedro.",
+        "notes": "intensas de frutos tropicales y flores blancas, corazón de rosa y jazmín intenso, base profunda de ámbar, almizcle y madera de cedro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.34696.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "bdcc919a-cb49-4db8-ba13-c24c6eca2179",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT INTENSE PARFUM 150ML",
+        "size_ml": 150,
+        "concentration": "parfum",
+        "price": 62.3,
+        "description": "Limón, piña y abedul con almizcle.",
+        "notes": "Limón, piña y abedul con almizcle.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.34696.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0039",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.75), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "39ffaa90-9678-4562-8fa2-028d68cd8877",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT URBAN A ELIXIR EDP 105ML",
+        "size_ml": 105,
+        "concentration": "edp",
+        "price": 42.7,
+        "description": "Canela, vainilla y ámbar con maderas dulces.",
+        "notes": "Canela, vainilla y ámbar con maderas dulces.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.77860.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "872c98a0-22cf-42b0-bf68-127072758844",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT URBAN A MAN EDP 105ML",
+        "size_ml": 105,
+        "concentration": "edp",
+        "price": 41.3,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.47394.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0040",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "a550e605-44c2-4a20-9ddf-b6c6888777b7",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT NTENSE EDT 105ML",
+        "size_ml": 105,
+        "concentration": "edt",
+        "price": 46.9,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.34696.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      },
+      {
+        "id": "bdcc919a-cb49-4db8-ba13-c24c6eca2179",
+        "brand": "Armaf",
+        "name": "ARABE ARMAF CLUB DE NUIT INTENSE PARFUM 150ML",
+        "size_ml": 150,
+        "concentration": "parfum",
+        "price": 62.3,
+        "description": "Limón, piña y abedul con almizcle.",
+        "notes": "Limón, piña y abedul con almizcle.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.34696.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 3
+      }
+    ]
+  },
+  {
+    "id": "G0041",
+    "suspicion_type": "B_imagen_compartida",
+    "reason": "Misma imagen, nombres parecidos pero distintos | Descripciones/notas distintas pero comparten imagen",
+    "recommended_action": "Revisar imagen y nombre",
+    "shared_image": true,
+    "products": [
+      {
+        "id": "b203aadf-fc61-4438-a48e-2a86d83a61b7",
+        "brand": "Chanel",
+        "name": "CHANEL COCO MADEMOISELLE EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 224.7,
+        "description": "Apertura brillante de naranja y bergamota, corazón de rosa de Grasse y jazmín, base sofisticada de pachulí, vetiver y almizcle.",
+        "notes": "Apertura brillante de naranja y bergamota, corazón de rosa de Grasse y jazmín, base sofisticada de pachulí, vetiver y almizcle.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.611.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/b203aadf-fc61-4438-a48e-2a86d83a61b7.png?v=1777484724481",
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      },
+      {
+        "id": "45b28244-4d90-47e9-9ff1-fd830d3b9e13",
+        "brand": "Chanel",
+        "name": "CHANEL COCO MADEMOISELLE INTENSE EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 233.1,
+        "description": "Notas intensas de naranja amarga y bergamota, corazón profundo de rosa y jazmín, base poderosa de pachulí, vetiver y ámbar oscuro.",
+        "notes": "intensas de naranja amarga y bergamota, corazón profundo de rosa y jazmín, base poderosa de pachulí, vetiver y ámbar oscuro.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.611.jpg",
+        "clean_image_url": "https://erlssjllmhpbtaeithss.supabase.co/storage/v1/object/public/clean-images/b203aadf-fc61-4438-a48e-2a86d83a61b7.png?v=1777484724481",
+        "grouped_currently": false,
+        "shares_image_with_n": 2
+      }
+    ]
+  },
+  {
+    "id": "G0042",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.71), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "162c7414-6205-48dc-9bbd-3390fef4fa93",
+        "brand": "Jo Milano",
+        "name": "JO MILANO GAME OF SPADES WILDCARD PARFUM 100ML",
+        "size_ml": 100,
+        "concentration": "parfum",
+        "price": 109.9,
+        "description": "Cítricos luminosos en la salida, corazón aromático y limpio, base envolvente de ámbar gris, almizcle y madera.",
+        "notes": "Cítricos luminosos en la salida, corazón aromático y limpio, base envolvente de ámbar gris, almizcle y madera.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.103910.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "27900fa2-3d0f-404d-8bbd-30e6d6466570",
+        "brand": "Jo Milano",
+        "name": "JO MILANO GAME OF SPADES JACKPOT PARFUM 100ML",
+        "size_ml": 100,
+        "concentration": "parfum",
+        "price": 98.7,
+        "description": "Salida brillante y afrutada, corazón especiado elegante, fondo de ámbar, almizcle y maderas sedosas.",
+        "notes": "Salida brillante y afrutada, corazón especiado elegante, fondo de ámbar, almizcle y maderas sedosas.",
+        "image_url": "https://fimgs.net/mdimg/perfume-thumbs/375x500.121564.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  },
+  {
+    "id": "G0043",
+    "suspicion_type": "A_nombre_inconsistente",
+    "reason": "Nombres muy similares (sim=0.71), mismo ML",
+    "recommended_action": "Revisar para agrupar",
+    "shared_image": false,
+    "products": [
+      {
+        "id": "56b3039b-c100-42f2-ae86-ec8e9f96c168",
+        "brand": "Risala",
+        "name": "ARABE RISALA ELITEHIKMAH OF LIFE EDP 100ML",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 30.1,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "http://www.khanelkhaliliusa.com/cdn/shop/files/Hikmah-Of-Life-Perfume-100ml-EDP-Risala-Elite-169096034.webp?v=1750274039",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      },
+      {
+        "id": "c10c0510-deae-4142-b2a7-000068e0fb62",
+        "brand": "Risala",
+        "name": "ARABE RISALA ELITEHIKMAH OF LIFE INT EDP 100ML(5763",
+        "size_ml": 100,
+        "concentration": "edp",
+        "price": 31.4,
+        "description": "Cítricos, especias suaves y maderas limpias.",
+        "notes": "Cítricos, especias suaves y maderas limpias.",
+        "image_url": "https://m.media-amazon.com/images/I/613uTnQeGGL._AC_UF1000,1000_QL80_.jpg",
+        "clean_image_url": null,
+        "grouped_currently": false,
+        "shares_image_with_n": 1
+      }
+    ]
+  }
+]
