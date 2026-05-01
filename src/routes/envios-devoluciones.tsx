@@ -30,30 +30,42 @@ function EnviosPage() {
         <section>
           <p className="eyebrow text-accent mb-3">Envíos</p>
           <p>
-            Realizamos envíos a todo el país. Coordinamos el método más conveniente
-            (correo, mensajería privada o retiro en La Plata) por WhatsApp una vez
-            confirmado tu pedido. Tiempo estimado de entrega: 24 a 72 hs hábiles
-            según la localidad.
+            Realizamos envíos a todo el país. Una vez confirmado tu pedido, coordinamos
+            por WhatsApp el método más conveniente según tu ubicación: Correo Argentino,
+            punto de retiro o envío coordinado por nosotros en La Plata.
+          </p>
+          <p className="mt-4">
+            Trabajamos con perfumes importados y proveedores del exterior, por lo que
+            los tiempos de entrega pueden variar según disponibilidad y logística. El
+            plazo estimado es a partir de 7 días hábiles, pudiendo extenderse en envíos
+            al interior del país.
           </p>
         </section>
 
         <section>
           <p className="eyebrow text-accent mb-3">Cambios y devoluciones</p>
           <p>
-            Si recibís un producto que no coincide con lo solicitado o presenta
-            algún defecto de fábrica, tenés 7 días para informarlo. Coordinamos
-            sin cargo el reemplazo o la devolución del importe. Por tratarse de
-            artículos de perfumería, no aceptamos devoluciones de productos
-            abiertos o utilizados, salvo defecto comprobable.
+            Si recibís un producto que no coincide con lo solicitado o presenta algún
+            defecto de fábrica, tenés 7 días desde la recepción para informarlo.
+            Evaluamos cada caso y coordinamos el reemplazo o la devolución
+            correspondiente.
+          </p>
+          <p className="mt-4">
+            Por tratarse de artículos de perfumería, no aceptamos cambios ni devoluciones
+            de productos abiertos o utilizados, salvo defecto comprobable.
           </p>
         </section>
 
         <section>
           <p className="eyebrow text-accent mb-3">Garantía de originalidad</p>
           <p>
-            Todos nuestros perfumes son 100% originales y provienen de canales
-            oficiales. Si tenés cualquier duda sobre tu producto, escribinos por
-            WhatsApp y te asesoramos.
+            Todos nuestros perfumes son 100% originales. Trabajamos con proveedores
+            seleccionados y canales de importación confiables para ofrecer productos
+            auténticos y cuidadosamente elegidos.
+          </p>
+          <p className="mt-4">
+            Si tenés dudas sobre un producto, una fragancia o una presentación,
+            escribinos por WhatsApp y te asesoramos personalmente.
           </p>
         </section>
       </div>
