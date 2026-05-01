@@ -245,7 +245,7 @@ function CatalogoPage() {
               onClick={() => navigate({ search: (prev: typeof search) => ({ ...prev, ...s.patch }) })}
               className={`eyebrow text-[0.65rem] px-4 py-2.5 border transition-colors ${
                 s.isActive
-                  ? "border-accent text-accent"
+                  ? "border-accent bg-accent text-accent-foreground font-semibold"
                   : "border-border/60 text-foreground/60 hover:border-foreground/40 hover:text-foreground"
               }`}
             >
