@@ -83,7 +83,7 @@ export function PerfumeCard({
           type="button"
           onClick={() => handleOpen(true)}
           aria-label={`Ver detalles de ${displayName}`}
-          className="relative aspect-[4/5] overflow-hidden bg-card block w-full text-left"
+          className="relative aspect-[4/5] overflow-hidden bg-transparent block w-full text-left"
         >
           <SmartImage
             src={imageSrc}

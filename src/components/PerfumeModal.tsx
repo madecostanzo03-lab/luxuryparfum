@@ -96,7 +96,7 @@ export function PerfumeModal({
         </button>
 
         <div className="grid md:grid-cols-2">
-          <div className="aspect-square md:aspect-auto md:min-h-[500px] bg-card">
+          <div className="aspect-square md:aspect-auto md:min-h-[500px] bg-transparent">
             {(() => {
               const { src, isPremium } = resolvePerfumeImage(
                 perfume.id,
