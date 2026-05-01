@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
 import { whatsappGeneralLink } from "@/lib/whatsapp";
 
 /**
  * Botón flotante de WhatsApp visible en todo el sitio.
- * Diseño elegante (oro/noir) que respeta la estética premium.
+ * Verde oficial WhatsApp (#25D366) con tooltip en hover.
  */
 export function FloatingWhatsApp() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Aparece tras un breve scroll para no competir con el hero inicial
-    const onScroll = () => setVisible(window.scrollY > 240);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <a
