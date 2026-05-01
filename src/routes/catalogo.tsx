@@ -9,6 +9,7 @@ import { Search, Loader2, SlidersHorizontal, X } from "lucide-react";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { HIDDEN_BRAND_SLUGS, HIDDEN_BRAND_SLUG_SET } from "@/lib/hidden-brands";
+import { groupPerfumes, groupMatchesQuery } from "@/lib/perfume-grouping";
 
 const searchSchema = z.object({
   marca: fallback(z.string(), "").default(""),
@@ -61,6 +62,7 @@ function CatalogoPage() {
   const navigate = Route.useNavigate();
 
   const [perfumes, setPerfumes] = useState<Perfume[]>([]);
+  const [skuCount, setSkuCount] = useState<number>(0);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
   const [filtering, setFiltering] = useState(false);
@@ -144,7 +146,26 @@ function CatalogoPage() {
           if (ia !== ib) return ia - ib;
           return a.price - b.price;
         });
-        setPerfumes(list);
+        // Agrupación visual: une SKUs del mismo perfume que solo difieren en tamaño.
+        // No modifica la BD; cada SKU sigue accesible vía variants[] del grupo.
+        let visibleList = groupPerfumes(list);
+        // Si hay búsqueda, asegurar que también matchee variantes ocultas dentro del grupo
+        if (search.q) {
+          visibleList = visibleList.filter((g) => groupMatchesQuery(g, search.q));
+        }
+        // Re-orden: bestseller/recomendado primero, luego con imagen, precio asc
+        visibleList.sort((a, b) => {
+          const rank = (p: Perfume) => (p.is_bestseller ? 0 : p.is_recommended ? 1 : 2);
+          const ra = rank(a);
+          const rb = rank(b);
+          if (ra !== rb) return ra - rb;
+          const ia = a.image_url || a.clean_image_url ? 0 : 1;
+          const ib = b.image_url || b.clean_image_url ? 0 : 1;
+          if (ia !== ib) return ia - ib;
+          return a.price - b.price;
+        });
+        setPerfumes(visibleList);
+        setSkuCount(list.length);
       }
       setLoading(false);
       setFiltering(false);
@@ -358,7 +379,11 @@ function CatalogoPage() {
         <div>
           <div className="flex items-center gap-3 mb-8">
             <p className="eyebrow text-foreground/50">
-              {loading ? "Cargando..." : `${perfumes.length} pieza${perfumes.length === 1 ? "" : "s"}`}
+              {loading
+                ? "Cargando..."
+                : skuCount > perfumes.length
+                  ? `${perfumes.length} perfumes · ${skuCount} presentaciones`
+                  : `${perfumes.length} pieza${perfumes.length === 1 ? "" : "s"}`}
             </p>
             {filtering && !loading && (
               <Loader2 size={12} className="text-accent animate-spin" />
