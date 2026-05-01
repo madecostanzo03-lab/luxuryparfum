@@ -17,6 +17,23 @@ export const Route = createFileRoute("/sobre-nosotros")({
 function SobrePage() {
   return (
     <div className="relative min-h-screen -mt-16 sm:-mt-20">
+      {/* Hero banner de imagen con overlay y título centrado */}
+      <header className="relative h-[320px] w-full overflow-hidden">
+        <img
+          src={heroImg}
+          alt="Frasco de perfume Luxury Parfum"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-noir/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-noir/50 via-noir/40 to-noir/80" />
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 pt-16">
+          <p className="eyebrow text-accent/85">Filosofía</p>
+          <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-serif leading-tight text-white drop-shadow-md">
+            Una elección, <em className="text-accent">una identidad</em>.
+          </h1>
+        </div>
+      </header>
+
       {/* Imagen de fondo fija para acompañar el copy */}
       <div className="fixed inset-0 -z-10">
         <img
@@ -25,17 +42,11 @@ function SobrePage() {
           aria-hidden="true"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-noir/80" />
-        <div className="absolute inset-0 bg-gradient-to-b from-noir/60 via-noir/70 to-noir" />
+        <div className="absolute inset-0 bg-noir/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-noir/70 via-noir/80 to-noir" />
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 pt-32 pb-24">
-        <header className="text-center mb-16">
-          <p className="eyebrow text-accent/85">Filosofía</p>
-          <h1 className="mt-6 text-5xl md:text-6xl font-serif leading-tight">
-            Una elección, <em className="text-accent">una identidad</em>.
-          </h1>
-        </header>
+      <div className="max-w-3xl mx-auto px-6 pt-16 pb-24">
 
         {/* Panel oscuro semitransparente sobre la imagen */}
         <div className="bg-background/70 backdrop-blur-md border border-border/30 p-8 sm:p-14 space-y-12 text-lg leading-relaxed text-foreground/85">
