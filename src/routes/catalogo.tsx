@@ -154,7 +154,35 @@ function CatalogoPage() {
           visibleList = visibleList.filter((g) => groupMatchesQuery(g, search.q));
         }
         // Re-orden: bestseller/recomendado primero, luego con imagen, precio asc
+        // Re-orden: marcas premium primero, luego bestseller/recomendado, con imagen, precio asc
+        const PRIORITY_BRANDS = [
+          "jean paul gaultier",
+          "armani", // matchea giorgio armani / emporio armani
+          "carolina herrera",
+          "chanel",
+          "dior",
+          "versace",
+          "hugo boss",
+          "dolce",
+          "paco rabanne",
+        ];
+        const brandPriority = (p: Perfume): number => {
+          const hay = `${p.brand?.name ?? ""} ${p.name}`.toLowerCase();
+          for (let i = 0; i < PRIORITY_BRANDS.length; i++) {
+            if (hay.includes(PRIORITY_BRANDS[i])) return i;
+          }
+          return 999;
+        };
         visibleList.sort((a, b) => {
+          const pa = brandPriority(a);
+          const pb = brandPriority(b);
+          if (pa !== pb) return pa - pb;
+          if (pa === 999) {
+            // resto: alfabético por marca
+            const ba = (a.brand?.name ?? "").toLowerCase();
+            const bb = (b.brand?.name ?? "").toLowerCase();
+            if (ba !== bb) return ba.localeCompare(bb);
+          }
           const rank = (p: Perfume) => (p.is_bestseller ? 0 : p.is_recommended ? 1 : 2);
           const ra = rank(a);
           const rb = rank(b);
