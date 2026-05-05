@@ -42,14 +42,15 @@ export function Navbar() {
           <Link
             to="/"
             onClick={() => setOpen(false)}
-            className="group flex items-center leading-none"
+            className="group flex items-center leading-none notranslate"
             aria-label="Luxury Parfum — Inicio"
+            translate="no"
           >
-            <span className="flex flex-col">
-              <span className="brand-serif text-2xl sm:text-[1.7rem] tracking-tight font-semibold">
+            <span className="flex flex-col notranslate" translate="no">
+              <span className="brand-serif text-2xl sm:text-[1.7rem] tracking-tight font-semibold notranslate" translate="no">
                 Luxury
               </span>
-              <span className="brand-serif text-[0.62rem] sm:text-[0.7rem] tracking-[0.32em] uppercase -mt-0.5 text-accent/90 font-semibold">
+              <span className="brand-serif text-[0.62rem] sm:text-[0.7rem] tracking-[0.32em] uppercase -mt-0.5 text-accent/90 font-semibold notranslate" translate="no">
                 Parfum
               </span>
             </span>
