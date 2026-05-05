@@ -34,6 +34,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "google", content: "notranslate" },
       { title: "Luxury Parfum — Fragancias de autor" },
       { name: "description", content: "Catálogo curado de perfumería de lujo. Te guiamos a encontrar tu fragancia ideal." },
       { name: "author", content: "Luxury Parfum" },
