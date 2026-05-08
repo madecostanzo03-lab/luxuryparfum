@@ -2,15 +2,39 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  confirmCleanImageMatch,
-  skipCleanImage,
-  getPendingImageUrl,
-  setManualImageStatus,
-  assignManualImage,
-  reuseCleanImage,
-} from "@/server/clean-images.functions";
+import { createServerFn } from "@tanstack/react-start";
 import { Loader2, CheckCircle2, SkipForward, Search, ChevronLeft, ChevronRight, Upload, Flag, ShieldCheck, ExternalLink, Copy, Check, X, ZoomIn } from "lucide-react";
+
+// Re-export server functions via dynamic import to avoid client/server boundary violation
+const confirmCleanImageMatch = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
+  const { confirmCleanImageMatch: fn } = await import("@/server/clean-images.functions");
+  return fn({ data });
+});
+
+const skipCleanImage = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
+  const { skipCleanImage: fn } = await import("@/server/clean-images.functions");
+  return fn({ data });
+});
+
+const getPendingImageUrl = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
+  const { getPendingImageUrl: fn } = await import("@/server/clean-images.functions");
+  return fn({ data });
+});
+
+const setManualImageStatus = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
+  const { setManualImageStatus: fn } = await import("@/server/clean-images.functions");
+  return fn({ data });
+});
+
+const assignManualImage = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
+  const { assignManualImage: fn } = await import("@/server/clean-images.functions");
+  return fn({ data });
+});
+
+const reuseCleanImage = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
+  const { reuseCleanImage: fn } = await import("@/server/clean-images.functions");
+  return fn({ data });
+});
 
 export const Route = createFileRoute("/admin/imagenes-match")({
   head: () => ({
@@ -60,7 +84,6 @@ function AdminImagesMatchPage() {
   const [filter, setFilter] = useState<"manual" | "pending" | "confirmed" | "skipped">("manual");
   const [cursor, setCursor] = useState(0);
 
-  // signed URL de la imagen pendiente actual
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [busy, setBusy] = useState(false);
@@ -71,7 +94,6 @@ function AdminImagesMatchPage() {
   const skipFn = useServerFn(skipCleanImage);
   const getUrlFn = useServerFn(getPendingImageUrl);
 
-  // Auth + admin gate (mismo patrón que /admin/qa y /admin/precios)
   useEffect(() => {
     (async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -89,14 +111,12 @@ function AdminImagesMatchPage() {
 
   const loadAll = async () => {
     setLoading(true);
-    // Cola
     const { data: q } = await supabase
       .from("clean_image_import_queue")
       .select("*")
       .order("created_at", { ascending: true });
     setQueue((q ?? []) as QueueRow[]);
 
-    // Perfumes no árabes en stock (universo de búsqueda y candidatos)
     const { data: brands } = await supabase
       .from("brands").select("id, slug").in("slug", HIDDEN_BRAND_SLUGS);
     const hiddenIds = (brands ?? []).map((b) => b.id);
@@ -120,7 +140,6 @@ function AdminImagesMatchPage() {
 
   const current = visibleQueue[cursor] ?? null;
 
-  // cuando cambia el item actual, pedir signed URL
   useEffect(() => {
     setPendingUrl(null);
     setSearch("");
@@ -136,7 +155,6 @@ function AdminImagesMatchPage() {
     })();
   }, [current?.id, accessToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // reset cursor al cambiar filtro
   useEffect(() => { setCursor(0); }, [filter]);
 
   const counts = useMemo(() => ({
@@ -184,7 +202,6 @@ function AdminImagesMatchPage() {
     return out;
   }, [search, perfumes]);
 
-  // ---------- guards ----------
   if (authed === false) {
     return (
       <div className="max-w-md mx-auto px-6 py-32 text-center">
@@ -218,7 +235,6 @@ function AdminImagesMatchPage() {
         </p>
       </header>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
         <Stat label="Total cola" value={counts.total} />
         <Stat label="Pendientes" value={counts.pending} accent />
@@ -228,7 +244,6 @@ function AdminImagesMatchPage() {
         <Stat label="Sin sugerencias" value={counts.withoutSug} />
       </div>
 
-      {/* Filtros */}
       <div className="flex gap-2 mb-6 border-b border-border/40 flex-wrap">
         <button
           onClick={() => setFilter("manual")}
@@ -264,7 +279,6 @@ function AdminImagesMatchPage() {
         </div>
       ) : (
         <div className="grid lg:grid-cols-[420px_1fr] gap-8">
-          {/* IZQ: imagen limpia actual */}
           <div>
             <div className="flex items-center justify-between mb-3">
               <button
@@ -314,7 +328,6 @@ function AdminImagesMatchPage() {
             )}
           </div>
 
-          {/* DER: sugerencias + búsqueda manual */}
           <div>
             {filter === "pending" && (
               <>
@@ -392,9 +405,6 @@ function AdminImagesMatchPage() {
   );
 }
 
-// Los 8 productos cuyo image_url original NO se pudo descargar
-// (CDN bloqueado / Instagram devuelve HTML / dominios anti-bot).
-// Mapping product_id -> motivo legible.
 const MANUAL_PENDING_MOTIVES: Record<string, string> = {
   "ec6df0be-8b21-4463-b7d0-a5d16534f993": "dior.com 403 (anti-bot CDN)",
   "cff31433-8509-4091-977a-4546f24c0384": "dior.com 403 (anti-bot CDN)",
@@ -443,18 +453,13 @@ function MissingCleanSection() {
   const [msg, setMsg] = useState<string | null>(null);
   const [zoomUrl, setZoomUrl] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  // Estado del flujo de confirmación: producto + archivo + dataURL preview
   const [pendingUpload, setPendingUpload] = useState<
     { product: MissingRow; file: File; previewUrl: string } | null
   >(null);
-  // Catálogo de imágenes limpias reutilizables
   const [reusable, setReusable] = useState<ReusableRow[]>([]);
-  // Tarjeta con panel de "Buscar imagen limpia existente" abierto
   const [expandedReuseId, setExpandedReuseId] = useState<string | null>(null);
-  // Modo de listado dentro del panel: "search" | "variants" | "same_base"
   const [reuseMode, setReuseMode] = useState<"search" | "variants" | "same_base">("search");
   const [reuseSearch, setReuseSearch] = useState("");
-  // Confirmación de reutilización
   const [pendingReuse, setPendingReuse] = useState<
     { target: MissingRow; source: ReusableRow } | null
   >(null);
@@ -493,7 +498,6 @@ function MissingCleanSection() {
       const { data } = await q.order("name");
       setRows((data as unknown as MissingRow[]) ?? []);
 
-      // Catálogo de imágenes limpias reutilizables (todos los perfumes con clean_image_url)
       const { data: reusableData } = await supabase
         .from("perfumes")
         .select("id, name, base_name, size_ml, price, image_url, clean_image_url, brand:brands(name, slug)")
@@ -527,7 +531,6 @@ function MissingCleanSection() {
     }
   };
 
-  // Paso 1: el usuario elige un archivo -> generamos preview y mostramos modal
   const handlePickFile = (product: MissingRow, file: File) => {
     if (file.size > 5 * 1024 * 1024) {
       setMsg("Error: imagen excede 5MB");
@@ -543,7 +546,6 @@ function MissingCleanSection() {
     setPendingUpload(null);
   };
 
-  // Paso 2: confirmación visual explícita -> recién acá se sube y actualiza clean_image_url
   const confirmUpload = async () => {
     if (!accessToken || !pendingUpload || busyId) return;
     const { product, file } = pendingUpload;
@@ -582,7 +584,6 @@ function MissingCleanSection() {
     }
   };
 
-  // Helpers de búsqueda dentro del catálogo reutilizable
   const normalize = (s: string) =>
     s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
@@ -593,7 +594,6 @@ function MissingCleanSection() {
     if (reuseMode === "variants") {
       const targetBrand = target.brand?.slug ?? "";
       const targetBase = baseKey(target);
-      // Misma marca y base_name parecido (incluye, o coincide en >=2 tokens)
       const tokens = targetBase.split(/\s+/).filter((t) => t.length >= 3);
       return reusable
         .filter((r) => r.brand?.slug === targetBrand)
@@ -609,7 +609,6 @@ function MissingCleanSection() {
       const targetBase = baseKey(target);
       return reusable.filter((r) => baseKey(r) === targetBase).slice(0, 30);
     }
-    // search libre
     const term = normalize(reuseSearch.trim());
     if (term.length < 2) return [];
     return reusable
@@ -677,7 +676,6 @@ function MissingCleanSection() {
         </p>
       )}
 
-      {/* SECCIÓN DESTACADA: 8 pendientes manuales — tarjetas grandes */}
       {rows !== null && manualPending.length > 0 && (
         <div className="mb-10 border-2 border-accent/40 bg-accent/5 p-4 sm:p-6">
           <h3 className="font-serif text-xl mb-1">8 pendientes manuales</h3>
@@ -692,7 +690,6 @@ function MissingCleanSection() {
               const motive = MANUAL_PENDING_MOTIVES[r.id];
               return (
                 <div key={r.id} className="border border-border/50 bg-background p-4 flex flex-col sm:flex-row gap-4">
-                  {/* Imagen actual GRANDE (≥220px desktop) */}
                   <div className="flex-shrink-0">
                     <button
                       type="button"
@@ -723,7 +720,6 @@ function MissingCleanSection() {
                     )}
                   </div>
 
-                  {/* Datos + acciones */}
                   <div className="flex-1 min-w-0">
                     <p className="text-[0.65rem] eyebrow text-foreground/50">{r.brand?.name ?? "—"}</p>
                     <p className="font-serif text-lg leading-tight mt-0.5">{r.base_name ?? r.name}</p>
@@ -836,7 +832,6 @@ function MissingCleanSection() {
                       {busyId === r.id && <Loader2 size={14} className="animate-spin text-accent" />}
                     </div>
 
-                    {/* Panel expandible: Buscar imagen limpia existente */}
                     {expandedReuseId === r.id && (
                       <div className="mt-4 border border-accent/30 bg-accent/5 p-3">
                         <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -893,21 +888,11 @@ function MissingCleanSection() {
                                 >
                                   <div className="flex-shrink-0 grid grid-cols-2 gap-1 w-[140px]">
                                     <div className="aspect-square bg-card border border-accent/40 overflow-hidden">
-                                      <img
-                                        src={src.clean_image_url}
-                                        alt=""
-                                        className="w-full h-full object-contain"
-                                        loading="lazy"
-                                      />
+                                      <img src={src.clean_image_url} alt="" className="w-full h-full object-contain" loading="lazy" />
                                     </div>
                                     <div className="aspect-square bg-card border border-border/40 overflow-hidden">
                                       {src.image_url ? (
-                                        <img
-                                          src={src.image_url}
-                                          alt=""
-                                          className="w-full h-full object-contain opacity-70"
-                                          loading="lazy"
-                                        />
+                                        <img src={src.image_url} alt="" className="w-full h-full object-contain opacity-70" loading="lazy" />
                                       ) : (
                                         <span className="flex items-center justify-center h-full text-foreground/30 text-xs">—</span>
                                       )}
@@ -916,18 +901,12 @@ function MissingCleanSection() {
                                     <p className="text-[0.5rem] eyebrow text-foreground/40 text-center">original</p>
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">
-                                      {src.brand?.name ?? "—"}
-                                    </p>
-                                    <p className="text-xs font-serif leading-tight line-clamp-2 mt-0.5">
-                                      {src.base_name ?? src.name}
-                                    </p>
+                                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">{src.brand?.name ?? "—"}</p>
+                                    <p className="text-xs font-serif leading-tight line-clamp-2 mt-0.5">{src.base_name ?? src.name}</p>
                                     <p className="text-[0.65rem] text-foreground/60 mt-0.5">
                                       {src.size_ml ? `${src.size_ml} ml` : "—"} · USD {src.price.toFixed(0)}
                                     </p>
-                                    <code className="text-[0.55rem] font-mono text-foreground/40 block truncate mt-0.5">
-                                      {src.id}
-                                    </code>
+                                    <code className="text-[0.55rem] font-mono text-foreground/40 block truncate mt-0.5">{src.id}</code>
                                     <button
                                       type="button"
                                       disabled={busyId === r.id}
@@ -953,36 +932,18 @@ function MissingCleanSection() {
         </div>
       )}
 
-      {/* Modal: zoom de imagen actual */}
       {zoomUrl && (
-        <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6"
-          onClick={() => setZoomUrl(null)}
-        >
-          <button
-            type="button"
-            onClick={() => setZoomUrl(null)}
-            className="absolute top-4 right-4 p-2 text-white/80 hover:text-white"
-            aria-label="Cerrar"
-          >
+        <div className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6" onClick={() => setZoomUrl(null)}>
+          <button type="button" onClick={() => setZoomUrl(null)} className="absolute top-4 right-4 p-2 text-white/80 hover:text-white" aria-label="Cerrar">
             <X size={22} />
           </button>
-          <img
-            src={zoomUrl}
-            alt="Imagen ampliada"
-            className="max-w-full max-h-full object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <img src={zoomUrl} alt="Imagen ampliada" className="max-w-full max-h-full object-contain" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
 
-      {/* Modal: confirmación de subida — comparación lado a lado */}
       {pendingUpload && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div
-            className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between gap-4 mb-5">
               <div>
                 <p className="eyebrow text-accent text-[0.65rem]">Confirmar imagen</p>
@@ -993,17 +954,9 @@ function MissingCleanSection() {
                 <p className="text-xs text-foreground/60 mt-1">
                   {pendingUpload.product.size_ml ? `${pendingUpload.product.size_ml} ml` : "—"} · USD {pendingUpload.product.price.toFixed(0)}
                 </p>
-                <code className="text-[0.6rem] font-mono text-foreground/50 mt-1 inline-block">
-                  {pendingUpload.product.id}
-                </code>
+                <code className="text-[0.6rem] font-mono text-foreground/50 mt-1 inline-block">{pendingUpload.product.id}</code>
               </div>
-              <button
-                type="button"
-                onClick={cancelUpload}
-                className="p-1.5 text-foreground/60 hover:text-foreground"
-                aria-label="Cerrar"
-                disabled={busyId === pendingUpload.product.id}
-              >
+              <button type="button" onClick={cancelUpload} className="p-1.5 text-foreground/60 hover:text-foreground" aria-label="Cerrar" disabled={busyId === pendingUpload.product.id}>
                 <X size={18} />
               </button>
             </div>
@@ -1028,30 +981,15 @@ function MissingCleanSection() {
             </div>
 
             <p className="text-[0.65rem] text-foreground/50 mb-4">
-              Al confirmar, se actualiza solo <code className="text-accent">clean_image_url</code>.
-              El <code>image_url</code> original queda intacto.
+              Al confirmar, se actualiza solo <code className="text-accent">clean_image_url</code>. El <code>image_url</code> original queda intacto.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-end">
-              <button
-                type="button"
-                onClick={cancelUpload}
-                disabled={busyId === pendingUpload.product.id}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50"
-              >
+              <button type="button" onClick={cancelUpload} disabled={busyId === pendingUpload.product.id} className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50">
                 Cancelar / elegir otra imagen
               </button>
-              <button
-                type="button"
-                onClick={confirmUpload}
-                disabled={busyId === pendingUpload.product.id}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50"
-              >
-                {busyId === pendingUpload.product.id ? (
-                  <Loader2 size={14} className="animate-spin" />
-                ) : (
-                  <CheckCircle2 size={14} />
-                )}
+              <button type="button" onClick={confirmUpload} disabled={busyId === pendingUpload.product.id} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50">
+                {busyId === pendingUpload.product.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
                 Confirmar esta imagen para este producto
               </button>
             </div>
@@ -1059,7 +997,6 @@ function MissingCleanSection() {
         </div>
       )}
 
-      {/* Modal: confirmación de reutilización de imagen limpia existente */}
       {pendingReuse && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           <div className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto">
@@ -1068,27 +1005,17 @@ function MissingCleanSection() {
                 <p className="eyebrow text-accent text-[0.65rem]">Reutilizar imagen limpia</p>
                 <h4 className="mt-1 font-serif text-xl">Confirmar reutilización</h4>
                 <p className="text-xs text-foreground/60 mt-1">
-                  Se copiará el mismo <code className="text-accent">clean_image_url</code>.
-                  Nada se mueve, nada se borra, <code>image_url</code> queda intacto.
+                  Se copiará el mismo <code className="text-accent">clean_image_url</code>. Nada se mueve, nada se borra, <code>image_url</code> queda intacto.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setPendingReuse(null)}
-                className="p-1.5 text-foreground/60 hover:text-foreground"
-                aria-label="Cerrar"
-                disabled={busyId === pendingReuse.target.id}
-              >
+              <button type="button" onClick={() => setPendingReuse(null)} className="p-1.5 text-foreground/60 hover:text-foreground" aria-label="Cerrar" disabled={busyId === pendingReuse.target.id}>
                 <X size={18} />
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-              {/* IZQ: producto destino (pendiente) */}
               <div>
-                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">
-                  Producto pendiente (destino)
-                </p>
+                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">Producto pendiente (destino)</p>
                 <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
                   {pendingReuse.target.image_url ? (
                     <img src={pendingReuse.target.image_url} alt="" className="w-full h-full object-contain" />
@@ -1097,66 +1024,32 @@ function MissingCleanSection() {
                   )}
                 </div>
                 <div className="mt-3 text-xs">
-                  <p className="eyebrow text-[0.6rem] text-foreground/50">
-                    {pendingReuse.target.brand?.name ?? "—"}
-                  </p>
-                  <p className="font-serif text-base mt-0.5">
-                    {pendingReuse.target.base_name ?? pendingReuse.target.name}
-                  </p>
-                  <p className="text-foreground/60 mt-1">
-                    {pendingReuse.target.size_ml ? `${pendingReuse.target.size_ml} ml` : "—"} · USD {pendingReuse.target.price.toFixed(0)}
-                  </p>
-                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">
-                    {pendingReuse.target.id}
-                  </code>
+                  <p className="eyebrow text-[0.6rem] text-foreground/50">{pendingReuse.target.brand?.name ?? "—"}</p>
+                  <p className="font-serif text-base mt-0.5">{pendingReuse.target.base_name ?? pendingReuse.target.name}</p>
+                  <p className="text-foreground/60 mt-1">{pendingReuse.target.size_ml ? `${pendingReuse.target.size_ml} ml` : "—"} · USD {pendingReuse.target.price.toFixed(0)}</p>
+                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">{pendingReuse.target.id}</code>
                 </div>
               </div>
-
-              {/* DER: producto fuente (con clean_image_url) */}
               <div>
-                <p className="eyebrow text-[0.6rem] text-accent mb-2">
-                  Fuente elegida (clean_image_url)
-                </p>
+                <p className="eyebrow text-[0.6rem] text-accent mb-2">Fuente elegida (clean_image_url)</p>
                 <div className="aspect-square bg-card border border-accent/60 flex items-center justify-center overflow-hidden">
                   <img src={pendingReuse.source.clean_image_url} alt="" className="w-full h-full object-contain" />
                 </div>
                 <div className="mt-3 text-xs">
-                  <p className="eyebrow text-[0.6rem] text-foreground/50">
-                    {pendingReuse.source.brand?.name ?? "—"}
-                  </p>
-                  <p className="font-serif text-base mt-0.5">
-                    {pendingReuse.source.base_name ?? pendingReuse.source.name}
-                  </p>
-                  <p className="text-foreground/60 mt-1">
-                    {pendingReuse.source.size_ml ? `${pendingReuse.source.size_ml} ml` : "—"} · USD {pendingReuse.source.price.toFixed(0)}
-                  </p>
-                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">
-                    {pendingReuse.source.id}
-                  </code>
+                  <p className="eyebrow text-[0.6rem] text-foreground/50">{pendingReuse.source.brand?.name ?? "—"}</p>
+                  <p className="font-serif text-base mt-0.5">{pendingReuse.source.base_name ?? pendingReuse.source.name}</p>
+                  <p className="text-foreground/60 mt-1">{pendingReuse.source.size_ml ? `${pendingReuse.source.size_ml} ml` : "—"} · USD {pendingReuse.source.price.toFixed(0)}</p>
+                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">{pendingReuse.source.id}</code>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-end">
-              <button
-                type="button"
-                onClick={() => setPendingReuse(null)}
-                disabled={busyId === pendingReuse.target.id}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50"
-              >
+              <button type="button" onClick={() => setPendingReuse(null)} disabled={busyId === pendingReuse.target.id} className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50">
                 Cancelar
               </button>
-              <button
-                type="button"
-                onClick={confirmReuse}
-                disabled={busyId === pendingReuse.target.id}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50"
-              >
-                {busyId === pendingReuse.target.id ? (
-                  <Loader2 size={14} className="animate-spin" />
-                ) : (
-                  <CheckCircle2 size={14} />
-                )}
+              <button type="button" onClick={confirmReuse} disabled={busyId === pendingReuse.target.id} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50">
+                {busyId === pendingReuse.target.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
                 Confirmar reutilización
               </button>
             </div>
@@ -1164,7 +1057,6 @@ function MissingCleanSection() {
         </div>
       )}
 
-      {/* Tabla general */}
       {rows === null ? (
         <div className="text-center py-12"><Loader2 className="inline animate-spin" /></div>
       ) : rows.length === 0 ? (
