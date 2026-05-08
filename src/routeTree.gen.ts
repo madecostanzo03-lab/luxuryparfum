@@ -10,23 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreNosotrosRouteImport } from './routes/sobre-nosotros'
+import { Route as RevendedoresRouteImport } from './routes/revendedores'
 import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EnviosDevolucionesRouteImport } from './routes/envios-devoluciones'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminQaRouteImport } from './routes/admin.qa'
-import { Route as AdminPreciosRouteImport } from './routes/admin.precios'
-import { Route as AdminImagenesMatchRouteImport } from './routes/admin.imagenes-match'
-import { Route as AdminImagenesDuplicadasRouteImport } from './routes/admin.imagenes-duplicadas'
-import { Route as AdminFondosBlancosRouteImport } from './routes/admin.fondos-blancos'
-import { Route as AdminAuditoriaVariantesNoAgrupadasRouteImport } from './routes/admin.auditoria-variantes-no-agrupadas'
-import { Route as AdminAgrupacionVariantesRouteImport } from './routes/admin.agrupacion-variantes'
 import { Route as ApiPublicImageProxyRouteImport } from './routes/api/public/image-proxy'
 
 const SobreNosotrosRoute = SobreNosotrosRouteImport.update({
   id: '/sobre-nosotros',
   path: '/sobre-nosotros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RevendedoresRoute = RevendedoresRouteImport.update({
+  id: '/revendedores',
+  path: '/revendedores',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MarcasRoute = MarcasRouteImport.update({
@@ -54,43 +53,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminQaRoute = AdminQaRouteImport.update({
-  id: '/admin/qa',
-  path: '/admin/qa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminPreciosRoute = AdminPreciosRouteImport.update({
-  id: '/admin/precios',
-  path: '/admin/precios',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminImagenesMatchRoute = AdminImagenesMatchRouteImport.update({
-  id: '/admin/imagenes-match',
-  path: '/admin/imagenes-match',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminImagenesDuplicadasRoute = AdminImagenesDuplicadasRouteImport.update({
-  id: '/admin/imagenes-duplicadas',
-  path: '/admin/imagenes-duplicadas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminFondosBlancosRoute = AdminFondosBlancosRouteImport.update({
-  id: '/admin/fondos-blancos',
-  path: '/admin/fondos-blancos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAuditoriaVariantesNoAgrupadasRoute =
-  AdminAuditoriaVariantesNoAgrupadasRouteImport.update({
-    id: '/admin/auditoria-variantes-no-agrupadas',
-    path: '/admin/auditoria-variantes-no-agrupadas',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AdminAgrupacionVariantesRoute =
-  AdminAgrupacionVariantesRouteImport.update({
-    id: '/admin/agrupacion-variantes',
-    path: '/admin/agrupacion-variantes',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const ApiPublicImageProxyRoute = ApiPublicImageProxyRouteImport.update({
   id: '/api/public/image-proxy',
   path: '/api/public/image-proxy',
@@ -103,14 +65,8 @@ export interface FileRoutesByFullPath {
   '/envios-devoluciones': typeof EnviosDevolucionesRoute
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
+  '/revendedores': typeof RevendedoresRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
-  '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
-  '/admin/auditoria-variantes-no-agrupadas': typeof AdminAuditoriaVariantesNoAgrupadasRoute
-  '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
-  '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
-  '/admin/imagenes-match': typeof AdminImagenesMatchRoute
-  '/admin/precios': typeof AdminPreciosRoute
-  '/admin/qa': typeof AdminQaRoute
   '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
 }
 export interface FileRoutesByTo {
@@ -119,14 +75,8 @@ export interface FileRoutesByTo {
   '/envios-devoluciones': typeof EnviosDevolucionesRoute
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
+  '/revendedores': typeof RevendedoresRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
-  '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
-  '/admin/auditoria-variantes-no-agrupadas': typeof AdminAuditoriaVariantesNoAgrupadasRoute
-  '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
-  '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
-  '/admin/imagenes-match': typeof AdminImagenesMatchRoute
-  '/admin/precios': typeof AdminPreciosRoute
-  '/admin/qa': typeof AdminQaRoute
   '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
 }
 export interface FileRoutesById {
@@ -136,14 +86,8 @@ export interface FileRoutesById {
   '/envios-devoluciones': typeof EnviosDevolucionesRoute
   '/login': typeof LoginRoute
   '/marcas': typeof MarcasRoute
+  '/revendedores': typeof RevendedoresRoute
   '/sobre-nosotros': typeof SobreNosotrosRoute
-  '/admin/agrupacion-variantes': typeof AdminAgrupacionVariantesRoute
-  '/admin/auditoria-variantes-no-agrupadas': typeof AdminAuditoriaVariantesNoAgrupadasRoute
-  '/admin/fondos-blancos': typeof AdminFondosBlancosRoute
-  '/admin/imagenes-duplicadas': typeof AdminImagenesDuplicadasRoute
-  '/admin/imagenes-match': typeof AdminImagenesMatchRoute
-  '/admin/precios': typeof AdminPreciosRoute
-  '/admin/qa': typeof AdminQaRoute
   '/api/public/image-proxy': typeof ApiPublicImageProxyRoute
 }
 export interface FileRouteTypes {
@@ -154,14 +98,8 @@ export interface FileRouteTypes {
     | '/envios-devoluciones'
     | '/login'
     | '/marcas'
+    | '/revendedores'
     | '/sobre-nosotros'
-    | '/admin/agrupacion-variantes'
-    | '/admin/auditoria-variantes-no-agrupadas'
-    | '/admin/fondos-blancos'
-    | '/admin/imagenes-duplicadas'
-    | '/admin/imagenes-match'
-    | '/admin/precios'
-    | '/admin/qa'
     | '/api/public/image-proxy'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -170,14 +108,8 @@ export interface FileRouteTypes {
     | '/envios-devoluciones'
     | '/login'
     | '/marcas'
+    | '/revendedores'
     | '/sobre-nosotros'
-    | '/admin/agrupacion-variantes'
-    | '/admin/auditoria-variantes-no-agrupadas'
-    | '/admin/fondos-blancos'
-    | '/admin/imagenes-duplicadas'
-    | '/admin/imagenes-match'
-    | '/admin/precios'
-    | '/admin/qa'
     | '/api/public/image-proxy'
   id:
     | '__root__'
@@ -186,14 +118,8 @@ export interface FileRouteTypes {
     | '/envios-devoluciones'
     | '/login'
     | '/marcas'
+    | '/revendedores'
     | '/sobre-nosotros'
-    | '/admin/agrupacion-variantes'
-    | '/admin/auditoria-variantes-no-agrupadas'
-    | '/admin/fondos-blancos'
-    | '/admin/imagenes-duplicadas'
-    | '/admin/imagenes-match'
-    | '/admin/precios'
-    | '/admin/qa'
     | '/api/public/image-proxy'
   fileRoutesById: FileRoutesById
 }
@@ -203,14 +129,8 @@ export interface RootRouteChildren {
   EnviosDevolucionesRoute: typeof EnviosDevolucionesRoute
   LoginRoute: typeof LoginRoute
   MarcasRoute: typeof MarcasRoute
+  RevendedoresRoute: typeof RevendedoresRoute
   SobreNosotrosRoute: typeof SobreNosotrosRoute
-  AdminAgrupacionVariantesRoute: typeof AdminAgrupacionVariantesRoute
-  AdminAuditoriaVariantesNoAgrupadasRoute: typeof AdminAuditoriaVariantesNoAgrupadasRoute
-  AdminFondosBlancosRoute: typeof AdminFondosBlancosRoute
-  AdminImagenesDuplicadasRoute: typeof AdminImagenesDuplicadasRoute
-  AdminImagenesMatchRoute: typeof AdminImagenesMatchRoute
-  AdminPreciosRoute: typeof AdminPreciosRoute
-  AdminQaRoute: typeof AdminQaRoute
   ApiPublicImageProxyRoute: typeof ApiPublicImageProxyRoute
 }
 
@@ -221,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/sobre-nosotros'
       fullPath: '/sobre-nosotros'
       preLoaderRoute: typeof SobreNosotrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/revendedores': {
+      id: '/revendedores'
+      path: '/revendedores'
+      fullPath: '/revendedores'
+      preLoaderRoute: typeof RevendedoresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/marcas': {
@@ -258,55 +185,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/qa': {
-      id: '/admin/qa'
-      path: '/admin/qa'
-      fullPath: '/admin/qa'
-      preLoaderRoute: typeof AdminQaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/precios': {
-      id: '/admin/precios'
-      path: '/admin/precios'
-      fullPath: '/admin/precios'
-      preLoaderRoute: typeof AdminPreciosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/imagenes-match': {
-      id: '/admin/imagenes-match'
-      path: '/admin/imagenes-match'
-      fullPath: '/admin/imagenes-match'
-      preLoaderRoute: typeof AdminImagenesMatchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/imagenes-duplicadas': {
-      id: '/admin/imagenes-duplicadas'
-      path: '/admin/imagenes-duplicadas'
-      fullPath: '/admin/imagenes-duplicadas'
-      preLoaderRoute: typeof AdminImagenesDuplicadasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/fondos-blancos': {
-      id: '/admin/fondos-blancos'
-      path: '/admin/fondos-blancos'
-      fullPath: '/admin/fondos-blancos'
-      preLoaderRoute: typeof AdminFondosBlancosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/auditoria-variantes-no-agrupadas': {
-      id: '/admin/auditoria-variantes-no-agrupadas'
-      path: '/admin/auditoria-variantes-no-agrupadas'
-      fullPath: '/admin/auditoria-variantes-no-agrupadas'
-      preLoaderRoute: typeof AdminAuditoriaVariantesNoAgrupadasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/agrupacion-variantes': {
-      id: '/admin/agrupacion-variantes'
-      path: '/admin/agrupacion-variantes'
-      fullPath: '/admin/agrupacion-variantes'
-      preLoaderRoute: typeof AdminAgrupacionVariantesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/image-proxy': {
       id: '/api/public/image-proxy'
       path: '/api/public/image-proxy'
@@ -323,15 +201,8 @@ const rootRouteChildren: RootRouteChildren = {
   EnviosDevolucionesRoute: EnviosDevolucionesRoute,
   LoginRoute: LoginRoute,
   MarcasRoute: MarcasRoute,
+  RevendedoresRoute: RevendedoresRoute,
   SobreNosotrosRoute: SobreNosotrosRoute,
-  AdminAgrupacionVariantesRoute: AdminAgrupacionVariantesRoute,
-  AdminAuditoriaVariantesNoAgrupadasRoute:
-    AdminAuditoriaVariantesNoAgrupadasRoute,
-  AdminFondosBlancosRoute: AdminFondosBlancosRoute,
-  AdminImagenesDuplicadasRoute: AdminImagenesDuplicadasRoute,
-  AdminImagenesMatchRoute: AdminImagenesMatchRoute,
-  AdminPreciosRoute: AdminPreciosRoute,
-  AdminQaRoute: AdminQaRoute,
   ApiPublicImageProxyRoute: ApiPublicImageProxyRoute,
 }
 export const routeTree = rootRouteImport
