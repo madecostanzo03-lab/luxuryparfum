@@ -8,12 +8,12 @@ const links = [
   { to: "/catalogo" as const, label: "Catálogo" },
   { to: "/marcas" as const, label: "Marcas" },
   { to: "/sobre-nosotros" as const, label: "Filosofía" },
+  { to: "/revendedores" as const, label: "Revendedores" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
 
-  // Bloqueo de scroll cuando el menú mobile está abierto (UX premium)
   useEffect(() => {
     if (open) {
       const original = document.body.style.overflow;
@@ -24,7 +24,6 @@ export function Navbar() {
     }
   }, [open]);
 
-  // Cerrar con ESC
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -83,14 +82,13 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* MOBILE FULL-SCREEN MENU — fondo SÓLIDO, totalmente opaco, sin contenido detrás */}
+      {/* MOBILE FULL-SCREEN MENU */}
       {open && (
         <div
           className="md:hidden fixed inset-0 z-[55] flex flex-col"
           role="dialog"
           aria-modal="true"
         >
-          {/* Capa sólida noir + degradé azul muy sutil — bloquea totalmente el fondo */}
           <div
             className="absolute inset-0"
             style={{
@@ -98,7 +96,6 @@ export function Navbar() {
                 "linear-gradient(180deg, oklch(0.07 0.005 240) 0%, oklch(0.10 0.025 235) 60%, oklch(0.07 0.005 240) 100%)",
             }}
           />
-          {/* Filete dorado superior */}
           <span className="absolute top-16 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
 
           <div className="relative flex flex-col h-full pt-20 pb-10 px-7 overflow-y-auto">
@@ -126,7 +123,6 @@ export function Navbar() {
               ))}
             </nav>
 
-            {/* Bloque WhatsApp dentro del menú */}
             <div className="mt-auto pt-10">
               <p className="eyebrow text-[0.6rem] text-foreground/50">
                 Asesoramiento premium
