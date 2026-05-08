@@ -1,1164 +1,283 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useServerFn } from "@tanstack/react-start";
 import { createServerFn } from "@tanstack/react-start";
-import { Loader2, CheckCircle2, SkipForward, Search, ChevronLeft, ChevronRight, Upload, Flag, ShieldCheck, ExternalLink, Copy, Check, X, ZoomIn } from "lucide-react";
+import { z } from "zod";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-// Re-export server functions via dynamic import to avoid client/server boundary violation
-const confirmCleanImageMatch = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
-  const { confirmCleanImageMatch: fn } = await import("@/server/clean-images.functions");
-  return fn({ data });
-});
+// v2: token-based admin verification (no middleware)
+const PENDING_BUCKET = "clean-images-pending";
+const FINAL_BUCKET = "clean-images";
 
-const skipCleanImage = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
-  const { skipCleanImage: fn } = await import("@/server/clean-images.functions");
-  return fn({ data });
-});
-
-const getPendingImageUrl = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
-  const { getPendingImageUrl: fn } = await import("@/server/clean-images.functions");
-  return fn({ data });
-});
-
-const setManualImageStatus = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
-  const { setManualImageStatus: fn } = await import("@/server/clean-images.functions");
-  return fn({ data });
-});
-
-const assignManualImage = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
-  const { assignManualImage: fn } = await import("@/server/clean-images.functions");
-  return fn({ data });
-});
-
-const reuseCleanImage = createServerFn({ method: "POST" }).handler(async ({ data }: { data: any }) => {
-  const { reuseCleanImage: fn } = await import("@/server/clean-images.functions");
-  return fn({ data });
-});
-
-export const Route = createFileRoute("/admin/imagenes-match")({
-  head: () => ({
-    meta: [
-      { title: "Match de imágenes limpias — Admin" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
-  }),
-  component: AdminImagesMatchPage,
-});
-
-type QueueRow = {
-  id: string;
-  pending_path: string;
-  original_filename: string;
-  phash: string | null;
-  suggested_perfume_ids: string[];
-  suggestion_scores: number[];
-  assigned_perfume_id: string | null;
-  status: "pending" | "confirmed" | "skipped";
-};
-
-type PerfumeLite = {
-  id: string;
-  name: string;
-  base_name: string | null;
-  image_url: string | null;
-  price: number;
-  brand: { name: string; slug: string } | null;
-};
-
-const HIDDEN_BRAND_SLUGS = [
-  "adyan","afnan","ajmal","al-haramain","al-wataniah","armaf","arqus","avar",
-  "bespoke","boulevard","dar-el-ward","emperor","french-avenue","hamidi",
-  "jack-hope","jo-milano","lattafa","lovali","maison-alhambra","maison-de-milan",
-  "mawwal","mirada","nasma","prime-collection","rasasi","reyane-tradition",
-  "riiffs","risala","smart-collection",
-];
-
-function AdminImagesMatchPage() {
-  const [authed, setAuthed] = useState<boolean | null>(null);
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const [queue, setQueue] = useState<QueueRow[]>([]);
-  const [perfumes, setPerfumes] = useState<Map<string, PerfumeLite>>(new Map());
-  const [filter, setFilter] = useState<"manual" | "pending" | "confirmed" | "skipped">("manual");
-  const [cursor, setCursor] = useState(0);
-
-  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useState<string | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  const confirmFn = useServerFn(confirmCleanImageMatch);
-  const skipFn = useServerFn(skipCleanImage);
-  const getUrlFn = useServerFn(getPendingImageUrl);
-
-  useEffect(() => {
-    (async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) { setAuthed(false); return; }
-      setAuthed(true);
-      setAccessToken(session.access_token);
-      const { data: roles } = await supabase
-        .from("user_roles").select("role").eq("user_id", session.user.id);
-      const admin = (roles ?? []).some((r) => r.role === "admin");
-      setIsAdmin(admin);
-      if (!admin) return;
-      await loadAll();
-    })();
-  }, []);
-
-  const loadAll = async () => {
-    setLoading(true);
-    const { data: q } = await supabase
-      .from("clean_image_import_queue")
-      .select("*")
-      .order("created_at", { ascending: true });
-    setQueue((q ?? []) as QueueRow[]);
-
-    const { data: brands } = await supabase
-      .from("brands").select("id, slug").in("slug", HIDDEN_BRAND_SLUGS);
-    const hiddenIds = (brands ?? []).map((b) => b.id);
-
-    let pq = supabase
-      .from("perfumes")
-      .select("id, name, base_name, image_url, price, brand:brands(name, slug)")
-      .eq("in_stock", true);
-    if (hiddenIds.length) pq = pq.not("brand_id", "in", `(${hiddenIds.join(",")})`);
-    const { data: ps } = await pq;
-    const m = new Map<string, PerfumeLite>();
-    (ps ?? []).forEach((p: any) => m.set(p.id, p as PerfumeLite));
-    setPerfumes(m);
-    setLoading(false);
-  };
-
-  const visibleQueue = useMemo(
-    () => queue.filter((q) => q.status === filter),
-    [queue, filter],
-  );
-
-  const current = visibleQueue[cursor] ?? null;
-
-  useEffect(() => {
-    setPendingUrl(null);
-    setSearch("");
-    setMsg(null);
-    if (!current || !accessToken) return;
-    (async () => {
-      try {
-        const r = await getUrlFn({ data: { accessToken, pendingPath: current.pending_path } });
-        setPendingUrl(r.url);
-      } catch (e: any) {
-        setMsg(`Error cargando preview: ${e.message ?? e}`);
-      }
-    })();
-  }, [current?.id, accessToken]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => { setCursor(0); }, [filter]);
-
-  const counts = useMemo(() => ({
-    pending: queue.filter((q) => q.status === "pending").length,
-    confirmed: queue.filter((q) => q.status === "confirmed").length,
-    skipped: queue.filter((q) => q.status === "skipped").length,
-    withSug: queue.filter((q) => q.suggested_perfume_ids.length > 0).length,
-    withoutSug: queue.filter((q) => q.suggested_perfume_ids.length === 0).length,
-    total: queue.length,
-  }), [queue]);
-
-  const handleConfirm = async (perfumeId: string) => {
-    if (!current || busy || !accessToken) return;
-    setBusy(true); setMsg(null);
-    try {
-      await confirmFn({ data: { accessToken, queueId: current.id, perfumeId } });
-      setMsg("✓ Confirmado y publicado.");
-      await loadAll();
-    } catch (e: any) {
-      setMsg(`Error: ${e.message ?? e}`);
-    } finally { setBusy(false); }
-  };
-
-  const handleSkip = async () => {
-    if (!current || busy || !accessToken) return;
-    setBusy(true); setMsg(null);
-    try {
-      await skipFn({ data: { accessToken, queueId: current.id } });
-      setMsg("Saltada.");
-      await loadAll();
-    } catch (e: any) {
-      setMsg(`Error: ${e.message ?? e}`);
-    } finally { setBusy(false); }
-  };
-
-  const searchResults = useMemo(() => {
-    const term = search.trim().toLowerCase();
-    if (!term || term.length < 2) return [];
-    const out: PerfumeLite[] = [];
-    for (const p of perfumes.values()) {
-      const hay = `${p.name} ${p.base_name ?? ""} ${p.brand?.name ?? ""}`.toLowerCase();
-      if (hay.includes(term)) out.push(p);
-      if (out.length >= 30) break;
-    }
-    return out;
-  }, [search, perfumes]);
-
-  if (authed === false) {
-    return (
-      <div className="max-w-md mx-auto px-6 py-32 text-center">
-        <p className="eyebrow text-accent">Admin</p>
-        <h1 className="mt-6 text-3xl font-serif">Iniciá sesión</h1>
-        <p className="mt-4 text-foreground/60 text-sm">Necesitás una cuenta admin.</p>
-        <Link to="/login" className="mt-8 inline-block eyebrow text-accent">Ir al login</Link>
-      </div>
-    );
+async function verifyAdmin(accessToken: string): Promise<string> {
+  if (!accessToken) throw new Error("Missing access token");
+  const { data: userData, error: uErr } = await supabaseAdmin.auth.getUser(accessToken);
+  if (uErr || !userData?.user) {
+    throw new Error("Invalid session");
   }
-  if (authed === null) {
-    return <div className="max-w-md mx-auto px-6 py-32 text-center text-foreground/60"><Loader2 className="inline animate-spin" /></div>;
-  }
-  if (isAdmin === false) {
-    return (
-      <div className="max-w-md mx-auto px-6 py-32 text-center">
-        <p className="eyebrow text-accent">403</p>
-        <h1 className="mt-6 text-3xl font-serif">Sin permisos</h1>
-        <p className="mt-4 text-foreground/60 text-sm">Tu cuenta no tiene rol admin.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
-      <header className="mb-8">
-        <p className="eyebrow text-accent">Admin</p>
-        <h1 className="mt-3 text-3xl md:text-4xl font-serif">Match manual de imágenes limpias</h1>
-        <p className="mt-2 text-sm text-foreground/60">
-          Confirmá manualmente cada imagen. Nada se aplica al catálogo sin tu confirmación.
-        </p>
-      </header>
-
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
-        <Stat label="Total cola" value={counts.total} />
-        <Stat label="Pendientes" value={counts.pending} accent />
-        <Stat label="Confirmadas" value={counts.confirmed} />
-        <Stat label="Saltadas" value={counts.skipped} />
-        <Stat label="Con sugerencias" value={counts.withSug} />
-        <Stat label="Sin sugerencias" value={counts.withoutSug} />
-      </div>
-
-      <div className="flex gap-2 mb-6 border-b border-border/40 flex-wrap">
-        <button
-          onClick={() => setFilter("manual")}
-          className={`px-4 py-2 text-xs eyebrow transition-colors ${
-            filter === "manual"
-              ? "border-b-2 border-accent text-accent"
-              : "text-destructive hover:text-foreground"
-          }`}
-        >
-          Manuales (8)
-        </button>
-        {(["pending","confirmed","skipped"] as const).map((s) => (
-          <button
-            key={s}
-            onClick={() => setFilter(s)}
-            className={`px-4 py-2 text-xs eyebrow transition-colors ${
-              filter === s ? "border-b-2 border-accent text-accent" : "text-foreground/50 hover:text-foreground"
-            }`}
-          >
-            {s === "pending" ? "Pendientes" : s === "confirmed" ? "Confirmadas" : "Saltadas"}
-            {" "}({s === "pending" ? counts.pending : s === "confirmed" ? counts.confirmed : counts.skipped})
-          </button>
-        ))}
-      </div>
-
-      {filter === "manual" ? (
-        <MissingCleanSection />
-      ) : loading ? (
-        <div className="text-center py-20"><Loader2 className="inline animate-spin" /></div>
-      ) : !current ? (
-        <div className="text-center py-20 text-foreground/60 font-serif italic">
-          No hay items en este estado.
-        </div>
-      ) : (
-        <div className="grid lg:grid-cols-[420px_1fr] gap-8">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <button
-                onClick={() => setCursor((c) => Math.max(0, c - 1))}
-                disabled={cursor === 0}
-                className="p-2 disabled:opacity-30 hover:text-accent"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <span className="text-xs eyebrow text-foreground/50">
-                {cursor + 1} / {visibleQueue.length}
-              </span>
-              <button
-                onClick={() => setCursor((c) => Math.min(visibleQueue.length - 1, c + 1))}
-                disabled={cursor >= visibleQueue.length - 1}
-                className="p-2 disabled:opacity-30 hover:text-accent"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-
-            <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
-              {pendingUrl ? (
-                <img src={pendingUrl} alt="Imagen limpia" className="w-full h-full object-contain" />
-              ) : (
-                <Loader2 className="animate-spin text-foreground/40" />
-              )}
-            </div>
-            <p className="mt-2 text-[0.65rem] text-foreground/40 font-mono break-all">
-              {current.original_filename}
-            </p>
-
-            {filter === "pending" && (
-              <button
-                onClick={handleSkip}
-                disabled={busy}
-                className="mt-4 w-full inline-flex items-center justify-center gap-2 py-2.5 border border-border/60 text-foreground/70 hover:border-foreground/40 text-xs eyebrow disabled:opacity-50"
-              >
-                <SkipForward size={14} /> Saltar (no aplicar)
-              </button>
-            )}
-
-            {msg && (
-              <p className={`mt-3 text-xs ${msg.startsWith("Error") ? "text-red-400" : "text-accent"}`}>
-                {msg}
-              </p>
-            )}
-          </div>
-
-          <div>
-            {filter === "pending" && (
-              <>
-                <h3 className="eyebrow text-foreground/60 mb-3">Sugerencias top-3 (pHash · solo ayuda visual)</h3>
-                {current.suggested_perfume_ids.length === 0 ? (
-                  <p className="text-sm text-foreground/50 italic mb-6">Sin sugerencias automáticas.</p>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-                    {current.suggested_perfume_ids.map((pid, i) => {
-                      const p = perfumes.get(pid);
-                      if (!p) return null;
-                      const dist = current.suggestion_scores[i];
-                      return (
-                        <SuggestionCard
-                          key={pid}
-                          perfume={p}
-                          distance={dist}
-                          onConfirm={() => handleConfirm(pid)}
-                          disabled={busy}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-
-                <h3 className="eyebrow text-foreground/60 mb-3">Buscar manualmente</h3>
-                <div className="relative mb-3">
-                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" />
-                  <input
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Nombre o marca..."
-                    className="w-full bg-input/40 border border-border pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-accent"
-                  />
-                </div>
-                {searchResults.length > 0 && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[480px] overflow-y-auto">
-                    {searchResults.map((p) => (
-                      <SuggestionCard
-                        key={p.id}
-                        perfume={p}
-                        onConfirm={() => handleConfirm(p.id)}
-                        disabled={busy}
-                      />
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-
-            {filter !== "pending" && current.assigned_perfume_id && (
-              <div>
-                <h3 className="eyebrow text-foreground/60 mb-3">Asignada a</h3>
-                {(() => {
-                  const p = perfumes.get(current.assigned_perfume_id);
-                  return p ? (
-                    <div className="flex gap-4 items-center">
-                      {p.image_url && <img src={p.image_url} alt="" className="w-24 h-24 object-contain bg-card" />}
-                      <div>
-                        <p className="text-xs eyebrow text-foreground/50">{p.brand?.name}</p>
-                        <p className="font-serif text-lg">{p.base_name ?? p.name}</p>
-                        <p className="text-xs text-foreground/50">USD {p.price.toFixed(0)}</p>
-                      </div>
-                    </div>
-                  ) : <p className="text-sm text-foreground/50">Perfume no encontrado.</p>;
-                })()}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {filter !== "manual" && <MissingCleanSection />}
-    </div>
-  );
+  const userId = userData.user.id;
+  const { data: roles, error: rErr } = await supabaseAdmin
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId);
+  if (rErr) throw new Error(`Role lookup failed: ${rErr.message}`);
+  const isAdmin = (roles ?? []).some((r: { role: string }) => r.role === "admin");
+  if (!isAdmin) throw new Error("Forbidden: admin role required");
+  return userId;
 }
 
-const MANUAL_PENDING_MOTIVES: Record<string, string> = {
-  "ec6df0be-8b21-4463-b7d0-a5d16534f993": "dior.com 403 (anti-bot CDN)",
-  "cff31433-8509-4091-977a-4546f24c0384": "dior.com 403 (anti-bot CDN)",
-  "fab4b006-eef5-4d86-a342-305c0ec66738": "givenchybeauty.com 403",
-  "f62b3c26-8de6-48ff-b60b-c978eb8869d0": "Instagram devuelve HTML, no imagen",
-  "b825a604-673e-4c59-aab8-9a83d366df61": "tupi.com.py 403",
-  "545f54f9-ae2c-4db3-806f-71cc1e7cb980": "Instagram devuelve HTML, no imagen",
-  "4d3c3fbd-2314-4d1d-8a10-bb318cf61f5d": "Instagram devuelve HTML, no imagen",
-  "001087e8-e929-4c3c-9d6c-05bf469de226": "Instagram devuelve HTML, no imagen",
-};
-const MANUAL_PENDING_IDS = new Set(Object.keys(MANUAL_PENDING_MOTIVES));
-
-type MissingRow = {
-  id: string;
-  name: string;
-  base_name: string | null;
-  size_ml: number | null;
-  price: number;
-  image_url: string | null;
-  brand: { name: string; slug: string } | null;
-};
-
-type ManualStatusRow = {
-  product_id: string;
-  status: "manual_needed" | "fallback_ok" | "priority_pending";
-  notes: string | null;
-  updated_at: string;
-};
-
-type ReusableRow = {
-  id: string;
-  name: string;
-  base_name: string | null;
-  size_ml: number | null;
-  price: number;
-  image_url: string | null;
-  clean_image_url: string;
-  brand: { name: string; slug: string } | null;
-};
-
-function MissingCleanSection() {
-  const [rows, setRows] = useState<MissingRow[] | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [statuses, setStatuses] = useState<Map<string, ManualStatusRow>>(new Map());
-  const [busyId, setBusyId] = useState<string | null>(null);
-  const [msg, setMsg] = useState<string | null>(null);
-  const [zoomUrl, setZoomUrl] = useState<string | null>(null);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [pendingUpload, setPendingUpload] = useState<
-    { product: MissingRow; file: File; previewUrl: string } | null
-  >(null);
-  const [reusable, setReusable] = useState<ReusableRow[]>([]);
-  const [expandedReuseId, setExpandedReuseId] = useState<string | null>(null);
-  const [reuseMode, setReuseMode] = useState<"search" | "variants" | "same_base">("search");
-  const [reuseSearch, setReuseSearch] = useState("");
-  const [pendingReuse, setPendingReuse] = useState<
-    { target: MissingRow; source: ReusableRow } | null
-  >(null);
-
-  const setStatusFn = useServerFn(setManualImageStatus);
-  const assignFn = useServerFn(assignManualImage);
-  const reuseFn = useServerFn(reuseCleanImage);
-
-  const loadStatuses = async () => {
-    const { data } = await supabase
-      .from("pending_manual_images")
-      .select("product_id, status, notes, updated_at");
-    const m = new Map<string, ManualStatusRow>();
-    (data ?? []).forEach((r: any) => m.set(r.product_id, r as ManualStatusRow));
-    setStatuses(m);
-  };
-
-  useEffect(() => {
-    (async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setAccessToken(session?.access_token ?? null);
-
-      const { data: hidden } = await supabase
-        .from("brands")
-        .select("id")
-        .in("slug", HIDDEN_BRAND_SLUGS);
-      const hiddenIds = (hidden ?? []).map((b) => b.id);
-      let q = supabase
-        .from("perfumes")
-        .select("id, name, base_name, size_ml, price, image_url, brand:brands(name, slug)")
-        .eq("in_stock", true)
-        .is("clean_image_url", null);
-      if (hiddenIds.length > 0) {
-        q = q.not("brand_id", "in", `(${hiddenIds.join(",")})`);
-      }
-      const { data } = await q.order("name");
-      setRows((data as unknown as MissingRow[]) ?? []);
-
-      const { data: reusableData } = await supabase
-        .from("perfumes")
-        .select("id, name, base_name, size_ml, price, image_url, clean_image_url, brand:brands(name, slug)")
-        .not("clean_image_url", "is", null)
-        .order("name");
-      setReusable((reusableData as unknown as ReusableRow[]) ?? []);
-
-      await loadStatuses();
-    })();
-  }, []);
-
-  const total = rows?.length ?? 0;
-  const manualPending = rows?.filter((r) => MANUAL_PENDING_IDS.has(r.id)) ?? [];
-  const otherPending = rows?.filter((r) => !MANUAL_PENDING_IDS.has(r.id)) ?? [];
-
-  const handleSetStatus = async (
-    productId: string,
-    status: "manual_needed" | "fallback_ok" | "priority_pending",
-  ) => {
-    if (!accessToken || busyId) return;
-    setBusyId(productId);
-    setMsg(null);
-    try {
-      await setStatusFn({ data: { accessToken, productId, status } });
-      await loadStatuses();
-      setMsg("✓ Estado guardado");
-    } catch (e: any) {
-      setMsg(`Error: ${e.message ?? e}`);
-    } finally {
-      setBusyId(null);
-    }
-  };
-
-  const handlePickFile = (product: MissingRow, file: File) => {
-    if (file.size > 5 * 1024 * 1024) {
-      setMsg("Error: imagen excede 5MB");
-      return;
-    }
-    setMsg(null);
-    const previewUrl = URL.createObjectURL(file);
-    setPendingUpload({ product, file, previewUrl });
-  };
-
-  const cancelUpload = () => {
-    if (pendingUpload) URL.revokeObjectURL(pendingUpload.previewUrl);
-    setPendingUpload(null);
-  };
-
-  const confirmUpload = async () => {
-    if (!accessToken || !pendingUpload || busyId) return;
-    const { product, file } = pendingUpload;
-    setBusyId(product.id);
-    setMsg(null);
-    try {
-      const arr = new Uint8Array(await file.arrayBuffer());
-      let bin = "";
-      for (let i = 0; i < arr.length; i++) bin += String.fromCharCode(arr[i]);
-      const b64 = btoa(bin);
-      const ct = (file.type === "image/jpeg" || file.type === "image/webp"
-        ? file.type
-        : "image/png") as "image/png" | "image/jpeg" | "image/webp";
-      await assignFn({
-        data: { accessToken, productId: product.id, imageBase64: b64, contentType: ct },
-      });
-      setMsg("✓ Imagen confirmada y asignada");
-      setRows((prev) => (prev ?? []).filter((r) => r.id !== product.id));
-      await loadStatuses();
-      URL.revokeObjectURL(pendingUpload.previewUrl);
-      setPendingUpload(null);
-    } catch (e: any) {
-      setMsg(`Error: ${e.message ?? e}`);
-    } finally {
-      setBusyId(null);
-    }
-  };
-
-  const copyId = async (id: string) => {
-    try {
-      await navigator.clipboard.writeText(id);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 1500);
-    } catch {
-      /* ignore */
-    }
-  };
-
-  const normalize = (s: string) =>
-    s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  const baseKey = (r: { base_name: string | null; name: string }) =>
-    normalize((r.base_name ?? r.name).trim());
-
-  const reuseListFor = (target: MissingRow): ReusableRow[] => {
-    if (reuseMode === "variants") {
-      const targetBrand = target.brand?.slug ?? "";
-      const targetBase = baseKey(target);
-      const tokens = targetBase.split(/\s+/).filter((t) => t.length >= 3);
-      return reusable
-        .filter((r) => r.brand?.slug === targetBrand)
-        .filter((r) => {
-          const rb = baseKey(r);
-          if (rb.includes(targetBase) || targetBase.includes(rb)) return true;
-          const matches = tokens.filter((t) => rb.includes(t)).length;
-          return matches >= 2;
-        })
-        .slice(0, 30);
-    }
-    if (reuseMode === "same_base") {
-      const targetBase = baseKey(target);
-      return reusable.filter((r) => baseKey(r) === targetBase).slice(0, 30);
-    }
-    const term = normalize(reuseSearch.trim());
-    if (term.length < 2) return [];
-    return reusable
-      .filter((r) => {
-        const hay = normalize(
-          `${r.brand?.name ?? ""} ${r.name} ${r.base_name ?? ""} ${r.size_ml ?? ""} ${r.id}`,
-        );
-        return hay.includes(term);
+export const confirmCleanImageMatch = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        queueId: z.string().uuid(),
+        perfumeId: z.string().uuid(),
       })
-      .slice(0, 30);
-  };
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    const userId = await verifyAdmin(data.accessToken);
 
-  const openReusePanel = (productId: string) => {
-    setExpandedReuseId((cur) => (cur === productId ? null : productId));
-    setReuseMode("search");
-    setReuseSearch("");
-  };
-
-  const confirmReuse = async () => {
-    if (!accessToken || !pendingReuse || busyId) return;
-    const { target, source } = pendingReuse;
-    setBusyId(target.id);
-    setMsg(null);
-    try {
-      await reuseFn({
-        data: {
-          accessToken,
-          targetProductId: target.id,
-          sourceProductId: source.id,
-        },
-      });
-      setMsg(`✓ Imagen reutilizada de ${source.brand?.name ?? ""} ${source.base_name ?? source.name}`);
-      setRows((prev) => (prev ?? []).filter((r) => r.id !== target.id));
-      await loadStatuses();
-      setPendingReuse(null);
-      setExpandedReuseId(null);
-    } catch (e: any) {
-      setMsg(`Error: ${e.message ?? e}`);
-    } finally {
-      setBusyId(null);
+    const { data: row, error: rowErr } = await supabaseAdmin
+      .from("clean_image_import_queue")
+      .select("id, pending_path, status")
+      .eq("id", data.queueId)
+      .single();
+    if (rowErr || !row) throw new Error("Queue row not found");
+    if (row.status === "confirmed") {
+      throw new Error("Esta imagen ya fue confirmada");
     }
-  };
 
-  return (
-    <section className="mt-16 pt-10 border-t border-border/40">
-      <header className="mb-6">
-        <p className="eyebrow text-accent">Revisión</p>
-        <h2 className="mt-2 text-2xl md:text-3xl font-serif">Faltantes clean_image_url</h2>
-        <p className="mt-2 text-sm text-foreground/60">
-          Productos no árabes activos sin imagen limpia confirmada. Mantienen su
-          {" "}<code className="text-accent">image_url</code> original como fallback en el catálogo.
-        </p>
-      </header>
+    const { data: perfume, error: pErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.perfumeId)
+      .single();
+    if (pErr || !perfume) throw new Error("Perfume no encontrado");
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-        <Stat label="Total faltantes" value={total} accent />
-        <Stat label="8 pendientes manuales" value={manualPending.length} />
-        <Stat label="Otros faltantes" value={otherPending.length} />
-        <Stat label="Ya con clean" value={292} />
-      </div>
+    const { data: blob, error: dlErr } = await supabaseAdmin.storage
+      .from(PENDING_BUCKET)
+      .download(row.pending_path);
+    if (dlErr || !blob) throw new Error(`Download failed: ${dlErr?.message}`);
+    const bytes = new Uint8Array(await blob.arrayBuffer());
 
-      {msg && (
-        <p className={`mb-4 text-xs ${msg.startsWith("Error") ? "text-red-400" : "text-accent"}`}>
-          {msg}
-        </p>
-      )}
+    const finalPath = `${data.perfumeId}.png`;
+    const { error: upErr } = await supabaseAdmin.storage
+      .from(FINAL_BUCKET)
+      .upload(finalPath, bytes, {
+        contentType: "image/png",
+        upsert: true,
+      });
+    if (upErr) throw new Error(`Upload failed: ${upErr.message}`);
 
-      {rows !== null && manualPending.length > 0 && (
-        <div className="mb-10 border-2 border-accent/40 bg-accent/5 p-4 sm:p-6">
-          <h3 className="font-serif text-xl mb-1">8 pendientes manuales</h3>
-          <p className="text-xs text-foreground/60 mb-5">
-            Origen bloqueado o no descargable. Subí una imagen alternativa (PNG/JPG/WEBP, máx 5MB).
-            Vas a poder confirmar visualmente <strong>antes</strong> de que se aplique al catálogo.
-          </p>
+    const { data: pub } = supabaseAdmin.storage
+      .from(FINAL_BUCKET)
+      .getPublicUrl(finalPath);
+    const publicUrl = `${pub.publicUrl}?v=${Date.now()}`;
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-            {manualPending.map((r) => {
-              const st = statuses.get(r.id);
-              const motive = MANUAL_PENDING_MOTIVES[r.id];
-              return (
-                <div key={r.id} className="border border-border/50 bg-background p-4 flex flex-col sm:flex-row gap-4">
-                  <div className="flex-shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => r.image_url && setZoomUrl(r.image_url)}
-                      className="group relative block w-full sm:w-[220px] h-[220px] bg-card border border-border/40 overflow-hidden"
-                      title="Click para ampliar"
-                    >
-                      {r.image_url ? (
-                        <>
-                          <img src={r.image_url} alt="" className="w-full h-full object-contain" loading="lazy" />
-                          <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors">
-                            <ZoomIn size={22} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </span>
-                        </>
-                      ) : (
-                        <span className="absolute inset-0 flex items-center justify-center text-foreground/30 text-3xl font-serif">—</span>
-                      )}
-                    </button>
-                    {r.image_url && (
-                      <a
-                        href={r.image_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1 text-[0.6rem] eyebrow text-foreground/60 hover:text-accent"
-                      >
-                        <ExternalLink size={11} /> Abrir en pestaña nueva
-                      </a>
-                    )}
-                  </div>
+    const { error: updErr } = await supabaseAdmin
+      .from("perfumes")
+      .update({ clean_image_url: publicUrl })
+      .eq("id", data.perfumeId);
+    if (updErr) throw new Error(`Perfume update failed: ${updErr.message}`);
 
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[0.65rem] eyebrow text-foreground/50">{r.brand?.name ?? "—"}</p>
-                    <p className="font-serif text-lg leading-tight mt-0.5">{r.base_name ?? r.name}</p>
-                    <p className="text-xs text-foreground/60 mt-1">
-                      {r.size_ml ? `${r.size_ml} ml` : "—"} · USD {r.price.toFixed(0)}
-                    </p>
+    const { error: qErr } = await supabaseAdmin
+      .from("clean_image_import_queue")
+      .update({
+        status: "confirmed",
+        assigned_perfume_id: data.perfumeId,
+        confirmed_by: userId,
+        confirmed_at: new Date().toISOString(),
+      })
+      .eq("id", data.queueId);
+    if (qErr) throw new Error(`Queue update failed: ${qErr.message}`);
 
-                    <div className="mt-2 flex items-center gap-2">
-                      <code className="text-[0.6rem] font-mono text-foreground/50 truncate">{r.id}</code>
-                      <button
-                        type="button"
-                        onClick={() => copyId(r.id)}
-                        className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[0.55rem] eyebrow border border-border/60 text-foreground/60 hover:text-accent hover:border-accent/60"
-                        title="Copiar product_id"
-                      >
-                        {copiedId === r.id ? <Check size={10} /> : <Copy size={10} />}
-                        {copiedId === r.id ? "Copiado" : "Copiar ID"}
-                      </button>
-                    </div>
+    await supabaseAdmin.storage.from(PENDING_BUCKET).remove([row.pending_path]);
 
-                    <p className="text-[0.65rem] text-destructive mt-2">⚠ {motive}</p>
+    return { ok: true, finalPath, publicUrl };
+  });
 
-                    {st && (
-                      <p className="mt-2 text-[0.6rem] eyebrow text-accent">
-                        Estado: {st.status === "fallback_ok"
-                          ? "Fallback aceptable"
-                          : st.status === "priority_pending"
-                          ? "Prioridad pendiente"
-                          : "Manual requerido"}
-                      </p>
-                    )}
+export const skipCleanImage = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        queueId: z.string().uuid(),
+        reason: z.string().max(500).optional(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    const userId = await verifyAdmin(data.accessToken);
+    const { error } = await supabaseAdmin
+      .from("clean_image_import_queue")
+      .update({
+        status: "skipped",
+        confirmed_by: userId,
+        confirmed_at: new Date().toISOString(),
+        notes: data.reason ?? null,
+      })
+      .eq("id", data.queueId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <label className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-accent/60 text-accent bg-accent/5 hover:bg-accent/15 cursor-pointer ${busyId === r.id ? "opacity-50 pointer-events-none" : ""}`}>
-                        <Upload size={12} />
-                        Subir imagen
-                        <input
-                          type="file"
-                          accept="image/png,image/jpeg,image/webp"
-                          className="hidden"
-                          disabled={busyId === r.id}
-                          onChange={(e) => {
-                            const f = e.target.files?.[0];
-                            if (f) handlePickFile(r, f);
-                            e.target.value = "";
-                          }}
-                        />
-                      </label>
-                      <button
-                        type="button"
-                        disabled={busyId === r.id}
-                        onClick={() => openReusePanel(r.id)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border disabled:opacity-50 ${
-                          expandedReuseId === r.id
-                            ? "border-accent text-accent bg-accent/10"
-                            : "border-accent/60 text-accent hover:bg-accent/10"
-                        }`}
-                      >
-                        <Search size={12} />
-                        Buscar imagen limpia existente
-                      </button>
-                      <button
-                        type="button"
-                        disabled={busyId === r.id}
-                        onClick={() => {
-                          setExpandedReuseId(r.id);
-                          setReuseMode("variants");
-                          setReuseSearch("");
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-border/60 text-foreground/80 hover:border-foreground/40 disabled:opacity-50"
-                      >
-                        Variantes del mismo perfume
-                      </button>
-                      <button
-                        type="button"
-                        disabled={busyId === r.id}
-                        onClick={() => {
-                          setExpandedReuseId(r.id);
-                          setReuseMode("same_base");
-                          setReuseSearch("");
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border border-border/60 text-foreground/80 hover:border-foreground/40 disabled:opacity-50"
-                      >
-                        Mismo nombre base
-                      </button>
-                      <button
-                        disabled={busyId === r.id}
-                        onClick={() => handleSetStatus(r.id, "fallback_ok")}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border ${
-                          st?.status === "fallback_ok"
-                            ? "border-accent text-accent bg-accent/10"
-                            : "border-border/60 text-foreground/70 hover:border-foreground/40"
-                        } disabled:opacity-50`}
-                      >
-                        <ShieldCheck size={12} />
-                        Fallback OK
-                      </button>
-                      <button
-                        disabled={busyId === r.id}
-                        onClick={() => handleSetStatus(r.id, "priority_pending")}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] eyebrow border ${
-                          st?.status === "priority_pending"
-                            ? "border-destructive text-destructive bg-destructive/10"
-                            : "border-border/60 text-foreground/70 hover:border-foreground/40"
-                        } disabled:opacity-50`}
-                      >
-                        <Flag size={12} />
-                        Prioridad
-                      </button>
-                      {busyId === r.id && <Loader2 size={14} className="animate-spin text-accent" />}
-                    </div>
+export const setManualImageStatus = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        productId: z.string().uuid(),
+        status: z.enum(["manual_needed", "fallback_ok", "priority_pending"]),
+        notes: z.string().max(1000).optional(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    const userId = await verifyAdmin(data.accessToken);
 
-                    {expandedReuseId === r.id && (
-                      <div className="mt-4 border border-accent/30 bg-accent/5 p-3">
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          <span className="eyebrow text-[0.6rem] text-foreground/60">Modo:</span>
-                          {([
-                            ["search", "Búsqueda libre"],
-                            ["variants", "Variantes (misma marca)"],
-                            ["same_base", "Mismo nombre base"],
-                          ] as const).map(([m, label]) => (
-                            <button
-                              key={m}
-                              type="button"
-                              onClick={() => setReuseMode(m)}
-                              className={`px-2 py-1 text-[0.6rem] eyebrow border ${
-                                reuseMode === m
-                                  ? "border-accent text-accent bg-accent/10"
-                                  : "border-border/60 text-foreground/70 hover:border-foreground/40"
-                              }`}
-                            >
-                              {label}
-                            </button>
-                          ))}
-                        </div>
+    const { data: p, error: pErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.productId)
+      .single();
+    if (pErr || !p) throw new Error("Perfume no encontrado");
 
-                        {reuseMode === "search" && (
-                          <div className="relative mb-3">
-                            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" />
-                            <input
-                              value={reuseSearch}
-                              onChange={(e) => setReuseSearch(e.target.value)}
-                              placeholder="Marca, nombre, ml, concentración o product_id…"
-                              className="w-full bg-input/40 border border-border pl-9 pr-3 py-2 text-xs focus:outline-none focus:border-accent"
-                            />
-                          </div>
-                        )}
+    const { error } = await supabaseAdmin
+      .from("pending_manual_images")
+      .upsert(
+        {
+          product_id: data.productId,
+          status: data.status,
+          notes: data.notes ?? null,
+          updated_by: userId,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "product_id" },
+      );
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
 
-                        {(() => {
-                          const list = reuseListFor(r);
-                          if (list.length === 0) {
-                            return (
-                              <p className="text-xs text-foreground/50 italic py-3">
-                                {reuseMode === "search" && reuseSearch.trim().length < 2
-                                  ? "Escribí al menos 2 caracteres para buscar."
-                                  : "Sin coincidencias."}
-                              </p>
-                            );
-                          }
-                          return (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[420px] overflow-y-auto">
-                              {list.map((src) => (
-                                <div
-                                  key={src.id}
-                                  className="border border-border/50 bg-background p-2 flex gap-2"
-                                >
-                                  <div className="flex-shrink-0 grid grid-cols-2 gap-1 w-[140px]">
-                                    <div className="aspect-square bg-card border border-accent/40 overflow-hidden">
-                                      <img src={src.clean_image_url} alt="" className="w-full h-full object-contain" loading="lazy" />
-                                    </div>
-                                    <div className="aspect-square bg-card border border-border/40 overflow-hidden">
-                                      {src.image_url ? (
-                                        <img src={src.image_url} alt="" className="w-full h-full object-contain opacity-70" loading="lazy" />
-                                      ) : (
-                                        <span className="flex items-center justify-center h-full text-foreground/30 text-xs">—</span>
-                                      )}
-                                    </div>
-                                    <p className="text-[0.5rem] eyebrow text-accent text-center">limpia</p>
-                                    <p className="text-[0.5rem] eyebrow text-foreground/40 text-center">original</p>
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">{src.brand?.name ?? "—"}</p>
-                                    <p className="text-xs font-serif leading-tight line-clamp-2 mt-0.5">{src.base_name ?? src.name}</p>
-                                    <p className="text-[0.65rem] text-foreground/60 mt-0.5">
-                                      {src.size_ml ? `${src.size_ml} ml` : "—"} · USD {src.price.toFixed(0)}
-                                    </p>
-                                    <code className="text-[0.55rem] font-mono text-foreground/40 block truncate mt-0.5">{src.id}</code>
-                                    <button
-                                      type="button"
-                                      disabled={busyId === r.id}
-                                      onClick={() => setPendingReuse({ target: r, source: src })}
-                                      className="mt-2 w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-2 bg-accent text-accent-foreground text-[0.6rem] eyebrow hover:bg-accent/90 disabled:opacity-50"
-                                    >
-                                      <CheckCircle2 size={11} />
-                                      Usar esta imagen limpia
-                                    </button>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          );
-                        })()}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+export const assignManualImage = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        productId: z.string().uuid(),
+        imageBase64: z.string().min(100),
+        contentType: z
+          .enum(["image/png", "image/jpeg", "image/webp"])
+          .default("image/png"),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    await verifyAdmin(data.accessToken);
 
-      {zoomUrl && (
-        <div className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6" onClick={() => setZoomUrl(null)}>
-          <button type="button" onClick={() => setZoomUrl(null)} className="absolute top-4 right-4 p-2 text-white/80 hover:text-white" aria-label="Cerrar">
-            <X size={22} />
-          </button>
-          <img src={zoomUrl} alt="Imagen ampliada" className="max-w-full max-h-full object-contain" onClick={(e) => e.stopPropagation()} />
-        </div>
-      )}
+    const { data: perfume, error: pErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.productId)
+      .single();
+    if (pErr || !perfume) throw new Error("Perfume no encontrado");
 
-      {pendingUpload && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-start justify-between gap-4 mb-5">
-              <div>
-                <p className="eyebrow text-accent text-[0.65rem]">Confirmar imagen</p>
-                <h4 className="mt-1 font-serif text-xl">
-                  {pendingUpload.product.brand?.name ? `${pendingUpload.product.brand.name} — ` : ""}
-                  {pendingUpload.product.base_name ?? pendingUpload.product.name}
-                </h4>
-                <p className="text-xs text-foreground/60 mt-1">
-                  {pendingUpload.product.size_ml ? `${pendingUpload.product.size_ml} ml` : "—"} · USD {pendingUpload.product.price.toFixed(0)}
-                </p>
-                <code className="text-[0.6rem] font-mono text-foreground/50 mt-1 inline-block">{pendingUpload.product.id}</code>
-              </div>
-              <button type="button" onClick={cancelUpload} className="p-1.5 text-foreground/60 hover:text-foreground" aria-label="Cerrar" disabled={busyId === pendingUpload.product.id}>
-                <X size={18} />
-              </button>
-            </div>
+    const raw = data.imageBase64.includes(",")
+      ? data.imageBase64.split(",")[1]
+      : data.imageBase64;
+    const bytes = Uint8Array.from(atob(raw), (c) => c.charCodeAt(0));
+    if (bytes.byteLength < 500) throw new Error("Imagen demasiado pequeña");
+    if (bytes.byteLength > 5 * 1024 * 1024)
+      throw new Error("Imagen excede 5MB");
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-              <div>
-                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">Actual (fallback image_url)</p>
-                <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
-                  {pendingUpload.product.image_url ? (
-                    <img src={pendingUpload.product.image_url} alt="" className="w-full h-full object-contain" />
-                  ) : (
-                    <span className="text-foreground/30 text-4xl font-serif">—</span>
-                  )}
-                </div>
-              </div>
-              <div>
-                <p className="eyebrow text-[0.6rem] text-accent mb-2">Nueva (a confirmar)</p>
-                <div className="aspect-square bg-card border border-accent/60 flex items-center justify-center overflow-hidden">
-                  <img src={pendingUpload.previewUrl} alt="" className="w-full h-full object-contain" />
-                </div>
-              </div>
-            </div>
+    const finalPath = `${data.productId}.png`;
+    const { error: upErr } = await supabaseAdmin.storage
+      .from(FINAL_BUCKET)
+      .upload(finalPath, bytes, {
+        contentType: data.contentType,
+        upsert: true,
+      });
+    if (upErr) throw new Error(`Upload failed: ${upErr.message}`);
 
-            <p className="text-[0.65rem] text-foreground/50 mb-4">
-              Al confirmar, se actualiza solo <code className="text-accent">clean_image_url</code>. El <code>image_url</code> original queda intacto.
-            </p>
+    const { data: pub } = supabaseAdmin.storage
+      .from(FINAL_BUCKET)
+      .getPublicUrl(finalPath);
+    const publicUrl = `${pub.publicUrl}?v=${Date.now()}`;
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-end">
-              <button type="button" onClick={cancelUpload} disabled={busyId === pendingUpload.product.id} className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50">
-                Cancelar / elegir otra imagen
-              </button>
-              <button type="button" onClick={confirmUpload} disabled={busyId === pendingUpload.product.id} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50">
-                {busyId === pendingUpload.product.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
-                Confirmar esta imagen para este producto
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+    const { error: updErr } = await supabaseAdmin
+      .from("perfumes")
+      .update({ clean_image_url: publicUrl })
+      .eq("id", data.productId);
+    if (updErr) throw new Error(`Perfume update failed: ${updErr.message}`);
 
-      {pendingReuse && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="bg-background border border-border/60 max-w-5xl w-full p-5 sm:p-7 my-auto">
-            <div className="flex items-start justify-between gap-4 mb-5">
-              <div>
-                <p className="eyebrow text-accent text-[0.65rem]">Reutilizar imagen limpia</p>
-                <h4 className="mt-1 font-serif text-xl">Confirmar reutilización</h4>
-                <p className="text-xs text-foreground/60 mt-1">
-                  Se copiará el mismo <code className="text-accent">clean_image_url</code>. Nada se mueve, nada se borra, <code>image_url</code> queda intacto.
-                </p>
-              </div>
-              <button type="button" onClick={() => setPendingReuse(null)} className="p-1.5 text-foreground/60 hover:text-foreground" aria-label="Cerrar" disabled={busyId === pendingReuse.target.id}>
-                <X size={18} />
-              </button>
-            </div>
+    await supabaseAdmin
+      .from("pending_manual_images")
+      .delete()
+      .eq("product_id", data.productId);
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-              <div>
-                <p className="eyebrow text-[0.6rem] text-foreground/50 mb-2">Producto pendiente (destino)</p>
-                <div className="aspect-square bg-card border border-border/40 flex items-center justify-center overflow-hidden">
-                  {pendingReuse.target.image_url ? (
-                    <img src={pendingReuse.target.image_url} alt="" className="w-full h-full object-contain" />
-                  ) : (
-                    <span className="text-foreground/30 text-4xl font-serif">—</span>
-                  )}
-                </div>
-                <div className="mt-3 text-xs">
-                  <p className="eyebrow text-[0.6rem] text-foreground/50">{pendingReuse.target.brand?.name ?? "—"}</p>
-                  <p className="font-serif text-base mt-0.5">{pendingReuse.target.base_name ?? pendingReuse.target.name}</p>
-                  <p className="text-foreground/60 mt-1">{pendingReuse.target.size_ml ? `${pendingReuse.target.size_ml} ml` : "—"} · USD {pendingReuse.target.price.toFixed(0)}</p>
-                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">{pendingReuse.target.id}</code>
-                </div>
-              </div>
-              <div>
-                <p className="eyebrow text-[0.6rem] text-accent mb-2">Fuente elegida (clean_image_url)</p>
-                <div className="aspect-square bg-card border border-accent/60 flex items-center justify-center overflow-hidden">
-                  <img src={pendingReuse.source.clean_image_url} alt="" className="w-full h-full object-contain" />
-                </div>
-                <div className="mt-3 text-xs">
-                  <p className="eyebrow text-[0.6rem] text-foreground/50">{pendingReuse.source.brand?.name ?? "—"}</p>
-                  <p className="font-serif text-base mt-0.5">{pendingReuse.source.base_name ?? pendingReuse.source.name}</p>
-                  <p className="text-foreground/60 mt-1">{pendingReuse.source.size_ml ? `${pendingReuse.source.size_ml} ml` : "—"} · USD {pendingReuse.source.price.toFixed(0)}</p>
-                  <code className="text-[0.6rem] font-mono text-foreground/40 block mt-1 break-all">{pendingReuse.source.id}</code>
-                </div>
-              </div>
-            </div>
+    return { ok: true, publicUrl };
+  });
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-end">
-              <button type="button" onClick={() => setPendingReuse(null)} disabled={busyId === pendingReuse.target.id} className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs eyebrow border border-border/60 text-foreground/70 hover:border-foreground/40 disabled:opacity-50">
-                Cancelar
-              </button>
-              <button type="button" onClick={confirmReuse} disabled={busyId === pendingReuse.target.id} className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs eyebrow bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50">
-                {busyId === pendingReuse.target.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
-                Confirmar reutilización
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+export const getPendingImageUrl = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        pendingPath: z.string().min(1).max(500),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    await verifyAdmin(data.accessToken);
+    const { data: signed, error } = await supabaseAdmin.storage
+      .from(PENDING_BUCKET)
+      .createSignedUrl(data.pendingPath, 60 * 60);
+    if (error || !signed) throw new Error(error?.message ?? "Sign failed");
+    return { url: signed.signedUrl };
+  });
 
-      {rows === null ? (
-        <div className="text-center py-12"><Loader2 className="inline animate-spin" /></div>
-      ) : rows.length === 0 ? (
-        <p className="text-foreground/60 italic">No hay productos faltantes.</p>
-      ) : (
-        <div className="overflow-x-auto border border-border/40">
-          <table className="w-full text-xs">
-            <thead className="bg-card/50 text-left eyebrow text-[0.6rem] text-foreground/60">
-              <tr>
-                <th className="p-3">Imagen</th>
-                <th className="p-3">Marca</th>
-                <th className="p-3">Nombre</th>
-                <th className="p-3">ml</th>
-                <th className="p-3">USD</th>
-                <th className="p-3">Origen</th>
-                <th className="p-3">Motivo</th>
-                <th className="p-3">ID</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => {
-                const manual = MANUAL_PENDING_IDS.has(r.id);
-                return (
-                  <tr key={r.id} className="border-t border-border/30 hover:bg-card/30">
-                    <td className="p-2">
-                      {r.image_url ? (
-                        <img src={r.image_url} alt="" className="w-12 h-12 object-contain bg-card" loading="lazy" />
-                      ) : (
-                        <div className="w-12 h-12 bg-card flex items-center justify-center text-foreground/30">—</div>
-                      )}
-                    </td>
-                    <td className="p-2 text-foreground/70">{r.brand?.name ?? "—"}</td>
-                    <td className="p-2 font-serif">{r.base_name ?? r.name}</td>
-                    <td className="p-2 text-foreground/60">{r.size_ml ?? "—"}</td>
-                    <td className="p-2 text-foreground/60">{r.price.toFixed(0)}</td>
-                    <td className="p-2">
-                      {manual ? (
-                        <span className="text-destructive eyebrow text-[0.55rem]">MANUAL</span>
-                      ) : (
-                        <span className="text-accent eyebrow text-[0.55rem]">RECUPERABLE</span>
-                      )}
-                    </td>
-                    <td className="p-2 text-foreground/60">
-                      {manual ? MANUAL_PENDING_MOTIVES[r.id] : "pendiente de procesar"}
-                    </td>
-                    <td className="p-2 font-mono text-[0.55rem] text-foreground/40">{r.id.slice(0, 8)}…</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </section>
-  );
-}
+export const reuseCleanImage = createServerFn({ method: "POST" })
+  .inputValidator((input) =>
+    z
+      .object({
+        accessToken: z.string().min(10),
+        targetProductId: z.string().uuid(),
+        sourceProductId: z.string().uuid(),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data }) => {
+    await verifyAdmin(data.accessToken);
 
-function Stat({ label, value, accent = false }: { label: string; value: number; accent?: boolean }) {
-  return (
-    <div className="border border-border/40 px-3 py-3">
-      <p className="text-[0.6rem] eyebrow text-foreground/50">{label}</p>
-      <p className={`mt-1 text-2xl font-serif ${accent ? "text-accent" : ""}`}>{value}</p>
-    </div>
-  );
-}
+    if (data.targetProductId === data.sourceProductId) {
+      throw new Error("Origen y destino son el mismo producto");
+    }
 
-function SuggestionCard({
-  perfume,
-  distance,
-  onConfirm,
-  disabled,
-}: {
-  perfume: PerfumeLite;
-  distance?: number;
-  onConfirm: () => void;
-  disabled: boolean;
-}) {
-  return (
-    <div className="border border-border/40 p-3 flex flex-col">
-      <div className="aspect-square bg-card flex items-center justify-center overflow-hidden mb-2">
-        {perfume.image_url ? (
-          <img src={perfume.image_url} alt="" className="w-full h-full object-contain" loading="lazy" />
-        ) : (
-          <span className="text-foreground/30 text-3xl font-serif">{perfume.name.charAt(0)}</span>
-        )}
-      </div>
-      <p className="text-[0.6rem] eyebrow text-foreground/50 truncate">{perfume.brand?.name ?? "—"}</p>
-      <p className="text-xs font-serif leading-tight line-clamp-2 mt-0.5">
-        {perfume.base_name ?? perfume.name}
-      </p>
-      {typeof distance === "number" && (
-        <p className="text-[0.55rem] text-foreground/40 mt-1">
-          Hamming: {distance} · {distance <= 10 ? "match alto" : distance <= 20 ? "posible" : "lejano"}
-        </p>
-      )}
-      <button
-        onClick={onConfirm}
-        disabled={disabled}
-        className="mt-2 inline-flex items-center justify-center gap-1.5 py-2 bg-accent text-accent-foreground text-[0.65rem] eyebrow hover:bg-accent/90 disabled:opacity-50"
-      >
-        <CheckCircle2 size={12} /> Confirmar
-      </button>
-    </div>
-  );
-}
+    const { data: source, error: sErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id, clean_image_url")
+      .eq("id", data.sourceProductId)
+      .single();
+    if (sErr || !source) throw new Error("Perfume origen no encontrado");
+    if (!source.clean_image_url) {
+      throw new Error("El perfume origen no tiene clean_image_url");
+    }
+
+    const { data: target, error: tErr } = await supabaseAdmin
+      .from("perfumes")
+      .select("id")
+      .eq("id", data.targetProductId)
+      .single();
+    if (tErr || !target) throw new Error("Perfume destino no encontrado");
+
+    const { error: updErr } = await supabaseAdmin
+      .from("perfumes")
+      .update({ clean_image_url: source.clean_image_url })
+      .eq("id", data.targetProductId);
+    if (updErr) throw new Error(`Update failed: ${updErr.message}`);
+
+    await supabaseAdmin
+      .from("pending_manual_images")
+      .delete()
+      .eq("product_id", data.targetProductId);
+
+    return { ok: true, cleanImageUrl: source.clean_image_url };
+  });
